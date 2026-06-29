@@ -1,0 +1,33 @@
+{
+  "name": "drama-ghar",
+  "version": "1.0.0",
+  "description": "DramaGhar – Pakistan ka number one drama schedule platform",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run start --prefix server",
+    "dev": "npx concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+    "seed": "npm run seed --prefix server",
+    "install:all": "npm install && npm install --prefix server && npm install --prefix client"
+  },
+  "keywords": [],
+  "author": "DramaGhar Team",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "compression": "^1.8.1",
+    "connect-session-sequelize": "^8.0.6",
+    "dotenv": "^17.4.2",
+    "ejs": "^5.0.2",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "express-validator": "^7.3.2",
+    "nodemailer": "^8.0.7",
+    "sequelize": "^6.37.8",
+    "sqlite3": "^6.0.1"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "nodemon": "^3.1.14",
+    "sequelize-cli": "^6.6.5"
+  }
+}

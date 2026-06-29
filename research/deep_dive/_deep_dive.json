@@ -1,0 +1,255 @@
+{
+  "Exam-Table": {
+    "name": "Exam-Table",
+    "files": {
+      "package.json": {
+        "branch": "main",
+        "size": 3028,
+        "lines": 91,
+        "first_500": "{\n  \"name\": \"fsc-exams\",\n  \"version\": \"0.1.0\",\n  \"private\": true,\n  \"scripts\": {\n    \"prebuild\": \"ts-node scripts/parse-excel.ts\",\n    \"build\": \"next build\",\n    \"dev\": \"ts-node scripts/parse-excel.ts && next dev\",\n    \"start\": \"next start\",\n    \"type-check\": \"tsc --noEmit\",\n    \"lint\": \"next lint\",\n    \"timetable:update\": \"python3 all_courses_schedule.py && mkdir -p public/data && cp timetable.json public/data/timetable.json\",\n    \"events:scrape\": \"python3 scripts/scrape_slate.py\",\n    \"events:"
+      },
+      "README.md": {
+        "branch": "main",
+        "size": 37326,
+        "lines": 830,
+        "first_500": "<div align=\"center\">\n\n<img src=\"public/logo/logo.png\" alt=\"FAST Isb Utilities Logo\" width=\"80\" />\n\n# FAST Isb Utilities\n\n**The unified campus companion for FAST NUCES Islamabad**\n\nNo more digging through messy Google Sheets. No more searching emails for exam schedules. No more peeking into rooms to check if they're free. Everything you need \u2014 in one place.\n\n[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen?style=for-the-badge)](https://fast-nuces.vercel.app/)\n[![Next.js](https://i"
+      },
+      "tsconfig.json": {
+        "branch": "main",
+        "size": 669,
+        "lines": 40,
+        "first_500": "{\n  \"compilerOptions\": {\n    \"target\": \"ES2017\",\n    \"lib\": [\n      \"dom\",\n      \"dom.iterable\",\n      \"esnext\"\n    ],\n    \"allowJs\": true,\n    \"skipLibCheck\": true,\n    \"strict\": true,\n    \"noEmit\": true,\n    \"esModuleInterop\": true,\n    \"module\": \"esnext\",\n    \"moduleResolution\": \"bundler\",\n    \"resolveJsonModule\": true,\n    \"isolatedModules\": true,\n    \"jsx\": \"preserve\",\n    \"incremental\": true,\n    \"plugins\": [\n      {\n        \"name\": \"next\"\n      }\n    ],\n    \"paths\": {\n      \"@/*\": [\n     "
+      },
+      "next.config.js": {
+        "branch": "main",
+        "size": 333,
+        "lines": 16,
+        "first_500": "/** @type {import('next').NextConfig} */\nconst nextConfig = {\n  compress: true,\n  poweredByHeader: false,\n  headers: async () => [\n    {\n      source: '/data/:path*',\n      headers: [\n        { key: 'Cache-Control', value: 'public, max-age=3600, stale-while-revalidate=86400' },\n      ],\n    },\n  ],\n};\n\nmodule.exports = nextConfig;\n"
+      },
+      "src/app/page.tsx": {
+        "branch": "main",
+        "size": 22801,
+        "lines": 517,
+        "first_500": "'use client';\nimport { useState, useEffect, useMemo } from 'react';\nimport { useRouter } from 'next/navigation';\nimport { Header } from '@/components/Header';\nimport { DesktopTicker } from '@/components/DesktopTicker';\nimport { flattenTimetable } from '@/lib/timetable-filter';\nimport type { RawTimetableJSON, TimetableEntry, SummerCourseCatalogEntry } from '@/lib/types';\n\n// eslint-disable-next-line\nconst timetableRaw: RawTimetableJSON = require('../../public/data/timetable.json');\nconst allTimet"
+      },
+      "src/app/layout.tsx": {
+        "branch": "main",
+        "size": 2176,
+        "lines": 87,
+        "first_500": "import type { Metadata } from 'next';\nimport { DM_Sans, DM_Mono, Instrument_Serif, JetBrains_Mono } from 'next/font/google';\n\nimport '../styles/globals.css';\nimport { ThemeProvider } from '@/lib/theme';\nimport { Navbar } from '@/components/Navbar';\nimport { FloatingMenu } from '@/components/FloatingMenu';\nimport { Analytics } from '@vercel/analytics/next';\nimport { Toaster } from '@/components/ui/toaster';\nimport { FeedbackWidget } from '@/components/FeedbackWidget';\nimport { GlobalShortcuts } f"
+      },
+      "src/components/Navbar.tsx": {
+        "branch": "main",
+        "size": 6801,
+        "lines": 163,
+        "first_500": "'use client';\n\nimport { usePathname, useRouter } from 'next/navigation';\nimport { motion, AnimatePresence } from 'framer-motion';\nimport { Home, Sliders, Users, Library, MapPin, Search } from 'lucide-react';\nimport { useTheme } from '@/lib/theme';\n\ntype Tab = {\n  id: string;\n  path: string;\n  label: string;\n  icon: any;\n};\n\nconst TABS: Tab[] = [\n  { id: 'rooms', path: '/rooms', label: 'ROOMS', icon: MapPin },\n  { id: 'lost-found', path: '/lost-found', label: 'LOST & FOUND', icon: Search },\n  { i"
+      },
+      "src/components/Header.tsx": {
+        "branch": "main",
+        "size": 2604,
+        "lines": 61,
+        "first_500": "'use client';\n\nimport Link from 'next/link';\nimport { ThemeToggle } from '@/components/ThemeToggle';\nimport { ReactNode } from 'react';\n\ninterface HeaderProps {\n  children?: ReactNode;\n  rightActions?: ReactNode;\n}\n\nexport function Header({ children, rightActions }: HeaderProps) {\n  return (\n    <header\n      className=\"sticky top-0 z-50 flex items-center justify-between h-[3.75rem] flex-shrink-0 glass-header-laser px-5 md:px-10\"\n      style={{ boxShadow: 'var(--shadow-header)' }}\n    >\n      {/"
+      },
+      "tailwind.config.ts": {
+        "branch": "main",
+        "size": 2055,
+        "lines": 68,
+        "first_500": "import type { Config } from 'tailwindcss';\nimport tailwindcssAnimate from 'tailwindcss-animate';\n\nexport default {\n  content: ['./src/**/*.{ts,tsx}'],\n  darkMode: ['selector', '[data-theme=\"dark\"]'],\n  theme: {\n    extend: {\n      fontFamily: {\n        display: ['Instrument Serif', 'serif'],\n        body:    ['DM Sans', 'sans-serif'],\n        mono:    ['DM Mono', 'monospace'],\n        clock:   ['var(--font-clock)', 'monospace'],\n      },\n\n      colors: {\n        bg:       'var(--color-bg)',\n    "
+      },
+      "vercel.json": {
+        "branch": "main",
+        "size": 205,
+        "lines": 13,
+        "first_500": "{\n  \"crons\": [\n    {\n      \"path\": \"/api/lost-found/cron/reminders\",\n      \"schedule\": \"0 5 * * 1-5\"\n    },\n    {\n      \"path\": \"/api/lost-found/cron/reminders\",\n      \"schedule\": \"0 13 * * 0\"\n    }\n  ]\n}\n"
+      },
+      "LICENSE": {
+        "branch": "main",
+        "size": 734,
+        "lines": 20,
+        "first_500": "FAST Isb Utilities \u2014 Source-Available License\n\nCopyright (c) 2026 Ammar Asad. All rights reserved.\n\nBuilt for the FAST NUCES Islamabad student community.\n\n------------------------------------------------------------------------\n\nYou're free to read the code, run it locally, and fork it to open pull\nrequests. Contributions are welcome \u2014 I review and merge at my discretion.\n\nYou're not free to copy the codebase, lift the UI design, or reproduce\nhow things are structured and built here \u2014 in whole o"
+      }
+    },
+    "top_level_listed": [
+      ".eslintrc.json",
+      ".github/workflows",
+      ".gitignore",
+      "LICENSE",
+      "README.md",
+      "Screenshots",
+      "Screenshots/custom_exams_desktop.png",
+      "Screenshots/custom_exams_mobile.png",
+      "Screenshots/custom_timetable_desktop.png",
+      "Screenshots/custom_timetable_mobile.png",
+      "Screenshots/events_page_desktop.png",
+      "Screenshots/events_page_mobile.png",
+      "Screenshots/exam_schedule_desktop.png",
+      "Screenshots/exam_schedule_mobile.png",
+      "Screenshots/faculty_page_desktop.png",
+      "Screenshots/faculty_page_mobile.png",
+      "Screenshots/home_page_desktop.png",
+      "Screenshots/home_page_mobile.png",
+      "Screenshots/landing_page_desktop.png",
+      "Screenshots/landing_page_mobile.png",
+      "Screenshots/lost_found_page_desktop.png",
+      "Screenshots/lost_found_page_mobile.png",
+      "Screenshots/optimizer_desktop.png",
+      "Screenshots/optimizer_mobile.png",
+      "Screenshots/rooms_page_desktop.png",
+      "Screenshots/rooms_page_mobile.png",
+      "Screenshots/semester_page_desktop.png",
+      "Screenshots/semester_page_mobile.png",
+      "Screenshots/timetable_page_desktop.png",
+      "Screenshots/timetable_page_mobile.png",
+      "TimetableOptimizer.jsx",
+      "all_courses_schedule.py",
+      "cli-tool",
+      "docs",
+      "exam_schedule.xlsx",
+      "next.config.js",
+      "package-lock.json",
+      "package.json",
+      "patch_custom_exam.js",
+      "postcss.config.js",
+      "public",
+      "public/logo/logo.png",
+      "scratch.mjs",
+      "scripts",
+      "src",
+      "supabase_schema.sql",
+      "tailwind.config.ts",
+      "timetable.json",
+      "tsconfig.json",
+      "vercel.json"
+    ]
+  },
+  "Drama-Ghar": {
+    "name": "Drama-Ghar",
+    "files": {
+      "package.json": {
+        "branch": "main",
+        "size": 1446,
+        "lines": 55,
+        "first_500": "{\n  \"name\": \"ai-studio-applet\",\n  \"version\": \"0.1.0\",\n  \"private\": true,\n  \"scripts\": {\n    \"dev\": \"next dev\",\n    \"build\": \"next build\",\n    \"start\": \"next start\",\n    \"lint\": \"eslint .\",\n    \"clean\": \"next clean\"\n  },\n  \"dependencies\": {\n    \"@google/genai\": \"^1.17.0\",\n    \"@hookform/resolvers\": \"^5.2.2\",\n    \"@radix-ui/react-dialog\": \"^1.1.15\",\n    \"@radix-ui/react-separator\": \"^1.1.8\",\n    \"@radix-ui/react-slot\": \"^1.2.4\",\n    \"@radix-ui/react-tabs\": \"^1.1.13\",\n    \"autoprefixer\": \"^10.4.21\""
+      },
+      "README.md": {
+        "branch": "main",
+        "size": 22088,
+        "lines": 423,
+        "first_500": "# DramaGhar \n\n**A full-stack Pakistani drama tracking & streaming platform built with Next.js 15, React 19, MongoDB Atlas, and Supabase.**\n\n---\n## Contributors\n\n- [Ammar Asad](https://github.com/ammarasad2005)\n- [Hanzlah Ch](https://github.com/HanzlahCh)\n\n## Table of Contents\n\n1. [Project Overview](#1-project-overview)\n2. [Tech Stack](#2-tech-stack)\n3. [System Architecture](#3-system-architecture)\n4. [Feature Breakdown & Self-Evaluation](#4-feature-breakdown--self-evaluation)\n   - [Functionality"
+      },
+      "tsconfig.json": {
+        "branch": "main",
+        "size": 660,
+        "lines": 29,
+        "first_500": "{\n  \"compilerOptions\": {\n    \"target\": \"ES2017\",\n    \"lib\": [\"dom\", \"dom.iterable\", \"esnext\"],\n    \"allowJs\": true,\n    \"skipLibCheck\": true,\n    \"strict\": true,\n    \"noEmit\": true,\n    \"esModuleInterop\": true,\n    \"module\": \"esnext\",\n    \"moduleResolution\": \"bundler\",\n    \"resolveJsonModule\": true,\n    \"isolatedModules\": true,\n    \"jsx\": \"preserve\",\n    \"incremental\": true,\n    \"plugins\": [\n      {\n        \"name\": \"next\"\n      }\n    ],\n    \"baseUrl\": \".\",\n    \"paths\": {\n      \"@/*\": [\"./*\"]\n   "
+      },
+      "next.config.ts": {
+        "branch": "main",
+        "size": 1258,
+        "lines": 55,
+        "first_500": "import type {NextConfig} from 'next';\n\nconst nextConfig: NextConfig = {\n  reactStrictMode: true,\n  eslint: {\n    ignoreDuringBuilds: true,\n  },\n  typescript: {\n    ignoreBuildErrors: false,\n  },\n  // Allow access to remote image placeholder.\n  images: {\n    remotePatterns: [\n      {\n        protocol: 'https',\n        hostname: 'picsum.photos',\n        port: '',\n        pathname: '/**', // This allows any path under the hostname\n      },\n      {\n        protocol: 'https',\n        hostname: 'grrff"
+      },
+      "app/page.tsx": {
+        "branch": "main",
+        "size": 105,
+        "lines": 6,
+        "first_500": "import { redirect } from 'next/navigation';\n\nexport default function RootPage() {\n  redirect('/home');\n}\n"
+      },
+      "app/layout.tsx": {
+        "branch": "main",
+        "size": 863,
+        "lines": 37,
+        "first_500": "import type {Metadata} from 'next';\nimport { Inter, Playfair_Display } from 'next/font/google';\nimport './globals.css';\n\nconst inter = Inter({\n  subsets: ['latin'],\n  variable: '--font-sans',\n});\n\nconst playfair = Playfair_Display({\n  subsets: ['latin'],\n  variable: '--font-serif',\n});\n\nexport const metadata: Metadata = {\n  title: 'DramaGhar',\n  description: 'Track your favorite Pakistani dramas',\n  icons: {\n    icon: '/icon.png',\n    apple: '/icon.png',\n  },\n};\n\nimport { UserProvider } from '@/"
+      },
+      "app/globals.css": {
+        "branch": "main",
+        "size": 202,
+        "lines": 7,
+        "first_500": "@import \"tailwindcss\";\n\n@theme {\n  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;\n  --font-serif: var(--font-serif), ui-serif, Georgia, Cambria, \"Times New Roman\", Times, serif;\n}\n"
+      }
+    },
+    "top_level_listed": [
+      ".env.example",
+      ".eslintrc.json",
+      ".gitignore",
+      "README.md",
+      "WebProgramming_ProjectRubrics.md",
+      "app",
+      "components",
+      "context",
+      "drama-ghar-streaming-included",
+      "eslint.config.mjs",
+      "generate-pages.js",
+      "hooks",
+      "lib",
+      "metadata.json",
+      "middleware.ts",
+      "models",
+      "next-env.d.ts",
+      "next.config.ts",
+      "package-lock.json",
+      "package.json",
+      "postcss.config.mjs",
+      "public",
+      "replace-colors-2.cjs",
+      "replace-colors.cjs",
+      "scripts",
+      "tsconfig.json"
+    ]
+  },
+  "gcr-resources-fetch": {
+    "name": "gcr-resources-fetch",
+    "files": {
+      "README.md": {
+        "branch": "main",
+        "size": 17233,
+        "lines": 324,
+        "first_500": "# GCR Fetch \u2014 Google Classroom Resource Downloader\n\n<p align=\"center\">\n  <strong>Bulk-download every resource from a Google Classroom course as a single ZIP archive.</strong>\n</p>\n\n<p align=\"center\">\n  <a href=\"#install\"><strong>\ud83d\ude80 Quick Install Guide (For Users)</strong></a> &nbsp;\u2022&nbsp; \n  <a href=\"#dev-setup\"><strong>\ud83d\udee0\ufe0f Developer Setup & Self-Hosting</strong></a>\n</p>\n\n---\n\n## The Problem\n\nIf you've ever used Google Classroom during exam season, you know the pain. Teachers share resources \u2014 P"
+      },
+      "manifest.json": {
+        "branch": "main",
+        "size": 1984,
+        "lines": 72,
+        "first_500": "{\n  \"manifest_version\": 3,\n  \"key\": \"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArL/MfpLnzPLMyjgVNDi1a6ms7kl8tMpLoZQLWvvr82ycD5woIzCDDDuQIH4jDATF7eBcwsD6AXMBwFBx9mSDzrROlPnj3wxyrEN5AbR3tTWo9ZwC1Zuz6X35DeE0bOyTM5wnMh5uzhAx4tKOO3D5fh0/dyrfxLUzBytmAOotFLFBlUw4newZk5snevNjsJdoX48fSA8HbVGkFyZtwzcvjh78ul04aF0EgwuWhZVkSqZeNfdV9r830oofD3XqNiF4C4Bq4HA/YNRrN94gsXUM6kz8Gk9lqIPyz4goWEi10ymdS6br3+na3caKq+OHBFlgN+eljWwefOIVfpqisHbxfQIDAQAB\",\n  \"browser_specific_settings\": {\n    \"gecko\": {\n      \"id\": \"gcr-fet"
+      },
+      "background.js": {
+        "branch": "main",
+        "size": 11541,
+        "lines": 367,
+        "first_500": "/**\n * GCR Fetch \u2014 background.js (MV3 Service Worker)\n *\n * Handles OAuth 2.0 authentication using chrome.identity.launchWebAuthFlow.\n * This works with ANY Google account regardless of the Chrome browser profile.\n *\n * Flow:\n *  1. LAUNCH_AUTH_FLOW  \u2192 opens Google consent popup \u2192 gets auth code\n *                       \u2192 sends code to Vercel backend \u2192 gets tokens\n *                       \u2192 stores tokens in chrome.storage.local\n *  2. GET_AUTH_TOKEN    \u2192 returns a valid access token (refreshing "
+      },
+      "content.js": {
+        "branch": "main",
+        "size": 19272,
+        "lines": 611,
+        "first_500": "/**\n * GCR Fetch \u2014 content.js\n *\n * Injected into every classroom.google.com page.\n * Responsibilities:\n *  1. Detect which tab is active (Stream vs Classwork).\n *  2. Inject the \"\u2b07 GCR Fetch\" floating button into the page.\n *  3. Create the sidebar iframe and handle open/close toggling.\n *  4. Relay messages between the sidebar iframe and background.js.\n *\n * Security:\n *  - No innerHTML / outerHTML used. All DOM manipulation uses\n *    createElement, setAttribute, textContent, appendChild.\n * "
+      },
+      "LICENSE": {
+        "branch": "main",
+        "size": 1076,
+        "lines": 22,
+        "first_500": "MIT License\n\nCopyright (c) 2026 Muhammad Ammar Asad\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above cop"
+      }
+    },
+    "top_level_listed": [
+      ".gitignore",
+      "LICENSE",
+      "README.md",
+      "background.js",
+      "content.js",
+      "gcr-fetch-backend",
+      "icons",
+      "lib",
+      "manifest.json",
+      "sidebar"
+    ]
+  },
+  "WayFinder": {
+    "name": "WayFinder",
+    "files": {},
+    "top_level_listed": [
+      ".gitignore",
+      "wayfinder-app"
+    ]
+  }
+}

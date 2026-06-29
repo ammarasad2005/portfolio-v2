@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "(1) **Layout**: Projects are displayed as full-width cards (one per view, with a left-side visual panel + right-side text).  \n(2) **Info per project**: Title (e.g., \"Keythym\"), description (bulleted features), and tech tags (e.g., Next.js, React, TypeScript).  \n(3) **Tech tags**: Small, rounded rectangles with dark backgrounds and light text (e.g., \"NEXT.JS\" in a black box with white text).  \n(4) **Hover/interaction**: A right-facing arrow on the project card suggests interactivity (likely links to project details).  \n(5) **Section heading**: \"Curated work\" with \"Curated\" in white and \"work\" in purple, centered above the projects.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1782764726,
+  "id": "20260630042522ea78bc696d334fee",
+  "model": "glm-4.6v",
+  "object": "chat.completion",
+  "request_id": "20260630042522ea78bc696d334fee",
+  "usage": {
+    "completion_tokens": 165,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 1428,
+    "prompt_tokens_details": {
+      "cached_tokens": 7
+    },
+    "total_tokens": 1593
+  }
+}

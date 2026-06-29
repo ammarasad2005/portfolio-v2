@@ -1,0 +1,540 @@
+     1→---
+     2→Task ID: RESEARCH-A
+     3→Agent: GitHub Analyst
+     4→Task: Deep analysis of GitHub profile ammarasad2005
+     5→
+     6→Work Log:
+     7→- Checked for existing worklog.md (none existed) and inspected /home/z/my-project/ — found an in-progress Next.js portfolio project with prisma, src/, and scripts/ dirs.
+     8→- Attempted GitHub REST API (api.github.com/users/ammarasad2005) — got HTTP 429 rate-limit. Switched strategy to HTML scraping + raw.githubusercontent + per-repo atom feeds.
+     9→- Wrote /home/z/my-project/scripts/fetch_profile.py — fetched profile page (250KB), repos tab (282KB), stars tab (229KB). Extracted 30 candidate repository names via href regex.
+    10→- Wrote /home/z/my-project/scripts/fetch_repos.py — fetched each repo's HTML page, README (trying main/master branches), and package.json in parallel (8 workers). Saved to /home/z/my-project/research/repos/. Result: 30 repos, 19 with READMEs, 18 with package.json.
+    11→- Wrote /home/z/my-project/scripts/parse_repos2.py — parsed each repo HTML with BeautifulSoup to extract: description, language breakdown (from `<li>` items with X.X% pattern), stars, forks, commit count, topics, top-level files, README quality score (1-5), and package.json contents. Fetched per-repo atom feed (https://github.com/ammarasad2005/REPO/commits.atom) in parallel to get last-commit ISO timestamps and recent commit messages.
+    12→- Wrote /home/z/my-project/scripts/deep_dive.py — for the 4 resume projects (Exam-Table, WayFinder, gcr-resources-fetch, Drama-Ghar), fetched 30+ candidate source files (App.tsx, layout.tsx, manifest.json, background.js, content.js, etc.). Saved to /home/z/my-project/research/deep_dive/.
+    13→- Discovered WayFinder's default branch is `master` (not `main`) and the app lives in a `wayfinder-app/` subdirectory. Re-fetched all WayFinder files with correct paths.
+    14→- Manually inspected source code of key files: WayFinder's next.config.ts (full security headers + CSP!), gcr-resources-fetch's background.js (OAuth 2.0 flow + Vercel backend proxy), Exam-Table's Navbar.tsx (Framer Motion stage-light animation, theme-aware gradients).
+    15→- Fetched the profile README (ammarasad2005/ammarasad2005/README.md) — 9.5KB, infographic-style with capsule-render header, typing-svg, tech-stack badges, featured-projects table, GitHub stats cards, achievements table.
+    16→- Fetched GitHub Actions workflow files for Exam-Table (.github/workflows/update-timetable.yml + update-events.yml) — confirmed hourly + weekly cron pipelines with Python data scraping, Supabase/Google Sheets/Groq API integration, auto-commit-with-secrets.
+    17→- Verified Algo-Visualizer also has CI/CD (ci.yml) — typecheck + multi-workspace setup (client + server) + ghcr.io container registry.
+    18→- Fetched portfolio repo README — confirmed it's the in-progress 3D observatory portfolio (Next.js 16, React Three Fiber, GSAP) we are helping build.
+    19→- Aggregated language stats across all 30 repos: TypeScript 49.6%, JavaScript 25%, Python 9.5%, CSS 6.9%, C++ 4%, HTML 4.3%. Aggregated top npm dependencies (react, react-dom, lucide-react, next, zod, react-hook-form, full Radix UI suite, supabase, recharts).
+    20→
+    21→Stage Summary:
+    22→
+    23→# Deep Analysis: GitHub Profile `ammarasad2005`
+    24→
+    25→## 1. Profile Overview
+    26→
+    27→| Field | Value |
+    28→|---|---|
+    29→| **Display name** | Muhammad Ammar Asad |
+    30→| **Handle** | `ammarasad2005` |
+    31→| **Bio** | 🎓 BS Computer Science \| FAST-NUCES Islamabad ('23–'27) · Full Stack Developer · 🔍 Passionate about coding & problem-solving |
+    32→| **Location** | Islamabad, Pakistan |
+    33→| **Email** | ammarasad321993@gmail.com |
+    34→| **LinkedIn** | linkedin.com/in/muhammad-ammar-asad |
+    35→| **X / Twitter** | @ammarasad321993 |
+    36→| **Followers** | 3 (per self-published badge on profile README) |
+    37→| **Public repos** | 30 |
+    38→| **Tagline** | *"Problem First · Code Second · Ship Always"* |
+    39→| **Self-described focus** | Full-stack web, Chrome extensions, LLM-integrated systems, agentic architectures |
+    40→
+    41→**Profile README** (`ammarasad2005/ammarasad2005` repo): A polished infographic-style README using `capsule-render` (animated SVG header with emerald-blue-brown gradient palette), `readme-typing-svg`, animated `divider.svg` and `domains.svg` images, categorized tech-stack badges, a "Featured Projects" table, and GitHub stats/streak/activity-graph cards. Includes an Achievements table.
+    42→
+    43→**GitHub Achievements (badges)**:
+    44→- 🏆 Pair Extraordinaire — co-authored PRs across repositories
+    45→- 🦈 Pull Shark — active pull-request contributor
+    46→- 🚀 YOLO — shipped a PR straight to main
+    47→
+    48→**Hackathons / Participations** (per profile README):
+    49→- 🤖 **Google Antigravity Hackathon** — Islamabad regional, Challenge 2: AI Service Orchestrator for Informal Economy (2,668+ registrations, PKR 2.5M prize pool, Google for Developers + MoITT Pakistan)
+    50→- 🧠 Promptopia 2.0 — Prompt Engineering Competition, GDGoC FAST Islamabad (Nov 2025)
+    51→- 📐 FPSC Problem Solving — FAST NUCES Islamabad (Nov 2025)
+    52→
+    53→**Pinned repos** (GitHub UI): Algo-Visualizer, Exam-Table, faculty-review, gcr-contacts. Note: these do **not** match the resume's Top-4 — the pinned set should be re-aligned to match the portfolio.
+    54→
+    55→**Contribution graph**: Static HTML does not embed contribution counts (loaded via XHR). The Atom feeds confirm very recent, daily activity: commits on 2026-06-29 (today) across portfolio + Exam-Table, 2026-06-28 on hamara-rozgar, 2026-06-23 on glucoguard-plus. Active streak confirmed.
+    56→
+    57→---
+    58→
+    59→## 2. Repository Inventory (30 repos)
+    60→
+    61→Sorted by last commit (most recent first). README quality scored 1–5 (0 = no README).
+    62→
+    63→| # | Repo | Primary Lang | ★ | Forks | Commits | Last Commit | README Q | Topics / Notes |
+    64→|---|---|---|---|---|---|---|---|---|
+    65→| 1 | Exam-Table | TypeScript | 0 | 0 | 376 | 2026-06-29 | 5 | Flagship; CI/CD; 14 features |
+    66→| 2 | portfolio | TypeScript | 0 | 0 | 6 | 2026-06-29 | 5 | In-progress 3D observatory portfolio |
+    67→| 3 | hamara-rozgar | JavaScript | 0 | 0 | 139 | 2026-06-28 | 5 | Multi-agent AI marketplace (Hackathon) |
+    68→| 4 | glucoguard-plus | Python | 0 | 0 | 7 | 2026-06-23 | 4 | Health/Python |
+    69→| 5 | Internship-Finder | TypeScript | 0 | 0 | 53 | 2026-06-21 | 4 | Job-scraper tool |
+    70→| 6 | identifiedpen | Python | 0 | 0 | 1 | 2026-06-20 | 0 | Single commit; placeholder |
+    71→| 7 | WayFinder | TypeScript | 0 | 0 | 5 | 2026-06-10 | 0 | Default README; real codebase in `wayfinder-app/` |
+    72→| 8 | ammarasad2005 | — | 0 | 0 | 7 | 2026-06-07 | 4 | Profile README repo |
+    73→| 9 | gcr-contacts | JavaScript | 0 | 0 | 7 | 2026-06-07 | 4 | Default README; sophisticated 5-step pipeline |
+    74→| 10 | gcr-resources-fetch | JavaScript | 3 | 0 | 32 | 2026-06-06 | 5 | **Most stars**; Chrome MV3; OAuth |
+    75→| 11 | fast-utilities-android | TypeScript | 0 | 0 | 295 | 2026-05-25 | 5 | Android port of Exam-Table |
+    76→| 12 | faculty-review | TypeScript | 0 | 0 | 57 | 2026-05-22 | 5 | Pinned; 240+ faculty, 9 depts |
+    77→| 13 | Drama-Ghar | TypeScript | 1 | 0 | 32 | 2026-05-20 | 5 | Next.js 15 + React 19; RBAC; co-built |
+    78→| 14 | cric-view | JavaScript | 0 | 0 | 3 | 2026-05-05 | 0 | Small; no README |
+    79→| 15 | barakah-homes | — | 0 | 0 | 1 | 2026-04-29 | 0 | Single commit; placeholder |
+    80→| 16 | nextjs-auth-system | TypeScript | 0 | 0 | 2 | 2026-04-21 | 5 | Auth reference repo |
+    81→| 17 | claude-code | TypeScript | 0 | 0 | 12 | 2026-04-02 | 5 | Tooling experiments |
+    82→| 18 | TASK-05-WEB | TypeScript | 0 | 0 | 6 | 2026-03-30 | 4 | Course assignment |
+    83→| 19 | login-system | JavaScript | 0 | 0 | 6 | 2026-03-06 | 0 | No README |
+    84→| 20 | Web-Dev-Task-03 | JavaScript | 0 | 0 | 10 | 2026-03-06 | 2 | Course assignment |
+    85→| 21 | Algo-Visualizer | TypeScript | 0 | 0 | 7 | 2026-03-04 | 5 | Pinned; 18+ algorithms; has CI/CD |
+    86→| 22 | faculty-feedback-hub | TypeScript | 0 | 0 | 79 | 2026-02-22 | 5 | Earlier version of faculty review |
+    87→| 23 | web-viewer | TypeScript | 0 | 0 | 1 | 2026-02-21 | 0 | Single commit |
+    88→| 24 | Web-Programming-Assignment-01 | HTML | 0 | 0 | 15 | 2026-01-31 | 0 | Coursework |
+    89→| 25 | employee-management-system | TypeScript | 0 | 0 | 4 | 2026-01-28 | 5 | Small CRUD demo |
+    90→| 26 | FacultyTrackNReview | — | 0 | 0 | 1 | 2026-01-25 | 0 | Earlier/abandoned variant |
+    91→| 27 | GalaxyWarriors-SFMLGraphics | C++ | 0 | 0 | 36 | 2025-12-12 | 0 | C++ SFML game; no README |
+    92→| 28 | nextjs-geist-font-optimization | JavaScript | 0 | 0 | 64 | 2025-08-16 | 0 | Optimization research repo |
+    93→| 29 | ammarasadPersonal | — | 0 | 0 | 3 | 2025-08-08 | 2 | Older personal site |
+    94→| 30 | AnonymousFacultyReview | — | ? | ? | ? | (empty) | 0 | Empty/archived |
+    95→
+    96→**Totals**: 4 stars (3 on gcr-resources-fetch, 1 on Drama-Ghar), 0 forks across all repos, 1,251 total commits across the 29 measurable repos.
+    97→
+    98→---
+    99→
+   100→## 3. Top 4 Projects (Resume Projects) — Deep Dive
+   101→
+   102→### 3.1 Exam-Table — *"FAST Isb Utilities"*
+   103→
+   104→| Attribute | Value |
+   105→|---|---|
+   106→| **Repo** | github.com/ammarasad2005/Exam-Table |
+   107→| **Live demo** | https://fast-nuces.vercel.app/ |
+   108→| **Commits** | 376 (most of any repo) |
+   109→| **Last activity** | 2026-06-29 (today — actively shipped) |
+   110→| **README** | 830 lines / 37 KB — README quality 5/5 |
+   111→| **License** | MIT (has LICENSE file) |
+   112→| **Stars / Forks** | 0 / 0 |
+   113→
+   114→**Tech stack** (from `package.json`):
+   115→- Next.js 14 (App Router) + React 18 + TypeScript 5
+   116→- Supabase (PostgreSQL) + raw `pg` driver
+   117→- shadcn/ui pattern (25+ `@radix-ui/*` packages, `class-variance-authority`, `clsx`, `tailwind-merge`)
+   118→- react-hook-form + zod (form validation)
+   119→- framer-motion (animations), recharts (charts), embla-carousel, vaul (drawer), cmdk (command palette), sonner (toasts)
+   120→- xlsx + exceljs (Excel parsing), file-saver
+   121→- nodemailer + resend (transactional email)
+   122→- react-day-picker, next-themes (dark mode)
+   123→- Playwright (devDep — testing infra available)
+   124→
+   125→**Repository structure** (top-level): `src/app/`, `src/components/`, `src/lib/`, `public/`, `public/data/`, `scripts/` (Python), `.github/workflows/`, `all_courses_schedule.py`, `tailwind.config.ts`, `vercel.json`, `LICENSE`.
+   126→
+   127→**README quality**: Exceptional. Includes logo, live-demo badge, tech-stack badges, full TOC, "The Problem" framing, 14 feature sections with emojis, screenshots, "How It Works" with multiple workflow diagrams, "Tech Stack" section, "Project Structure" section, "Routes" section, "Getting Started" with prerequisites/installation, "Available Scripts", and a "Data Pipeline" section explaining exam/timetable pipelines.
+   128→
+   129→**Notable engineering patterns**:
+   130→- **CI/CD with cron**: Two GitHub Actions workflows.
+   131→  - `update-timetable.yml`: cron `'0 * * * *'` (hourly). Checks out repo with `MAIN_PUSH_TOKEN`, sets up Python 3.11, runs `scripts/run_parser.py` with secrets for `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `GOOGLE_SHEETS_API_KEY`, `GROQ_API_KEY`. Copies `timetable.json` to `public/data/`. Auto-commits only if data changed.
+   132→  - `update-events.yml`: cron `'0 6 * * * 1'` (weekly Monday 06:00 UTC). Scrapes SLATE (student portal) using `requests` + `beautifulsoup4` + `lxml`, uses GROQ for AI-assisted parsing, auto-commits `slate_calendar_events.json` + `student_events.json`.
+   133→- **Hybrid Python + TypeScript stack**: Python scripts scrape + parse; TypeScript serves Next.js frontend. Pre-build hook (`ts-node scripts/parse-excel.ts`) runs in `npm run dev` and `npm run prebuild`.
+   134→- **14 features** (per README): Timetable Viewer, Exam Schedule Finder, Custom Exams Builder, Custom Timetable Builder, **Timetable Optimizer** (clash-free section combinations), Free Rooms Finder, Faculty Directory, Campus Events Calendar, Semester Schedule, **Lost & Found** (AI-augmented), Configuration & Home Page, Dark Mode & Theming, Keyboard Shortcuts, Export Options.
+   135→- **Production-grade UX**: Custom typing animation intro, feature-card abstraction, framer-motion `layoutId="stage-light"` with spring physics on the desktop navbar (cone + beam lighting effect), theme-aware gradients (`bg-gradient-to-r from-amber-500/40 via-yellow-200/70 to-amber-500/40`), 100dvh mobile layouts.
+   136→- **Strong typing**: Custom type defs (`RawTimetableJSON`, `TimetableEntry`, `SummerCourseCatalogEntry`), `flattenTimetable` lib function, typed SVG icon components inline.
+   137→- **AI integration**: Groq API for parsing lost-and-found descriptions and event data.
+   138→- **Vercel deployment** with `vercel.json` + `@vercel/analytics`.
+   139→
+   140→**Strengths to highlight**:
+   141→- 376 commits over many months — sustained iteration.
+   142→- Real users (FAST NUCES Islamabad students — 4 batches, 11 departments).
+   143→- Production CI/CD with auto-data-pipeline.
+   144→- 14-feature scope shows product-thinking, not just coding.
+   145→- README is genuinely excellent — would impress any reviewer.
+   146→
+   147→**Weaknesses / gaps**:
+   148→- No test files visible despite Playwright in devDeps (no `__tests__/`, no `*.test.ts`).
+   149→- 0 stars — no virality / marketing.
+   150→- Heavy commit log of automated `chore: auto-update timetable.json` can dilute perceived human effort (worth explaining in portfolio).
+   151→- Default branch is `main` (good), but `next.config.js` is JS not TS (minor).
+   152→
+   153→---
+   154→
+   155→### 3.2 Drama-Ghar — *"DramaGhar"*
+   156→
+   157→| Attribute | Value |
+   158→|---|---|
+   159→| **Repo** | github.com/ammarasad2005/Drama-Ghar |
+   160→| **Live demo** | https://drama-ghar.vercel.app/ |
+   161→| **Commits** | 32 |
+   162→| **Last activity** | 2026-05-20 |
+   163→| **README** | 423 lines / 22 KB — quality 5/5 |
+   164→| **Co-built with** | Hanzlah Ch (https://github.com/HanzlahCh) |
+   165→| **Stars / Forks** | 1 / 0 |
+   166→
+   167→**Tech stack** (from `package.json`):
+   168→- Next.js 15 (App Router + API Routes) + React 19 + TypeScript 5.9
+   169→- MongoDB Atlas via Mongoose
+   170→- Supabase (cited in README for EPG data)
+   171→- bcryptjs (password hashing), jose (JWT signing/verifying) — proper auth crypto
+   172→- @google/genai (Google Gemini SDK) — AI integration
+   173→- react-hook-form + zod, react-youtube (video embedding)
+   174→- nodemailer (transactional email), date-fns + date-fns-tz (timezone-aware scheduling)
+   175→- Tailwind CSS 4.1, tw-animate-css, motion (animations)
+   176→- @radix-ui dialog/separator/slot/tabs (subset of shadcn/ui)
+   177→- firebase-tools (devDep — possibly used for hosting experiments)
+   178→
+   179→**Repository structure** (top-level): `app/` (App Router pages + API routes), `components/`, `lib/`, `models/` (Mongoose schemas), `public/`, `next.config.ts`, `tsconfig.json`. 26 top-level entries.
+   180→
+   181→**README quality**: Very detailed. Includes contributors, TOC, full "Project Overview", Tech Stack table, "System Architecture" section, **"Feature Breakdown & Self-Evaluation"** with 11 sub-criteria scored (Functionality 25/25, Password Encryption 20/20, RBAC 25/25, Form Validation 15/15, etc.) — suggests this was a graded course project. Includes Database Models, API Routes, Pages & Screens, Technical Setup, and a Self-Evaluation Summary Table.
+   182→
+   183→**Notable engineering patterns**:
+   184→- **RBAC**: Three roles (user / admin / guest) with explicit role-based access control on admin dashboard, content management, account management. README explicitly calls out RBAC scoring.
+   185→- **Password encryption**: bcryptjs with proper salt rounds.
+   186→- **JWT session management**: jose library for signing/verifying JWTs.
+   187→- **Guest sessions**: Explicit "remember me" + social footer + guest name prompt (visible in commit log: `feat: implement guest session, explicit remember me, and social footer`).
+   188→- **200+ dramas catalog** across 7 channels (ARY Digital, HUM TV, Geo Entertainment, Green Entertainment, Express Entertainment, etc.).
+   189→- **Live EPG** (Electronic Program Guide) grid with auto-scroll to current time.
+   190→- **Watch analytics**: Per-episode progress tracking + today/weekly/lifetime watch-time in hours.
+   191→- **YouTube streaming**: react-youtube for embedded playback.
+   192→- **Timezone-aware scheduling**: date-fns-tz for PKT (Asia/Karachi) handling.
+   193→- **Self-evaluation section** in README — academic framing with rubric.
+   194→
+   195→**Strengths to highlight**:
+   196→- Most modern stack of any resume project (Next.js 15 + React 19 + Tailwind 4).
+   197→- Full-stack depth: auth + RBAC + crypto + DB + AI + email + timezone.
+   198→- Clear collaborative provenance (co-built with Hanzlah Ch — shows teamwork).
+   199→- README doubles as both documentation and a graded self-evaluation (good talking point).
+   200→
+   201→**Weaknesses / gaps**:
+   202→- **Last commit message is literally "Final Commit"** (2026-05-20) — suggests project may be paused/abandoned. Worth re-engaging before portfolio launch.
+   203→- `package.json` `name` is `"ai-studio-applet"` (leftover from Google AI Studio scaffold) — should be renamed to `dramaghar`.
+   204→- Mongoose 9.6.2 in deps (this version doesn't exist publicly — likely a typo or preview; production Mongoose is at v8.x).
+   205→- 1 star only.
+   206→- No CI/CD, no tests.
+   207→
+   208→---
+   209→
+   210→### 3.3 gcr-resources-fetch — *"GCR Fetch"*
+   211→
+   212→| Attribute | Value |
+   213→|---|---|
+   214→| **Repo** | github.com/ammarasad2005/gcr-resources-fetch |
+   215→| **Live demo** | (No public landing — extension runs in-browser; backend at gcr-fetch-backend.vercel.app) |
+   216→| **Commits** | 32 |
+   217→| **Last activity** | 2026-06-06 (recently added Firefox support) |
+   218→| **README** | 324 lines / 17 KB — quality 5/5 |
+   219→| **License** | MIT |
+   220→| **Stars / Forks** | **3 / 0** (most stars of any repo) |
+   221→
+   222→**Tech stack**:
+   223→- Chrome Extension **Manifest V3** (vanilla JS, no build step)
+   224→- Cross-browser: Chrome + Firefox (`browser_specific_settings.gecko.id = "gcr-fetch@ammarasad.com"`, `strict_min_version: "109.0"`)
+   225→- OAuth 2.0 via `chrome.identity.launchWebAuthFlow`
+   226→- Vercel Serverless backend (`gcr-fetch-backend.vercel.app`) for token exchange — keeps `CLIENT_SECRET` server-side
+   227→- JSZip (vendored at `lib/jszip.min.js`)
+   228→- 8 Google API scopes (least-privilege: `classroom.courses.readonly`, `classroom.coursework.me.readonly`, `classroom.courseworkmaterials.readonly`, `classroom.announcements.readonly`, `drive.readonly`, `drive.file`, `email`, `profile`)
+   229→
+   230→**Repository structure** (top-level): `background.js` (367 lines, MV3 service worker), `content.js` (611 lines, injected on classroom.google.com), `manifest.json` (72 lines), `sidebar/sidebar.html` + `sidebar.css` + `sidebar.js`, `lib/fetcher.js`, `lib/zipper.js`, `lib/jszip.min.js`, `icons/`, `LICENSE`. 10 top-level entries.
+   231→
+   232→**README quality**: Excellent. Opens with a vivid "Problem" framing (the pain of manually downloading resources during exam season), "Quick Install Guide (For Users)" + "Developer Setup & Self-Hosting" split (audience-aware), "Overview" explaining the hybrid detection approach, "Key Features" table, "Hybrid Resource Detection" explanation, "External Resources Dashboard" (HTML generator feature), installation instructions, MIT license. Recently restructured (visible in commits: "docs: restructure installation instructions for users vs developers").
+   233→
+   234→**Notable engineering patterns**:
+   235→- **Hybrid resource detection**: Combines DOM scraping (finds visible resources) with Google Classroom API (finds hidden ones). This dual approach is a real engineering decision worth showcasing.
+   236→- **OAuth 2.0 done right**: `CLIENT_SECRET` never ships in the extension — it lives on the Vercel backend. Tokens stored in `chrome.storage.local` (sandboxed). 2-minute expiry buffer for proactive refresh. Detailed security comments in `background.js`:
+   237→  > "Security: CLIENT_SECRET never appears here — it lives on the Vercel backend only. Tokens are stored in chrome.storage.local (sandboxed to this extension). All API proxying enforces an HTTPS-only, Google-domain allowlist. No tokens are ever logged."
+   238→- **Message-router pattern** in `background.js`: Single `chrome.runtime.onMessage` listener dispatches to `GET_AUTH_TOKEN`, `LAUNCH_AUTH_FLOW`, `FETCH_WITH_AUTH`, `SIGN_OUT`, `GET_USER_INFO` handlers.
+   239→- **Cross-browser compatibility**: Firefox detection via `typeof browser !== 'undefined'` + User-Agent, different `REDIRECT_URI` for Firefox (`http://127.0.0.1/mozoauth2/...`) vs Chrome (`https://${EXTENSION_ID}.chromiumapp.org`).
+   240→- **External Resources Dashboard**: Generates a polished interactive HTML file (with search/filter/copy) included in the ZIP for non-downloadable resources (YouTube links, Forms, Drive folders, external URLs). This is a delightful UX touch.
+   241→- **Web-accessible-resources** scoped to `classroom.google.com/*` only.
+   242→- **Recent commits show active maintenance**: "Add Firefox extension support", "Improve CORS handling and Firefox browser detection", "Add Vercel backend URL to manifest host_permissions", "Fix SyntaxError by removing duplicate origin declaration in backend" (all 2026-06-06).
+   243→
+   244→**Strengths to highlight**:
+   245→- **Most popular repo** (3 stars — small but meaningful).
+   246→- Production MV3 extension with proper OAuth — a niche, hard-to-fake skill.
+   247→- Cross-browser (Chrome + Firefox) is rare among students.
+   248→- Excellent README that frames the user pain vividly.
+   249→- Security-first design with backend proxy pattern.
+   250→- Active recent maintenance.
+   251→
+   252→**Weaknesses / gaps**:
+   253→- No tests.
+   254→- No CI/CD.
+   255→- Vanilla JS (no TypeScript) — slightly inconsistent with the rest of his TypeScript-heavy portfolio.
+   256→- 3 stars is still very low — could be marketed more.
+   257→
+   258→---
+   259→
+   260→### 3.4 WayFinder — *"Wayfinder"*
+   261→
+   262→| Attribute | Value |
+   263→|---|---|
+   264→| **Repo** | github.com/ammarasad2005/WayFinder |
+   265→| **Live demo** | https://wayfinder-app-gray.vercel.app/ |
+   266→| **Commits** | 5 |
+   267→| **Last activity** | 2026-06-10 |
+   268→| **README** | **Default `create-next-app` boilerplate (37 lines, 1.4 KB) — quality 0/5** |
+   269→| **Stars / Forks** | 0 / 0 |
+   270→
+   271→**Tech stack** (from `package.json` at `wayfinder-app/package.json`):
+   272→- **Next.js 16.2.7** (most recent Next.js version of any repo) + React 19.2.4 + TypeScript 5
+   273→- **next-auth** (`^4.24.14`) — full authentication
+   274→- **@upstash/redis** (`^1.38.0`) — serverless Redis for caching/rate-limiting
+   275→- **rate-limiter-flexible** (`^11.2.0`) — production rate limiting
+   276→- Minimal dependencies otherwise — very lean codebase
+   277→
+   278→**Repository structure** (under `wayfinder-app/`): `app/` (with `api/`, `home/`, `place/`, `profile/`, `saved/`, `providers.tsx`, `layout.tsx`, `page.tsx`, `globals.css`), `components/` (BottomNav, MapEmbed, PlaceCard, SearchBar, WelcomeScreen — each with co-located `.module.css`), `lib/` (`google-maps.ts`, `storage.ts`, `yango-handoff.ts`), `next.config.ts`, `tsconfig.json`, `eslint.config.mjs`. 11 top-level entries.
+   279→
+   280→**README quality**: **CRITICAL GAP** — the README is the unmodified `create-next-app` boilerplate ("This is a Next.js project bootstrapped with create-next-app… Open http://localhost:3000…"). **Must be replaced before portfolio launch.**
+   281→
+   282→**Notable engineering patterns** (read directly from source):
+   283→- **Security headers in `next.config.ts`** — comprehensive and production-grade:
+   284→  - `X-Frame-Options: DENY` (clickjacking)
+   285→  - `X-Content-Type-Options: nosniff` (MIME sniffing)
+   286→  - `Referrer-Policy: strict-origin-when-cross-origin`
+   287→  - `Permissions-Policy: camera=(), microphone=(), payment=(), usb=()` (with note: "geolocation intentionally omitted — we use it on the client")
+   288→  - `Strict-Transport-Security: max-age=63072000; includeSubDomains; preload` (HSTS)
+   289→  - **Full Content-Security-Policy** with explicit allowlists per directive (`default-src`, `script-src`, `style-src`, `font-src`, `img-src`, `connect-src`, `frame-src`, `frame-ancestors 'none'`, `object-src 'none'`, `base-uri 'self'`)
+   290→  - Thoughtful inline comments: *"TODO(security): Tighten nonce-based CSP before production launch. Maps JS API requires unsafe-eval for its runtime; this is a known Google Maps limitation."*
+   291→  - This is **the most security-conscious code in his entire portfolio**.
+   292→- **NextAuth.js session management** with proper loading states.
+   293→- **First-visit onboarding flow**: `hasVisited()` + `markVisited()` localStorage helpers gate a `WelcomeScreen` for first-time visitors; returning guests go straight to `/home`.
+   294→- **Mobile-first UX**: `100dvh` (dynamic viewport height), BottomNav with co-located CSS modules, `viewport.maximumScale: 1, userScalable: false` (prevents zoom on mobile).
+   295→- **Theming via CSS custom properties**: `var(--surface-0)` for dark mode.
+   296→- **Yango ride-hailing deep-link integration** (`lib/yango-handoff.ts`) — Pakistan-specific ride-hailing service. Commit log shows careful param alignment: `"feat(yango): align redirect URL parameters and fallback with official…"`, `"fix: omit starting coordinates in Yango deep link to prevent tariff l…"` (interesting — omitting start coords to prevent tariff leakage).
+   297→- **Google Maps intelligence** (`lib/google-maps.ts`) — places photo proxy, static map fallback, profile photos.
+   298→- **OpenGraph + metadata** with proper title/description/keywords/authors/icons.
+   299→- **Skeleton loading** with themed dark surface.
+   300→- **PR-based workflow**: Commit log shows "Merge pull request #1 from ammarasad2005/main" — proper Git Flow even on a solo project.
+   301→
+   302→**Strengths to highlight**:
+   303→- **Bleeding-edge stack**: Next.js 16 + React 19.
+   304→- **Security-first mindset** — the CSP/HSTS/Permissions-Policy block is genuinely impressive and rare for a student.
+   305→- **Pakistan-specific product thinking**: Yango + Google Maps integration for Islamabad.
+   306→- **Mobile-first**: dynamic viewport, bottom nav, no-zoom.
+   307→- **Lean dependencies** — no bloat.
+   308→
+   309→**Weaknesses / gaps**:
+   310→- **README is unchanged from `create-next-app`** — must be fixed. This is the #1 portfolio blocker for WayFinder.
+   311→- Only 5 commits — the codebase exists but is thin.
+   312→- The actual app code lives in a `wayfinder-app/` subdirectory of the repo (the root has only `.gitignore` + `wayfinder-app/`) — confusing repo structure.
+   313→- Default branch is `master` (inconsistent with his other repos on `main`).
+   314→- No tests, no CI/CD.
+   315→- 0 stars.
+   316→
+   317→---
+   318→
+   319→## 4. Coding Style & Patterns
+   320→
+   321→**Language usage** (aggregated across 30 repos, weighted by per-repo %):
+   322→- TypeScript 49.6% (in 15 repos)
+   323→- JavaScript 25.0% (in 15 repos)
+   324→- Python 9.5% (in 6 repos)
+   325→- CSS 6.9% (in 19 repos)
+   326→- HTML 4.3% (in 6 repos)
+   327→- C++ 4.0% (in 1 repo — GalaxyWarriors-SFMLGraphics)
+   328→- PLpgSQL 0.5% (in 2 repos — Supabase functions)
+   329→
+   330→**File naming conventions**:
+   331→- Components: PascalCase (`Navbar.tsx`, `Header.tsx`, `PlaceCard.tsx`, `WelcomeScreen.tsx`)
+   332→- Routes (Next.js App Router): `page.tsx` / `layout.tsx` / `route.ts` (kebab-case dirs)
+   333→- Lib modules: kebab-case (`google-maps.ts`, `timetable-filter.ts`, `yango-handoff.ts`)
+   334→- Styles: co-located CSS Modules (`PlaceCard.module.css`) — WayFinder uses these; Exam-Table and Drama-Ghar use Tailwind exclusively
+   335→- Python scripts: snake_case (`run_parser.py`, `scrape_slate.py`, `parse-excel.ts` mixed)
+   336→
+   337→**Component structure**:
+   338→- shadcn/ui pattern is dominant — 25+ `@radix-ui/*` packages + `class-variance-authority` + `clsx` + `tailwind-merge` appear consistently
+   339→- `'use client'` directive used correctly at the top of interactive components (verified in WayFinder `app/page.tsx` and Exam-Table `src/components/Navbar.tsx`)
+   340→- Context providers: `UserProvider` (Drama-Ghar), `Providers` (WayFinder)
+   341→- Inline SVG icons in some places (Exam-Table feature cards), `lucide-react` in others
+   342→
+   343→**Comments quality**:
+   344→- WayFinder's `next.config.ts` has the best comments — inline security rationale + TODO notes
+   345→- gcr-resources-fetch's `background.js` has a multi-paragraph header comment explaining the auth flow + security model
+   346→- hamara-rozgar's README has Mermaid diagrams + LaTeX math for the utility function
+   347→- Otherwise, code comments are sparse — most logic is self-documenting via TypeScript types
+   348→
+   349→**Testing presence**: **Effectively none.**
+   350→- Exam-Table has `playwright` in devDependencies but no `__tests__/` or `*.spec.ts` files visible
+   351→- No `jest`, `vitest`, `@testing-library` in any repo's deps
+   352→- No `test` script in any package.json (only `dev`, `build`, `start`, `lint`)
+   353→- **This is a portfolio-wide gap.**
+   354→
+   355→**CI/CD presence** (`.github/workflows/`):
+   356→- ✅ **Exam-Table**: 2 workflows (`update-timetable.yml` hourly cron, `update-events.yml` weekly cron) — both with Python data pipelines + auto-commit
+   357→- ✅ **Algo-Visualizer**: 1 workflow (`ci.yml`) — typecheck + multi-workspace (client + server) + ghcr.io container registry
+   358→- ❌ All other repos have no workflows
+   359→
+   360→**Commit message quality**:
+   361→- Mostly conventional commits (`feat:`, `fix:`, `chore:`, `docs:`, `refactor:`, `init:`)
+   362→- Scope tags used (`feat(yango):`, `fix: enable scrolling...`)
+   363→- Some repos have automated bulk commits that dilute signal (Exam-Table's `chore: auto-update timetable.json` × 100+; hamara-rozgar's `chore: incremental update of scraped local businesses` × many)
+   364→- Drama-Ghar ends with a literal `"Final Commit"` — concerning
+   365→- gcr-contacts has the highest-quality recent commit messages ("fix: coverage-score tie-breaking + discard unresolvable GCR teachers", "fix: two-pass matching to correctly handle multi-batch course offerings") — shows real algorithmic problem-solving
+   366→
+   367→---
+   368→
+   369→## 5. Technology Trends (ranked by frequency × recency)
+   370→
+   371→### Languages
+   372→| Rank | Language | Frequency | Recency |
+   373→|---|---|---|---|
+   374→| 1 | TypeScript | 15 repos, 49.6% of code | Today (portfolio, Exam-Table) |
+   375→| 2 | JavaScript | 15 repos, 25.0% | Today (hamara-rozgar, gcr-contacts) |
+   376→| 3 | Python | 6 repos, 9.5% | Today (Exam-Table data pipeline) |
+   377→| 4 | CSS | 19 repos, 6.9% | Today |
+   378→| 5 | C++ | 1 repo, 4.0% | Dec 2025 (GalaxyWarriors) |
+   379→| 6 | HTML | 6 repos, 4.3% | Jan 2026 (coursework) |
+   380→
+   381→### Frontend frameworks
+   382→| Framework | Versions in use | Recency |
+   383→|---|---|---|
+   384→| **Next.js** | 14 (Exam-Table), 15 (Drama-Ghar), 16 (WayFinder, gcr-contacts, portfolio) | Today — clearly his primary framework, on the bleeding edge |
+   385→| **Vite** | Used in hamara-rozgar (service-orchestrator) | June 2026 |
+   386→| **React** | 18 (Exam-Table), 19 (Drama-Ghar, WayFinder, hamara-rozgar, gcr-contacts, portfolio) | Today — adopting React 19 across new work |
+   387→
+   388→### UI / Styling
+   389→- Tailwind CSS (3 and 4 — migrating to 4)
+   390→- shadcn/ui pattern (Radix UI primitives + CVA + clsx + tailwind-merge)
+   391→- framer-motion / motion for animations
+   392→- lucide-react for icons
+   393→- CSS Modules (WayFinder)
+   394→- recharts for data viz
+   395→
+   396→### Backend / Databases
+   397→- **Supabase** (PostgreSQL) — 6 repos, primary DB
+   398→- **MongoDB Atlas** via Mongoose — Drama-Ghar
+   399→- **Upstash Redis** — WayFinder (caching + rate limit)
+   400→- raw `pg` driver — Exam-Table
+   401→- Next.js API Routes / Route Handlers (serverless)
+   402→
+   403→### Auth
+   404→- **NextAuth.js** — WayFinder
+   405→- **OAuth 2.0** (Google, via chrome.identity) — gcr-resources-fetch
+   406→- **bcryptjs + jose (JWT)** — Drama-Ghar
+   407→- Custom email/password with sessions — faculty-review
+   408→
+   409→### AI / LLM
+   410→- **Google Gemini** (@google/genai) — Drama-Ghar
+   411→- **Groq** — Exam-Table (data pipeline), hamara-rozgar
+   412→- **OpenAI** — listed in profile README
+   413→- **GitHub Models API** (OpenAI-compatible) — hamara-rozgar
+   414→- **Ollama** (local LLM) — hamara-rozgar
+   415→- **Multi-LLM orchestration with auto-failover** — hamara-rozgar (Ollama → Groq → GitHub Models → regex fallback)
+   416→
+   417→### DevOps / Tooling
+   418→- **GitHub Actions** — Exam-Table (cron pipelines), Algo-Visualizer (CI typecheck + ghcr.io)
+   419→- **Vercel** — deployment for nearly all web apps
+   420→- **Capacitor** — hamara-rozgar (Android APK)
+   421→- **Docker** — listed in profile README; Algo-Visualizer ships to ghcr.io
+   422→
+   423→---
+   424→
+   425→## 6. Hidden Strengths (not on resume, worth showcasing)
+   426→
+   427→### 6.1 hamara-rozgar — *Multi-Agent AI Marketplace Orchestrator* 🏆
+   428→**This is the single biggest hidden strength.** Built for the Google Antigravity Hackathon (Challenge 2: AI Service Orchestrator for Informal Economy). 139 commits, last activity 2026-06-28 (yesterday).
+   429→
+   430→- **5 cooperative micro-agents** (Mermaid-diagrammed in README):
+   431→  1. **IntentAgent** — multilingual parsing (English / formal Urdu / Roman Urdu) with selectable LLM engines: Local Slang Parser (regex), Ollama (self-hosted), Groq Cloud, GitHub Models API, with **auto-failover chain**. Multi-turn context memory.
+   432→  2. **DiscoveryAgent** — OpenStreetMap Nominatim geocoding + **6-factor utility function** with explicit weights: $U = (d × 0.25) + (R × 0.20) + (L × 0.20) + (P × 0.15) + (C × 0.10) + (S × 0.10)$ where d=distance, R=rating, L=reliability, P=price match, C=cancellation rate, S=sector matching.
+   433→  3. **PricingAgent** — base rate + travel allowance (50 PKR/km) + urgency surcharge (+30%) + surge surplus (+15%) + loyalty discount (-10%).
+   434→  4. **BookingAgent** — Supabase Cloud REST sync with localStorage offline fallback (sub-250KB footprint, zero SDK bloat).
+   435→  5. **DisputeAgent** — self-healing: intercepts cancellations, re-assigns to next-best provider, issues 150 PKR voucher credit.
+   436→- **"100% Evacuated from Google Cloud"** — fully offline-capable using OSM/Supabase/Ollama/Groq/GitHub Models. This is a principled architectural decision worth highlighting.
+   437→- **Capacitor APK** — Android build available.
+   438→- React 19 + Vite + lucide-react only (lean frontend).
+   439→- This project demonstrates **agentic AI architecture** — the very thing his profile README says he's "most actively building toward." It should be on the portfolio front page.
+   440→
+   441→### 6.2 gcr-contacts — *5-Step Cascading Email Resolver*
+   442→Next.js 16 + React 19 + JavaScript + Google OAuth + Classroom API. 7 commits, last 2026-06-07. Default README (bothersome) but the commit log reveals real algorithmic work:
+   443→- "feat: integrate TA/LD allocation sheet as Step 0 of email resolution"
+   444→- "fix: two-pass matching to correctly handle multi-batch course offerings"
+   445→- "fix: coverage-score tie-breaking + discard unresolvable GCR teachers"
+   446→- "fix: Step 0 TA sheet check must run for ALL GCR teachers, not just local"
+   447→- "fix: fetch both TASheet and LDSheet tabs (not just TASheet)"
+   448→
+   449→5-step cascading pipeline with coverage-score tie-breaking and two-pass matching is non-trivial algorithmic engineering. **Needs a real README.** Domain-locked (NU FAST Islamabad only).
+   450→
+   451→### 6.3 Exam-Table CI/CD + Python Data Pipeline
+   452→The two GitHub Actions workflows (`update-timetable.yml` hourly, `update-events.yml` weekly) with Python scraping + AI parsing + auto-commit is a **production pattern** most students never demonstrate. Should be a centerpiece talking point: "I run a cron-driven data pipeline that scrapes the university portal, parses it with Python + Groq, and auto-deploys to Vercel every hour."
+   453→
+   454→### 6.4 WayFinder Security Headers
+   455→The `next.config.ts` block with full CSP, HSTS, Permissions-Policy, X-Frame-Options, Referrer-Policy — with thoughtful inline rationale comments — is **the single most security-mature code in his portfolio**. Most students don't know what CSP is, let alone write a per-directive allowlist with TODOs for nonce-based hardening. This deserves a dedicated callout even if WayFinder's README is incomplete.
+   456→
+   457→### 6.5 Algo-Visualizer — *EvoSearch Lab*
+   458→Pinned but not on resume. 18+ algorithms (Genetic Algorithms: OneMax, TSP, Function Optimization, Knapsack; Informed Search: A*, Greedy, IDA*, Weighted A*, Beam Search, Hill Climbing, Simulated Annealing). Step-by-step visualization, live metrics, fitness charts, diversity tracking. Has CI/CD (ci.yml with typecheck + multi-workspace + ghcr.io). MIT License. **Worth resurrecting as a portfolio piece** — shows CS fundamentals + educational tooling.
+   459→
+   460→### 6.6 Cross-Platform Breadth
+   461→He's shipped on **4 surfaces**:
+   462→- Web (Next.js — many)
+   463→- Chrome Extension MV3 (gcr-resources-fetch, with Firefox support)
+   464→- Android (hamara-rozgar via Capacitor, fast-utilities-android)
+   465→- Desktop game (GalaxyWarriors in C++/SFML — older but shows range)
+   466→
+   467→### 6.7 Hackathon Pedigree
+   468→Google Antigravity Hackathon (Islamabad regional — 2,668+ registrations, PKR 2.5M prize pool, Google for Developers + MoITT Pakistan) is a **real, citable credential**. Promptopia 2.0 and FPSC Problem Solving show local community engagement.
+   469→
+   470→### 6.8 GitHub Profile README Aesthetics
+   471→The `ammarasad2005/ammarasad2005` profile README (9.5KB) is genuinely well-designed: capsule-render animated SVG header, readme-typing-svg, categorized tech-stack badges, featured-projects table, GitHub stats/streak/activity-graph cards, achievements table, animated SVG dividers. He has design taste.
+   472→
+   473→---
+   474→
+   475→## 7. Gaps / Weaknesses (things to de-emphasize)
+   476→
+   477→| Gap | Severity | Recommendation |
+   478→|---|---|---|
+   479→| **No tests anywhere** | High | Add at least one Playwright E2E test to Exam-Table before portfolio launch; mention "testing in progress" |
+   480→| **CI/CD only on 2 repos** | Medium | Highlight the 2 that have it; don't claim org-wide CI/CD maturity |
+   481→| **WayFinder README is default boilerplate** | High (blocks portfolio) | Must replace before featuring WayFinder |
+   482→| **gcr-contacts README is default boilerplate** | Medium | Replace with real README that explains the 5-step pipeline |
+   483→| **Drama-Ghar's last commit is "Final Commit"** | Medium | Either re-engage (add a feature, fix a bug) or explicitly mark as "v1 — May 2025" in portfolio |
+   484→| **Several 1-commit placeholder repos** | Low | Hide from public view or delete: identifiedpen, barakah-homes, web-viewer, FacultyTrackNReview, AnonymousFacultyReview |
+   485→| **Several repos with no README** | Medium | WayFinder, identifiedpen, barakah-homes, cric-view, login-system, web-viewer, AnonymousFacultyReview, FacultyTrackNReview, GalaxyWarriors-SFMLGraphics, nextjs-geist-font-optimization, Web-Programming-Assignment-01 |
+   486→| **0–3 stars across all repos** | Low | Don't lead with social proof; lead with technical depth |
+   487→| **3 followers** | Low | Don't claim community influence; focus on shipped work |
+   488→| **Repo naming inconsistency** | Low | Multiple variants of faculty-review concept (faculty-review, faculty-feedback-hub, AnonymousFacultyReview, FacultyTrackNReview) — consolidate or hide the older ones |
+   489→| **Mongoose 9.6.2 in Drama-Ghar** | Low | Version doesn't exist publicly — verify and fix |
+   490→| **Drama-Ghar package.json name is "ai-studio-applet"** | Low | Rename to "dramaghar" |
+   491→| **WayFinder repo structure has app nested in `wayfinder-app/` subdir on `master` branch** | Low | Confusing for visitors — consider flattening |
+   492→| **Coursework repos mixed with serious projects** | Low | Web-Dev-Task-03, TASK-05-WEB, Web-Programming-Assignment-01, employee-management-system, login-system — consider archiving or starring only the serious ones |
+   493→| **Automated bulk commits dilute signal** | Low | Exam-Table (100+ `chore: auto-update timetable.json` commits) and hamara-rozgar (many `chore: incremental update` commits) — explain in portfolio that these are CI/CD artifacts, not busywork |
+   494→
+   495→---
+   496→
+   497→## 8. Recommended Narrative (for the portfolio)
+   498→
+   499→> Muhammad Ammar Asad is a **problem-first full-stack engineer** who turns tedious real-world workflows into polished, AI-augmented products. His flagship, **Exam-Table**, is a 14-feature campus platform serving FAST NUCES Islamabad students — backed by 376 commits, hourly cron-driven Python data pipelines, multi-API orchestration (Supabase + Google Sheets + Groq), and a 830-line README that reads like product documentation. He pairs production web engineering (Next.js + TypeScript + Supabase) with adjacent surfaces — a **Manifest V3 Chrome extension** with proper OAuth 2.0 and a backend proxy for secret isolation, an **Android APK** via Capacitor, and a security-hardened Next.js 16 app with full CSP/HSTS/Permissions-Policy. Increasingly, he builds **agentic LLM systems**: a 5-cooperative-agent marketplace orchestrator (IntentAgent → DiscoveryAgent → PricingAgent → BookingAgent → DisputeAgent) with multi-LLM failover across Ollama, Groq, and GitHub Models. Showcase him as a **ship-first generalist** with depth in three pillars: **campus/utility platforms, browser extensions, and multi-agent AI** — a builder who treats AI not as a label but as the layer that makes systems more adaptive.
+   500→
+   501→(5 sentences. Tightenable to 3 for the hero section.)
+   502→
+   503→---
+   504→
+   505→## 9. Recommended Showcase Order
+   506→
+   507→### Primary track (resume-aligned, with one substitution)
+   508→
+   509→| Order | Project | Reasoning |
+   510→|---|---|---|
+   511→| **1** | **Exam-Table** (FAST Isb Utilities) | Flagship — deepest scope (14 features), most commits (376), only repo with production CI/CD (2 workflows), real users (FAST NUCES Islamabad students), best README (830 lines), active today. Anchor the portfolio here. |
+   512→| **2** | **gcr-resources-fetch** (GCR Fetch) | Most stars (3), production Chrome MV3 extension (rare skill), cross-browser (Chrome + Firefox), OAuth 2.0 with backend-secret-proxy pattern, vivid problem-framing in README, recently maintained (Firefox support added June 6). Demonstrates **breadth beyond web**. |
+   513→| **3** | **hamara-rozgar** (Service Orchestrator) | **Substitute this for WayFinder's slot.** Hidden strength — 5-agent cooperative LLM architecture, multi-LLM failover (Ollama/Groq/GitHub Models), 6-factor utility function, OpenStreetMap geocoding, Capacitor APK, hackathon pedigree (Google Antigravity). Demonstrates **agentic AI** — the thing he says he's building toward. 139 commits. |
+   514→| **4** | **Drama-Ghar** (DramaGhar) | Most modern stack (Next.js 15 + React 19 + Tailwind 4), full-stack depth (RBAC + bcrypt + JWT + MongoDB + Supabase + Gemini), collaborative provenance (co-built with Hanzlah Ch), academic self-evaluation in README. Demonstrates **collaboration + security + AI** in one piece. |
+   515→
+   516→### Secondary track (supporting projects)
+   517→
+   518→| Order | Project | Reasoning |
+   519→|---|---|---|
+   520→| **5** | **WayFinder** | Only if README is fixed. Otherwise, demote to "Experiments" or "In Progress." If featured: lead with **security headers** (CSP/HSTS/Permissions-Policy) and **Yango ride-hailing integration** — these are the differentiators. Lean Next.js 16 + NextAuth + Upstash Redis. |
+   521→| **6** | **gcr-contacts** | Only if README is fixed. Otherwise, mention as "companion tool to GCR Fetch." The 5-step cascading pipeline + coverage-score tie-breaking + two-pass matching is real algorithmic work — currently invisible because the README is default boilerplate. |
+   522→| **7** | **Algo-Visualizer** (EvoSearch Lab) | Optional. Demonstrates CS fundamentals (18+ algorithms visualized) + educational tooling + has its own CI/CD. Good "depth" piece if there's room. |
+   523→| **8** | **fast-utilities-android** | Optional. Android port of Exam-Table — shows mobile reach. 295 commits. |
+   524→
+   525→### Hidden / archive list
+   526→- **Hide or archive**: identifiedpen, barakah-homes, web-viewer, FacultyTrackNReview, AnonymousFacultyReview, Web-Programming-Assignment-01, Web-Dev-Task-03, TASK-05-WEB, employee-management-system, login-system, nextjs-geist-font-optimization, ammarasadPersonal, cric-view. These are placeholders, coursework, or abandoned — they dilute the portfolio.
+   527→
+   528→### Suggested portfolio story arc
+   529→1. **Hero**: "Problem First · Code Second · Ship Always" + 3-pillar tagline (Campus Platforms · Browser Extensions · Agentic AI).
+   530→2. **Pillar 1 — Campus Platforms**: Exam-Table (lead), fast-utilities-android (mobile reach).
+   531→3. **Pillar 2 — Browser Extensions**: gcr-resources-fetch (lead), gcr-contacts (companion, if README fixed).
+   532→4. **Pillar 3 — Agentic AI**: hamara-rozgar (lead), Drama-Ghar (AI + RBAC).
+   533→5. **Security spotlight**: WayFinder's CSP block as a standalone "Security-first engineering" callout (even if the project itself is thin).
+   534→6. **CI/CD spotlight**: Exam-Table's GitHub Actions workflows as a standalone "Production data pipeline" callout.
+   535→7. **About**: Hackathon wins (Google Antigravity), achievements (Pull Shark, Pair Extraordinaire, YOLO), open-source contributions, "Open To: freelance / OSS / agentic AI collaborations."
+   536→
+   537→---
+   538→
+   539→**End of analysis.** Total repos analyzed: 30. Source files inspected: 11 (Exam-Table), 7 (Drama-Ghar), 5 (gcr-resources-fetch), 8 (WayFinder), 1 (hamara-rozgar README), 1 (gcr-contacts package.json), 2 (GitHub Actions workflows for Exam-Table), 1 (Algo-Visualizer ci.yml), 1 (profile README). All artifacts saved under `/home/z/my-project/research/`.
+   540→

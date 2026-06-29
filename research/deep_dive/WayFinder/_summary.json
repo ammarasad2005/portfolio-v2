@@ -1,0 +1,30 @@
+{
+  "package.json": {
+    "size": 578,
+    "lines": 28
+  },
+  "README.md": {
+    "size": 1450,
+    "lines": 37
+  },
+  "tsconfig.json": {
+    "size": 666,
+    "lines": 35
+  },
+  "next.config.ts": {
+    "size": 2617,
+    "lines": 68
+  },
+  "app/page.tsx": {
+    "size": 1458,
+    "lines": 58
+  },
+  "app/layout.tsx": {
+    "size": 1164,
+    "lines": 44
+  },
+  "app/globals.css": {
+    "size": 10656,
+    "lines": 426
+  }
+}

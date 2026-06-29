@@ -1,0 +1,2756 @@
+[
+  {
+    "name": "portfolio",
+    "description": "Personal portfolio \u2014 a 3D observatory of projects. Full-stack web \u00b7 Agentic AI \u00b7 Mobile.",
+    "languages": [
+      {
+        "lang": "TypeScript",
+        "pct": "95.9%"
+      },
+      {
+        "lang": "CSS",
+        "pct": "3.5%"
+      },
+      {
+        "lang": "JavaScript",
+        "pct": "0.6%"
+      }
+    ],
+    "primary_language": "TypeScript",
+    "stars": "0",
+    "forks": "0",
+    "commit_count_text": "6 Commits",
+    "topics": [],
+    "top_level_files": [],
+    "readme_chars": 7282,
+    "readme_headings": 17,
+    "readme_code_blocks": 6,
+    "readme_images": 0,
+    "readme_badges": 3,
+    "readme_links": 2,
+    "readme_quality": 5,
+    "readme_first_500": "# Portfolio \u2014 Muhammad Ammar Asad\n\n> A 3D observatory of projects. Full-stack web \u00b7 Agentic AI \u00b7 Mobile.\n\nA personal portfolio built as a \"who am I\" site \u2014 not a recruitment document. The visitor arrives at a quiet observatory floating in deep navy space, scrolls to aim a telescope, and discovers projects as celestial bodies.\n\n**Live:** Deploying to Vercel \u00b7 **Source:** [github.com/ammarasad2005/portfolio](https://github.com/ammarasad2005/portfolio)\n\n---\n\n## What this is\n\nA 3D, scroll-driven por",
+    "pkg_name": "nextjs_tailwind_shadcn_ts",
+    "pkg_description": "",
+    "pkg_dependencies": [
+      "@dnd-kit/core",
+      "@dnd-kit/sortable",
+      "@dnd-kit/utilities",
+      "@hookform/resolvers",
+      "@mdxeditor/editor",
+      "@prisma/client",
+      "@radix-ui/react-accordion",
+      "@radix-ui/react-alert-dialog",
+      "@radix-ui/react-aspect-ratio",
+      "@radix-ui/react-avatar",
+      "@radix-ui/react-checkbox",
+      "@radix-ui/react-collapsible",
+      "@radix-ui/react-context-menu",
+      "@radix-ui/react-dialog",
+      "@radix-ui/react-dropdown-menu",
+      "@radix-ui/react-hover-card",
+      "@radix-ui/react-label",
+      "@radix-ui/react-menubar",
+      "@radix-ui/react-navigation-menu",
+      "@radix-ui/react-popover",
+      "@radix-ui/react-progress",
+      "@radix-ui/react-radio-group",
+      "@radix-ui/react-scroll-area",
+      "@radix-ui/react-select",
+      "@radix-ui/react-separator",
+      "@radix-ui/react-slider",
+      "@radix-ui/react-slot",
+      "@radix-ui/react-switch",
+      "@radix-ui/react-tabs",
+      "@radix-ui/react-toast",
+      "@radix-ui/react-toggle",
+      "@radix-ui/react-toggle-group",
+      "@radix-ui/react-tooltip",
+      "@react-three/drei",
+      "@react-three/fiber",
+      "@reactuses/core",
+      "@tanstack/react-query",
+      "@tanstack/react-table",
+      "class-variance-authority",
+      "clsx",
+      "cmdk",
+      "date-fns",
+      "embla-carousel-react",
+      "framer-motion",
+      "gsap",
+      "input-otp",
+      "lucide-react",
+      "next",
+      "next-auth",
+      "next-intl",
+      "next-themes",
+      "prisma",
+      "react",
+      "react-day-picker",
+      "react-dom",
+      "react-hook-form",
+      "react-markdown",
+      "react-resizable-panels",
+      "react-syntax-highlighter",
+      "recharts",
+      "sharp",
+      "sonner",
+      "tailwind-merge",
+      "tailwindcss-animate",
+      "three",
+      "uuid",
+      "vaul",
+      "z-ai-web-dev-sdk",
+      "zod",
+      "zustand"
+    ],
+    "pkg_devDependencies": [
+      "@tailwindcss/postcss",
+      "@types/react",
+      "@types/react-dom",
+      "@types/three",
+      "bun-types",
+      "eslint",
+      "eslint-config-next",
+      "tailwindcss",
+      "tw-animate-css",
+      "typescript"
+    ],
+    "pkg_scripts": [
+      "dev",
+      "build",
+      "start",
+      "lint",
+      "db:push",
+      "db:generate",
+      "db:migrate",
+      "db:reset"
+    ],
+    "pkg_engines": {},
+    "last_commit_iso": "2026-06-29T15:22:47Z",
+    "recent_commits": [
+      {
+        "title": "feat: rebuild satellites with high-fidelity real satellite anatomy",
+        "date": "2026-06-29T15:22:47Z",
+        "author": ""
+      },
+      {
+        "title": "feat: rebuild 3D scene from observatory to space exploration journey",
+        "date": "2026-06-29T14:16:36Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "docs: add README with project overview, tech stack, structure, and qu\u2026",
+        "date": "2026-06-28T21:23:06Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "docs: add design documentation (14 phase docs), Phase 5 deep analysis\u2026",
+        "date": "2026-06-28T21:23:06Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "feat: build 3D observatory portfolio with scroll-driven camera, 7 pro\u2026",
+        "date": "2026-06-28T21:22:57Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "chore: scaffold Next.js 16 + TypeScript + Tailwind 4 + shadcn/ui",
+        "date": "2026-06-28T21:22:44Z",
+        "author": "ammarasad2005"
+      }
+    ]
+  },
+  {
+    "name": "faculty-review",
+    "description": "",
+    "languages": [
+      {
+        "lang": "TypeScript",
+        "pct": "96.0%"
+      },
+      {
+        "lang": "CSS",
+        "pct": "2.0%"
+      },
+      {
+        "lang": "Other",
+        "pct": "2.0%"
+      }
+    ],
+    "primary_language": "TypeScript",
+    "stars": "0",
+    "forks": "0",
+    "commit_count_text": "57 Commits",
+    "topics": [],
+    "top_level_files": [],
+    "readme_chars": 3616,
+    "readme_headings": 17,
+    "readme_code_blocks": 8,
+    "readme_images": 3,
+    "readme_badges": 2,
+    "readme_links": 3,
+    "readme_quality": 5,
+    "readme_first_500": "# FAST-NUCES Islamabad \u2014 Faculty Review System\n\nA web application for students of **FAST-NUCES Islamabad** to anonymously browse, search, and review faculty members. All reviews are completely anonymous and cannot be traced back to individual users.\n\n---\n\n## Screenshots\n\n### Home Page \u2014 Faculty Listing\n![Home Page](https://github.com/user-attachments/assets/dc33bbef-1d9b-4477-ae50-8d8f4ed666c8)\n\n### Faculty Profile & Review Form\n![Faculty Modal](https://github.com/user-attachments/assets/6ee439e",
+    "pkg_name": "vite_react_shadcn_ts",
+    "pkg_description": "",
+    "pkg_dependencies": [
+      "@hookform/resolvers",
+      "@radix-ui/react-accordion",
+      "@radix-ui/react-alert-dialog",
+      "@radix-ui/react-aspect-ratio",
+      "@radix-ui/react-avatar",
+      "@radix-ui/react-checkbox",
+      "@radix-ui/react-collapsible",
+      "@radix-ui/react-context-menu",
+      "@radix-ui/react-dialog",
+      "@radix-ui/react-dropdown-menu",
+      "@radix-ui/react-hover-card",
+      "@radix-ui/react-label",
+      "@radix-ui/react-menubar",
+      "@radix-ui/react-navigation-menu",
+      "@radix-ui/react-popover",
+      "@radix-ui/react-progress",
+      "@radix-ui/react-radio-group",
+      "@radix-ui/react-scroll-area",
+      "@radix-ui/react-select",
+      "@radix-ui/react-separator",
+      "@radix-ui/react-slider",
+      "@radix-ui/react-slot",
+      "@radix-ui/react-switch",
+      "@radix-ui/react-tabs",
+      "@radix-ui/react-toast",
+      "@radix-ui/react-toggle",
+      "@radix-ui/react-toggle-group",
+      "@radix-ui/react-tooltip",
+      "@supabase/supabase-js",
+      "@tanstack/react-query",
+      "@vercel/analytics",
+      "class-variance-authority",
+      "clsx",
+      "cmdk",
+      "date-fns",
+      "embla-carousel-react",
+      "input-otp",
+      "lucide-react",
+      "next-themes",
+      "react",
+      "react-day-picker",
+      "react-dom",
+      "react-hook-form",
+      "react-resizable-panels",
+      "react-router-dom",
+      "recharts",
+      "sonner",
+      "tailwind-merge",
+      "tailwindcss-animate",
+      "vaul",
+      "zod"
+    ],
+    "pkg_devDependencies": [
+      "@eslint/js",
+      "@tailwindcss/typography",
+      "@testing-library/jest-dom",
+      "@testing-library/react",
+      "@types/node",
+      "@types/react",
+      "@types/react-dom",
+      "@vitejs/plugin-react-swc",
+      "autoprefixer",
+      "eslint",
+      "eslint-plugin-react-hooks",
+      "eslint-plugin-react-refresh",
+      "globals",
+      "jsdom",
+      "postcss",
+      "tailwindcss",
+      "typescript",
+      "typescript-eslint",
+      "vite",
+      "vitest"
+    ],
+    "pkg_scripts": [
+      "dev",
+      "build",
+      "build:dev",
+      "lint",
+      "preview",
+      "test",
+      "test:watch"
+    ],
+    "pkg_engines": {},
+    "last_commit_iso": "2026-05-22T21:37:49Z",
+    "recent_commits": [
+      {
+        "title": "Merge pull request #47 from ammarasad2005/palette/starrating-a11y-141\u2026",
+        "date": "2026-05-22T21:37:49Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "\ud83c\udfa8 Palette: Improve StarRating accessibility for read-only and interac\u2026",
+        "date": "2026-05-22T08:41:34Z",
+        "author": "google-labs-jules"
+      },
+      {
+        "title": "Merge pull request #17 from ammarasad2005/fix-image-fallback-initials\u2026",
+        "date": "2026-04-16T18:51:34Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "feat: Replace fallback images with initials to prevent infinite loadi\u2026",
+        "date": "2026-04-16T18:47:05Z",
+        "author": "google-labs-jules"
+      },
+      {
+        "title": "Merge pull request #16 from ammarasad2005/perf/optimize-admin-panel-a\u2026",
+        "date": "2026-04-16T17:54:52Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "perf: Optimize chained array operations in AdminPanel",
+        "date": "2026-04-16T17:38:29Z",
+        "author": "google-labs-jules"
+      },
+      {
+        "title": "enhance review caching and timestamp normalization",
+        "date": "2026-03-18T12:48:12Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "Fix stale review cache refresh",
+        "date": "2026-03-18T12:40:18Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "feat: add share and export options to faculty modal",
+        "date": "2026-03-18T08:15:05Z",
+        "author": "google-labs-jules"
+      },
+      {
+        "title": "Add state management and faculty modal to leaderboard",
+        "date": "2026-02-27T06:17:17Z",
+        "author": "ammarasad2005"
+      }
+    ]
+  },
+  {
+    "name": "glucoguard-plus",
+    "description": "",
+    "languages": [
+      {
+        "lang": "Python",
+        "pct": "100.0%"
+      }
+    ],
+    "primary_language": "Python",
+    "stars": "0",
+    "forks": "0",
+    "commit_count_text": "7 Commits",
+    "topics": [],
+    "top_level_files": [],
+    "readme_chars": 1273,
+    "readme_headings": 8,
+    "readme_code_blocks": 2,
+    "readme_images": 0,
+    "readme_badges": 0,
+    "readme_links": 0,
+    "readme_quality": 4,
+    "readme_first_500": "# GlucoGuard+ \ud83d\udee1\ufe0f\n\n**Apne khaane ka guard banayein. Awaaz mein. Roman Urdu mein.**\n\nA phone-camera app for Pakistan's 33 million diabetics. Snap a photo of any packaged food label, get a personalized verdict in Roman Urdu \u2014 spoken aloud for the 40% who can't read.\n\n## The \"+\" in GlucoGuard+\n- **Voice output** \u2014 verdict read aloud via gpt-4o-mini-tts\n- **Live web search** \u2014 actual healthier alternatives available in Pakistan via gpt-4o-search-preview\n\n## Problem\nPakistan has 33M diabetics (world's",
+    "last_commit_iso": "2026-06-23T12:21:19Z",
+    "recent_commits": [
+      {
+        "title": "Added Dev Container Folder",
+        "date": "2026-06-23T12:21:19Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "feat: integrate Google Custom Search API as immediate fallback in alt\u2026",
+        "date": "2026-06-21T15:50:10Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "feat: integrate Zhipu AI GLM-4.7-Flash and GLM-4.6V-Flash fallback mo\u2026",
+        "date": "2026-06-21T15:36:18Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "Fix Streamlit Cloud settings.py secret load issue",
+        "date": "2026-06-21T12:33:00Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "Configure for Streamlit Community Cloud hosting and apply UI styling \u2026",
+        "date": "2026-06-21T12:24:54Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "refactor: unify UI styling with custom global theme and modernize tea\u2026",
+        "date": "2026-06-18T11:48:30Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "Add GlucoGuard+ core functionality with multi-provider support",
+        "date": "2026-06-17T10:19:14Z",
+        "author": "ammarasad2005"
+      }
+    ]
+  },
+  {
+    "name": "Exam-Table",
+    "description": "A simple website, which automates the process of students retrieving their course specific time tables, details including the classroom, slot and the course. It also features exams schedule extraction from the exam schedule sheet, which contains clusters of courses.",
+    "languages": [
+      {
+        "lang": "TypeScript",
+        "pct": "84.7%"
+      },
+      {
+        "lang": "Python",
+        "pct": "9.1%"
+      },
+      {
+        "lang": "JavaScript",
+        "pct": "4.0%"
+      },
+      {
+        "lang": "CSS",
+        "pct": "2.2%"
+      }
+    ],
+    "primary_language": "TypeScript",
+    "stars": "0",
+    "forks": "0",
+    "commit_count_text": "376 Commits",
+    "topics": [],
+    "top_level_files": [],
+    "readme_chars": 37326,
+    "readme_headings": 52,
+    "readme_code_blocks": 24,
+    "readme_images": 5,
+    "readme_badges": 16,
+    "readme_links": 57,
+    "readme_quality": 5,
+    "readme_first_500": "<div align=\"center\">\n\n<img src=\"public/logo/logo.png\" alt=\"FAST Isb Utilities Logo\" width=\"80\" />\n\n# FAST Isb Utilities\n\n**The unified campus companion for FAST NUCES Islamabad**\n\nNo more digging through messy Google Sheets. No more searching emails for exam schedules. No more peeking into rooms to check if they're free. Everything you need \u2014 in one place.\n\n[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen?style=for-the-badge)](https://fast-nuces.vercel.app/)\n[![Next.js](https://i",
+    "pkg_name": "fsc-exams",
+    "pkg_description": "",
+    "pkg_dependencies": [
+      "@hookform/resolvers",
+      "@radix-ui/react-accordion",
+      "@radix-ui/react-alert-dialog",
+      "@radix-ui/react-aspect-ratio",
+      "@radix-ui/react-avatar",
+      "@radix-ui/react-context-menu",
+      "@radix-ui/react-dialog",
+      "@radix-ui/react-dropdown-menu",
+      "@radix-ui/react-hover-card",
+      "@radix-ui/react-label",
+      "@radix-ui/react-menubar",
+      "@radix-ui/react-navigation-menu",
+      "@radix-ui/react-popover",
+      "@radix-ui/react-progress",
+      "@radix-ui/react-radio-group",
+      "@radix-ui/react-scroll-area",
+      "@radix-ui/react-select",
+      "@radix-ui/react-separator",
+      "@radix-ui/react-slider",
+      "@radix-ui/react-slot",
+      "@radix-ui/react-switch",
+      "@radix-ui/react-tabs",
+      "@radix-ui/react-toast",
+      "@radix-ui/react-toggle",
+      "@radix-ui/react-toggle-group",
+      "@radix-ui/react-tooltip",
+      "@supabase/supabase-js",
+      "@types/pg",
+      "@vercel/analytics",
+      "browser-image-compression",
+      "class-variance-authority",
+      "clsx",
+      "cmdk",
+      "embla-carousel-react",
+      "exceljs",
+      "file-saver",
+      "framer-motion",
+      "input-otp",
+      "lucide-react",
+      "next",
+      "next-themes",
+      "nodemailer",
+      "pg",
+      "react",
+      "react-day-picker",
+      "react-dom",
+      "react-hook-form",
+      "react-resizable-panels",
+      "recharts",
+      "resend",
+      "sonner",
+      "tailwind-merge",
+      "tailwindcss-animate",
+      "vaul",
+      "xlsx",
+      "zod"
+    ],
+    "pkg_devDependencies": [
+      "@types/file-saver",
+      "@types/node",
+      "@types/nodemailer",
+      "@types/react",
+      "@types/react-dom",
+      "autoprefixer",
+      "eslint",
+      "eslint-config-next",
+      "playwright",
+      "postcss",
+      "tailwindcss",
+      "ts-node",
+      "typescript"
+    ],
+    "pkg_scripts": [
+      "prebuild",
+      "build",
+      "dev",
+      "start",
+      "type-check",
+      "lint",
+      "timetable:update",
+      "events:scrape",
+      "events:filter",
+      "events:update"
+    ],
+    "pkg_engines": {},
+    "last_commit_iso": "2026-06-29T17:39:05Z",
+    "recent_commits": [
+      {
+        "title": "chore: auto-update timetable.json [2026-06-29 17:39 UTC]",
+        "date": "2026-06-29T17:39:05Z",
+        "author": "github-actions"
+      },
+      {
+        "title": "chore: auto-update timetable.json [2026-06-29 14:05 UTC]",
+        "date": "2026-06-29T14:05:51Z",
+        "author": "github-actions"
+      },
+      {
+        "title": "chore: auto-update timetable.json [2026-06-29 09:27 UTC]",
+        "date": "2026-06-29T09:27:27Z",
+        "author": "github-actions"
+      },
+      {
+        "title": "chore: auto-update timetable.json [2026-06-29 04:09 UTC]",
+        "date": "2026-06-29T04:09:24Z",
+        "author": "github-actions"
+      },
+      {
+        "title": "fix: remove hardcoded section A rule in summer courses filtering",
+        "date": "2026-06-28T12:18:37Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "chore: auto-update timetable.json [2026-06-25 16:26 UTC]",
+        "date": "2026-06-25T16:26:55Z",
+        "author": "github-actions"
+      },
+      {
+        "title": "chore: auto-update timetable.json [2026-06-25 13:20 UTC]",
+        "date": "2026-06-25T13:20:59Z",
+        "author": "github-actions"
+      },
+      {
+        "title": "chore: auto-update timetable.json [2026-06-24 08:23 UTC]",
+        "date": "2026-06-24T08:23:50Z",
+        "author": "github-actions"
+      },
+      {
+        "title": "chore: auto-update timetable.json [2026-06-24 05:05 UTC]",
+        "date": "2026-06-24T05:05:07Z",
+        "author": "github-actions"
+      },
+      {
+        "title": "fix: scrub resch and explicit times inside admin page catalog fetch a\u2026",
+        "date": "2026-06-24T05:02:56Z",
+        "author": "ammarasad2005"
+      }
+    ]
+  },
+  {
+    "name": "Internship-Finder",
+    "description": "",
+    "languages": [
+      {
+        "lang": "TypeScript",
+        "pct": "86.2%"
+      },
+      {
+        "lang": "CSS",
+        "pct": "8.7%"
+      },
+      {
+        "lang": "PLpgSQL",
+        "pct": "4.6%"
+      },
+      {
+        "lang": "Other",
+        "pct": "0.5%"
+      }
+    ],
+    "primary_language": "TypeScript",
+    "stars": "0",
+    "forks": "0",
+    "commit_count_text": "53 Commits",
+    "topics": [],
+    "top_level_files": [],
+    "readme_chars": 1450,
+    "readme_headings": 6,
+    "readme_code_blocks": 2,
+    "readme_images": 0,
+    "readme_badges": 0,
+    "readme_links": 10,
+    "readme_quality": 4,
+    "readme_first_500": "This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).\n\n## Getting Started\n\nFirst, run the development server:\n\n```bash\nnpm run dev\n# or\nyarn dev\n# or\npnpm dev\n# or\nbun dev\n```\n\nOpen [http://localhost:3000](http://localhost:3000) with your browser to see the result.\n\nYou can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.\n\nThis project uses [`next/font`](",
+    "pkg_name": "temp-app",
+    "pkg_description": "",
+    "pkg_dependencies": [
+      "@google/genai",
+      "@hookform/resolvers",
+      "@supabase/ssr",
+      "@supabase/supabase-js",
+      "cheerio",
+      "next",
+      "nodemailer",
+      "react",
+      "react-dom",
+      "react-hook-form",
+      "server-only",
+      "zod"
+    ],
+    "pkg_devDependencies": [
+      "@types/node",
+      "@types/nodemailer",
+      "@types/react",
+      "@types/react-dom",
+      "eslint",
+      "eslint-config-next",
+      "tsx",
+      "typescript"
+    ],
+    "pkg_scripts": [
+      "dev",
+      "build",
+      "start",
+      "lint"
+    ],
+    "pkg_engines": {},
+    "last_commit_iso": "2026-06-21T11:54:36Z",
+    "recent_commits": [
+      {
+        "title": "fix: upgrade worker runtime to node 22",
+        "date": "2026-06-21T11:54:36Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "fix: restore dashboard navigation and protect onboarding",
+        "date": "2026-06-21T11:06:42Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "fix: grant authenticated role access to user tables",
+        "date": "2026-06-21T10:39:21Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "fix: remove react-dom server rendering from notifications",
+        "date": "2026-06-20T20:09:27Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "fix: migrate schema to gen_random_uuid and deploy production database",
+        "date": "2026-06-20T18:16:57Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "docs: prepare production bootstrap package",
+        "date": "2026-06-20T14:53:09Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "docs: plan phase 18 production bootstrap",
+        "date": "2026-06-20T14:46:09Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "docs: update continuity after phase 17 completion",
+        "date": "2026-06-20T14:37:24Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "feat: implement phase 17 feedback learning loop",
+        "date": "2026-06-20T14:34:41Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "docs: plan phase 17 feedback learning loop",
+        "date": "2026-06-20T14:06:34Z",
+        "author": "ammarasad2005"
+      }
+    ]
+  },
+  {
+    "name": "WayFinder",
+    "description": "",
+    "languages": [
+      {
+        "lang": "TypeScript",
+        "pct": "69.0%"
+      },
+      {
+        "lang": "CSS",
+        "pct": "30.7%"
+      },
+      {
+        "lang": "JavaScript",
+        "pct": "0.3%"
+      }
+    ],
+    "primary_language": "TypeScript",
+    "stars": "0",
+    "forks": "0",
+    "commit_count_text": "5 Commits",
+    "topics": [],
+    "top_level_files": [],
+    "readme_chars": 0,
+    "readme_quality": 0,
+    "readme_first_500": "",
+    "last_commit_iso": "2026-06-10T07:46:24Z",
+    "recent_commits": [
+      {
+        "title": "Merge pull request #1 from ammarasad2005/main",
+        "date": "2026-06-10T07:46:24Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "feat(yango): align redirect URL parameters and fallback with official\u2026",
+        "date": "2026-06-10T07:45:24Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "fix: omit starting coordinates in Yango deep link to prevent tariff l\u2026",
+        "date": "2026-06-10T07:37:18Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "chore: ignore Vercel local folders in git",
+        "date": "2026-06-09T18:52:08Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "init: Wayfinder App v1.0",
+        "date": "2026-06-09T18:32:35Z",
+        "author": "ammarasad2005"
+      }
+    ]
+  },
+  {
+    "name": "identifiedpen",
+    "description": "",
+    "languages": [
+      {
+        "lang": "Python",
+        "pct": "100.0%"
+      }
+    ],
+    "primary_language": "Python",
+    "stars": "0",
+    "forks": "0",
+    "commit_count_text": "1 Commit",
+    "topics": [],
+    "top_level_files": [],
+    "readme_chars": 0,
+    "readme_quality": 0,
+    "readme_first_500": "",
+    "last_commit_iso": "2026-06-20T09:43:56Z",
+    "recent_commits": [
+      {
+        "title": "Initial audit pipeline implementation",
+        "date": "2026-06-20T09:43:56Z",
+        "author": "ammarasad2005"
+      }
+    ]
+  },
+  {
+    "name": "hamara-rozgar",
+    "description": "",
+    "languages": [
+      {
+        "lang": "JavaScript",
+        "pct": "55.2%"
+      },
+      {
+        "lang": "Python",
+        "pct": "20.1%"
+      },
+      {
+        "lang": "CSS",
+        "pct": "17.8%"
+      },
+      {
+        "lang": "HTML",
+        "pct": "5.5%"
+      },
+      {
+        "lang": "Java",
+        "pct": "0.6%"
+      },
+      {
+        "lang": "Batchfile",
+        "pct": "0.4%"
+      },
+      {
+        "lang": "Shell",
+        "pct": "0.4%"
+      }
+    ],
+    "primary_language": "JavaScript",
+    "stars": "0",
+    "forks": "0",
+    "commit_count_text": "139 Commits",
+    "topics": [],
+    "top_level_files": [],
+    "readme_chars": 8062,
+    "readme_headings": 11,
+    "readme_code_blocks": 8,
+    "readme_images": 0,
+    "readme_badges": 2,
+    "readme_links": 0,
+    "readme_quality": 5,
+    "readme_first_500": "# Hamara-Rozgar (RozgarOrch) \ud83d\udee0\ufe0f\n### Challenge 2: AI Service Orchestrator for Informal Economy - Google Antigravity Hackathon\n\n**Hamara-Rozgar (RozgarOrch)** is a premium, agentic, AI-driven marketplace orchestrator designed to solve fragmentation in Pakistan's informal economy. By bridging the digital divide for daily wage workers (plumbers, electricians, tutors, AC technicians, beauticians, mechanics), this solution automates the end-to-end booking lifecycle. It parses multi-turn conversational",
+    "pkg_name": "service-orchestrator",
+    "pkg_description": "",
+    "pkg_dependencies": [
+      "@capacitor/android",
+      "@capacitor/core",
+      "lucide-react",
+      "react",
+      "react-dom"
+    ],
+    "pkg_devDependencies": [
+      "@capacitor/cli",
+      "@eslint/js",
+      "@types/react",
+      "@types/react-dom",
+      "@vitejs/plugin-react",
+      "eslint",
+      "eslint-plugin-react-hooks",
+      "eslint-plugin-react-refresh",
+      "globals",
+      "vite"
+    ],
+    "pkg_scripts": [
+      "dev",
+      "build",
+      "lint",
+      "preview"
+    ],
+    "pkg_engines": {},
+    "last_commit_iso": "2026-06-28T13:55:31Z",
+    "recent_commits": [
+      {
+        "title": "chore: incremental update of scraped local businesses &amp; progress",
+        "date": "2026-06-28T13:55:31Z",
+        "author": "github-actions"
+      },
+      {
+        "title": "chore: incremental update of scraped local businesses &amp; progress",
+        "date": "2026-06-28T07:38:22Z",
+        "author": "github-actions"
+      },
+      {
+        "title": "chore: incremental update of scraped local businesses &amp; progress",
+        "date": "2026-06-27T22:18:31Z",
+        "author": "github-actions"
+      },
+      {
+        "title": "chore: incremental update of scraped local businesses &amp; progress",
+        "date": "2026-06-27T13:27:47Z",
+        "author": "github-actions"
+      },
+      {
+        "title": "chore: incremental update of scraped local businesses &amp; progress",
+        "date": "2026-06-27T07:11:22Z",
+        "author": "github-actions"
+      },
+      {
+        "title": "chore: incremental update of scraped local businesses &amp; progress",
+        "date": "2026-06-27T00:42:26Z",
+        "author": "github-actions"
+      },
+      {
+        "title": "chore: incremental update of scraped local businesses &amp; progress",
+        "date": "2026-06-26T14:15:00Z",
+        "author": "github-actions"
+      },
+      {
+        "title": "chore: incremental update of scraped local businesses &amp; progress",
+        "date": "2026-06-26T07:24:39Z",
+        "author": "github-actions"
+      },
+      {
+        "title": "chore: incremental update of scraped local businesses &amp; progress",
+        "date": "2026-06-26T00:55:17Z",
+        "author": "github-actions"
+      },
+      {
+        "title": "chore: incremental update of scraped local businesses &amp; progress",
+        "date": "2026-06-25T14:24:54Z",
+        "author": "github-actions"
+      }
+    ]
+  },
+  {
+    "name": "ammarasad2005",
+    "description": "Config files for my GitHub profile.",
+    "languages": [],
+    "primary_language": "",
+    "stars": "0",
+    "forks": "0",
+    "commit_count_text": "7 Commits",
+    "topics": [
+      "config",
+      "github-config"
+    ],
+    "top_level_files": [],
+    "readme_chars": 9352,
+    "readme_headings": 7,
+    "readme_code_blocks": 0,
+    "readme_images": 0,
+    "readme_badges": 70,
+    "readme_links": 5,
+    "readme_quality": 4,
+    "readme_first_500": "<!-- ============================================================\n     Muhammad Ammar Asad \u2014 GitHub Profile README\n     Username: ammarasad2005\n     Palette: Emerald \u00b7 Blue \u00b7 Brown\n     Infographic-first \u00b7 Animated SVGs \u00b7 Minimal text\n     ============================================================ -->\n\n<p align=\"center\">\n  <img width=\"100%\" src=\"https://capsule-render.vercel.app/api?type=waving&color=0:064E3B,50:1E3A5F,100:5C4033&height=260&section=header&text=Muhammad%20Ammar%20Asad&desc=Full",
+    "last_commit_iso": "2026-06-07T20:45:59Z",
+    "recent_commits": [
+      {
+        "title": "add animated svg files",
+        "date": "2026-06-07T20:45:59Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "Revise README with new profile details and projects",
+        "date": "2026-06-07T20:43:29Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "Revise README with new project details and tech stack",
+        "date": "2026-06-07T18:21:44Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "Revise README with new profile and project info",
+        "date": "2026-06-07T18:11:02Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "Revamp GitHub profile README with new sections",
+        "date": "2026-06-07T16:01:59Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "update readme",
+        "date": "2026-06-07T15:15:28Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "add a readme for profile",
+        "date": "2026-06-07T15:03:10Z",
+        "author": "ammarasad2005"
+      }
+    ]
+  },
+  {
+    "name": "fast-utilities-android",
+    "description": "",
+    "languages": [
+      {
+        "lang": "TypeScript",
+        "pct": "85.8%"
+      },
+      {
+        "lang": "Python",
+        "pct": "7.1%"
+      },
+      {
+        "lang": "JavaScript",
+        "pct": "4.6%"
+      },
+      {
+        "lang": "CSS",
+        "pct": "2.5%"
+      }
+    ],
+    "primary_language": "TypeScript",
+    "stars": "0",
+    "forks": "0",
+    "commit_count_text": "295 Commits",
+    "topics": [],
+    "top_level_files": [],
+    "readme_chars": 6031,
+    "readme_headings": 24,
+    "readme_code_blocks": 12,
+    "readme_images": 0,
+    "readme_badges": 0,
+    "readme_links": 0,
+    "readme_quality": 5,
+    "readme_first_500": "# FAST ISB Schedule Platform\n\nA unified student scheduling platform for FAST ISB with three major tools in one website:\n\n- Exam schedule viewer\n- Weekly class timetable viewer\n- Free room finder\n\nThe app supports both regular cohort flows and custom mixed-course flows for irregular students.\n\n## What Is Included\n\n### 1. Exams\n- Filter by batch, school, and department.\n- Search by course code or course name.\n- Grouped timeline view by date.\n- Exam detail drawer (mobile + desktop optimized).\n- Exp",
+    "pkg_name": "fsc-exams",
+    "pkg_description": "",
+    "pkg_dependencies": [
+      "@hookform/resolvers",
+      "@radix-ui/react-accordion",
+      "@radix-ui/react-alert-dialog",
+      "@radix-ui/react-aspect-ratio",
+      "@radix-ui/react-avatar",
+      "@radix-ui/react-context-menu",
+      "@radix-ui/react-dialog",
+      "@radix-ui/react-dropdown-menu",
+      "@radix-ui/react-hover-card",
+      "@radix-ui/react-label",
+      "@radix-ui/react-menubar",
+      "@radix-ui/react-navigation-menu",
+      "@radix-ui/react-popover",
+      "@radix-ui/react-progress",
+      "@radix-ui/react-radio-group",
+      "@radix-ui/react-scroll-area",
+      "@radix-ui/react-select",
+      "@radix-ui/react-separator",
+      "@radix-ui/react-slider",
+      "@radix-ui/react-slot",
+      "@radix-ui/react-switch",
+      "@radix-ui/react-tabs",
+      "@radix-ui/react-toast",
+      "@radix-ui/react-toggle",
+      "@radix-ui/react-toggle-group",
+      "@radix-ui/react-tooltip",
+      "@supabase/supabase-js",
+      "@vercel/analytics",
+      "browser-image-compression",
+      "class-variance-authority",
+      "clsx",
+      "cmdk",
+      "embla-carousel-react",
+      "exceljs",
+      "file-saver",
+      "framer-motion",
+      "input-otp",
+      "lucide-react",
+      "next",
+      "next-themes",
+      "nodemailer",
+      "react",
+      "react-day-picker",
+      "react-dom",
+      "react-hook-form",
+      "react-resizable-panels",
+      "recharts",
+      "resend",
+      "sonner",
+      "tailwind-merge",
+      "tailwindcss-animate",
+      "vaul",
+      "xlsx",
+      "zod"
+    ],
+    "pkg_devDependencies": [
+      "@types/file-saver",
+      "@types/node",
+      "@types/nodemailer",
+      "@types/react",
+      "@types/react-dom",
+      "autoprefixer",
+      "eslint",
+      "eslint-config-next",
+      "playwright",
+      "postcss",
+      "tailwindcss",
+      "ts-node",
+      "typescript"
+    ],
+    "pkg_scripts": [
+      "prebuild",
+      "build",
+      "dev",
+      "start",
+      "type-check",
+      "lint",
+      "timetable:update",
+      "events:scrape",
+      "events:filter",
+      "events:update"
+    ],
+    "pkg_engines": {},
+    "last_commit_iso": "2026-05-25T16:46:51Z",
+    "recent_commits": [
+      {
+        "title": "feat: add admin portal key link to root page footers",
+        "date": "2026-05-25T16:46:51Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "feat(admin): relocate admin dashboard to root and add global hotkeys",
+        "date": "2026-05-25T16:41:42Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "feat(lost-found): allow any email domain for claims and feedback",
+        "date": "2026-05-25T16:29:35Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "feat(lost-found): set up transactional email alert service for found \u2026",
+        "date": "2026-05-25T16:21:17Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "fix: resolve side tab viewport clipping issues using native writing-m\u2026",
+        "date": "2026-05-25T14:53:18Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "feat: implement global floating review &amp; suggestion drawer with emoji\u2026",
+        "date": "2026-05-25T14:43:19Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "style: refine stats dashboard mobile labels and resolution detail tex\u2026",
+        "date": "2026-05-25T13:27:45Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "feat: implement extremely robust 5-tier resolution counterpart matche\u2026",
+        "date": "2026-05-25T13:05:45Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "feat: automatically redirect claimants to the side-by-side reunion su\u2026",
+        "date": "2026-05-25T12:43:04Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "fix: implement advanced score-based fallback matching in the resoluti\u2026",
+        "date": "2026-05-25T12:38:23Z",
+        "author": "ammarasad2005"
+      }
+    ]
+  },
+  {
+    "name": "gcr-contacts",
+    "description": "Instantly find instructor, TA, and Lab Demonstrator emails from your Google Classroom courses \u2014 built for NU FAST Islamabad students",
+    "languages": [
+      {
+        "lang": "JavaScript",
+        "pct": "79.3%"
+      },
+      {
+        "lang": "CSS",
+        "pct": "20.7%"
+      }
+    ],
+    "primary_language": "JavaScript",
+    "stars": "0",
+    "forks": "0",
+    "commit_count_text": "7 Commits",
+    "topics": [],
+    "top_level_files": [],
+    "readme_chars": 1449,
+    "readme_headings": 6,
+    "readme_code_blocks": 2,
+    "readme_images": 0,
+    "readme_badges": 0,
+    "readme_links": 10,
+    "readme_quality": 4,
+    "readme_first_500": "This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).\n\n## Getting Started\n\nFirst, run the development server:\n\n```bash\nnpm run dev\n# or\nyarn dev\n# or\npnpm dev\n# or\nbun dev\n```\n\nOpen [http://localhost:3000](http://localhost:3000) with your browser to see the result.\n\nYou can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.\n\nThis project uses [`next/font`](h",
+    "pkg_name": "gcr-contacts",
+    "pkg_description": "",
+    "pkg_dependencies": [
+      "next",
+      "react",
+      "react-dom"
+    ],
+    "pkg_devDependencies": [
+      "eslint",
+      "eslint-config-next"
+    ],
+    "pkg_scripts": [
+      "dev",
+      "build",
+      "start",
+      "lint"
+    ],
+    "pkg_engines": {},
+    "last_commit_iso": "2026-06-07T11:12:40Z",
+    "recent_commits": [
+      {
+        "title": "fix: coverage-score tie-breaking + discard unresolvable GCR teachers",
+        "date": "2026-06-07T11:12:40Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "fix: two-pass matching to correctly handle multi-batch course offerings",
+        "date": "2026-06-07T10:36:15Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "fix: Step 0 TA sheet check must run for ALL GCR teachers, not just lo\u2026",
+        "date": "2026-06-07T10:23:37Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "fix: fetch both TASheet and LDSheet tabs (not just TASheet)",
+        "date": "2026-06-07T10:09:12Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "feat: integrate TA/LD allocation sheet as Step 0 of email resolution \u2026",
+        "date": "2026-06-07T10:04:45Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "feat: initial implementation of GCR Contacts website",
+        "date": "2026-06-05T16:26:10Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "Initial commit from Create Next App",
+        "date": "2026-06-05T15:33:01Z",
+        "author": "ammarasad2005"
+      }
+    ]
+  },
+  {
+    "name": "gcr-resources-fetch",
+    "description": "",
+    "languages": [
+      {
+        "lang": "JavaScript",
+        "pct": "83.3%"
+      },
+      {
+        "lang": "CSS",
+        "pct": "11.2%"
+      },
+      {
+        "lang": "HTML",
+        "pct": "5.5%"
+      }
+    ],
+    "primary_language": "JavaScript",
+    "stars": "3",
+    "forks": "0",
+    "commit_count_text": "32 Commits",
+    "topics": [],
+    "top_level_files": [],
+    "readme_chars": 17233,
+    "readme_headings": 24,
+    "readme_code_blocks": 14,
+    "readme_images": 0,
+    "readme_badges": 0,
+    "readme_links": 6,
+    "readme_quality": 5,
+    "readme_first_500": "# GCR Fetch \u2014 Google Classroom Resource Downloader\n\n<p align=\"center\">\n  <strong>Bulk-download every resource from a Google Classroom course as a single ZIP archive.</strong>\n</p>\n\n<p align=\"center\">\n  <a href=\"#install\"><strong>\ud83d\ude80 Quick Install Guide (For Users)</strong></a> &nbsp;\u2022&nbsp; \n  <a href=\"#dev-setup\"><strong>\ud83d\udee0\ufe0f Developer Setup & Self-Hosting</strong></a>\n</p>\n\n---\n\n## The Problem\n\nIf you've ever used Google Classroom during exam season, you know the pain. Teachers share resources \u2014 P",
+    "last_commit_iso": "2026-06-06T01:16:43Z",
+    "recent_commits": [
+      {
+        "title": "Fix SyntaxError by removing duplicate origin declaration in backend",
+        "date": "2026-06-06T01:16:43Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "Improve CORS handling and Firefox browser detection using User-Agent \u2026",
+        "date": "2026-06-06T01:09:19Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "Add Vercel backend URL to manifest host_permissions",
+        "date": "2026-06-06T01:06:20Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "Add Firefox extension support and update Vercel backend token exchange",
+        "date": "2026-06-06T01:00:51Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "docs: update README installation guide for clarity",
+        "date": "2026-06-04T16:39:00Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "docs: add quick navigation links at the top of README",
+        "date": "2026-06-04T16:36:43Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "docs: restructure installation instructions for users vs developers",
+        "date": "2026-06-04T16:32:25Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "docs: add MIT license and update README link",
+        "date": "2026-06-04T16:02:36Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "docs: rewrite README to provide comprehensive feature overview and ar\u2026",
+        "date": "2026-06-04T15:59:13Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "fix(backend): update EXTENSION_ID to match new locked extension ID",
+        "date": "2026-06-04T15:11:24Z",
+        "author": "ammarasad2005"
+      }
+    ]
+  },
+  {
+    "name": "Drama-Ghar",
+    "description": "A streamlined platform for all pakistani dramas, with personal scheduling and tracking",
+    "languages": [
+      {
+        "lang": "TypeScript",
+        "pct": "96.1%"
+      },
+      {
+        "lang": "JavaScript",
+        "pct": "2.7%"
+      },
+      {
+        "lang": "Python",
+        "pct": "1.1%"
+      },
+      {
+        "lang": "CSS",
+        "pct": "0.1%"
+      }
+    ],
+    "primary_language": "TypeScript",
+    "stars": "1",
+    "forks": "0",
+    "commit_count_text": "32 Commits",
+    "topics": [],
+    "top_level_files": [],
+    "readme_chars": 22088,
+    "readme_headings": 38,
+    "readme_code_blocks": 6,
+    "readme_images": 0,
+    "readme_badges": 3,
+    "readme_links": 22,
+    "readme_quality": 5,
+    "readme_first_500": "# DramaGhar \n\n**A full-stack Pakistani drama tracking & streaming platform built with Next.js 15, React 19, MongoDB Atlas, and Supabase.**\n\n---\n## Contributors\n\n- [Ammar Asad](https://github.com/ammarasad2005)\n- [Hanzlah Ch](https://github.com/HanzlahCh)\n\n## Table of Contents\n\n1. [Project Overview](#1-project-overview)\n2. [Tech Stack](#2-tech-stack)\n3. [System Architecture](#3-system-architecture)\n4. [Feature Breakdown & Self-Evaluation](#4-feature-breakdown--self-evaluation)\n   - [Functionality",
+    "pkg_name": "ai-studio-applet",
+    "pkg_description": "",
+    "pkg_dependencies": [
+      "@google/genai",
+      "@hookform/resolvers",
+      "@radix-ui/react-dialog",
+      "@radix-ui/react-separator",
+      "@radix-ui/react-slot",
+      "@radix-ui/react-tabs",
+      "autoprefixer",
+      "bcryptjs",
+      "class-variance-authority",
+      "clsx",
+      "date-fns",
+      "date-fns-tz",
+      "jose",
+      "lucide-react",
+      "mongoose",
+      "motion",
+      "next",
+      "nodemailer",
+      "postcss",
+      "react",
+      "react-dom",
+      "react-hook-form",
+      "react-youtube",
+      "tailwind-merge",
+      "zod"
+    ],
+    "pkg_devDependencies": [
+      "@tailwindcss/postcss",
+      "@tailwindcss/typography",
+      "@types/bcryptjs",
+      "@types/node",
+      "@types/nodemailer",
+      "@types/react",
+      "@types/react-dom",
+      "eslint",
+      "eslint-config-next",
+      "firebase-tools",
+      "tailwindcss",
+      "tw-animate-css",
+      "typescript"
+    ],
+    "pkg_scripts": [
+      "dev",
+      "build",
+      "start",
+      "lint",
+      "clean"
+    ],
+    "pkg_engines": {},
+    "last_commit_iso": "2026-05-20T19:52:53Z",
+    "recent_commits": [
+      {
+        "title": "Final Commit",
+        "date": "2026-05-20T19:52:53Z",
+        "author": "HanzlahCh"
+      },
+      {
+        "title": "feat: clean up credits and implement data management controls",
+        "date": "2026-05-10T10:43:21Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "fix: resolve typescript prop interfaces in route wrappers for vercel \u2026",
+        "date": "2026-05-10T09:15:57Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "fix: remove unused params spread causing next.js warning",
+        "date": "2026-05-10T09:06:45Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "refactor: transition to Next.js App Router URLs and add admin delete \u2026",
+        "date": "2026-05-10T09:06:45Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "feat: add interactive guest name prompt and isolate admin logic",
+        "date": "2026-05-10T09:06:45Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "feat: implement guest session, explicit remember me, and social foote\u2026",
+        "date": "2026-05-10T09:06:45Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "fix: enable scrolling for explore library page",
+        "date": "2026-05-10T09:06:45Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "feat: apply channel filter correctly when navigating",
+        "date": "2026-05-10T09:06:45Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "refactor: improve aesthetics and navigation for channels/explore",
+        "date": "2026-05-10T09:06:45Z",
+        "author": "ammarasad2005"
+      }
+    ]
+  },
+  {
+    "name": "nextjs-auth-system",
+    "description": "Build a complete authentication system using Next.js and MongoDB that allows users to: Create an account (signup), Log in securely, View a protected dashboard, Log out safely",
+    "languages": [
+      {
+        "lang": "TypeScript",
+        "pct": "93.9%"
+      },
+      {
+        "lang": "CSS",
+        "pct": "5.3%"
+      },
+      {
+        "lang": "JavaScript",
+        "pct": "0.8%"
+      }
+    ],
+    "primary_language": "TypeScript",
+    "stars": "0",
+    "forks": "0",
+    "commit_count_text": "2 Commits",
+    "topics": [],
+    "top_level_files": [],
+    "readme_chars": 2435,
+    "readme_headings": 10,
+    "readme_code_blocks": 12,
+    "readme_images": 0,
+    "readme_badges": 0,
+    "readme_links": 1,
+    "readme_quality": 5,
+    "readme_first_500": "# Next.js + MongoDB Authentication System\n\nA complete, secure, and production-ready authentication system built with:\n\n- **Next.js 14** (App Router)\n- **MongoDB** + **Mongoose**\n- **bcrypt** for password hashing\n- **Server Actions** for form handling\n- **HTTP-only Cookies** for session management\n- **Tailwind CSS** for beautiful UI\n\n##  Features\n\n-  User Signup with email + password\n-  Secure Login with password verification\n-  Protected Dashboard route\n-  Logout functionality (cookie cleared)\n-",
+    "pkg_name": "nextjs-mongodb-auth",
+    "pkg_description": "",
+    "pkg_dependencies": [
+      "bcrypt",
+      "mongoose",
+      "next",
+      "react",
+      "react-dom"
+    ],
+    "pkg_devDependencies": [
+      "@types/node",
+      "@types/react",
+      "@types/react-dom",
+      "eslint",
+      "eslint-config-next",
+      "postcss",
+      "tailwindcss",
+      "typescript"
+    ],
+    "pkg_scripts": [
+      "dev",
+      "build",
+      "start",
+      "lint"
+    ],
+    "pkg_engines": {},
+    "last_commit_iso": "2026-04-21T17:44:04Z",
+    "recent_commits": [
+      {
+        "title": "corrected",
+        "date": "2026-04-21T17:44:04Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "Initial commit - Clean project with logo by Ammar Asad",
+        "date": "2026-04-21T17:41:53Z",
+        "author": "ammarasad2005"
+      }
+    ]
+  },
+  {
+    "name": "claude-code",
+    "description": "Claude Code is an agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster by executing routine tasks, explaining complex code, and handling git workflows - all through natural language commands.",
+    "languages": [
+      {
+        "lang": "TypeScript",
+        "pct": "91.3%"
+      },
+      {
+        "lang": "JavaScript",
+        "pct": "8.7%"
+      }
+    ],
+    "primary_language": "TypeScript",
+    "stars": "0",
+    "forks": "0",
+    "commit_count_text": "12 Commits",
+    "topics": [],
+    "top_level_files": [],
+    "readme_chars": 16675,
+    "readme_headings": 33,
+    "readme_code_blocks": 20,
+    "readme_images": 7,
+    "readme_badges": 12,
+    "readme_links": 52,
+    "readme_quality": 5,
+    "readme_first_500": "<div align=\"center\">\n\n# Claude Code \u2014 Leaked Source\n\n**The full source code of Anthropic's Claude Code CLI, leaked on March 31, 2026**\n\n[![TypeScript](https://img.shields.io/badge/TypeScript-512K%2B_lines-3178C6?logo=typescript&logoColor=white)](#tech-stack)\n[![Bun](https://img.shields.io/badge/Runtime-Bun-f472b6?logo=bun&logoColor=white)](#tech-stack)\n[![React + Ink](https://img.shields.io/badge/UI-React_%2B_Ink-61DAFB?logo=react&logoColor=black)](#tech-stack)\n[![Files](https://img.shields.io/b",
+    "pkg_name": "@anthropic-ai/claude-code",
+    "pkg_description": "Anthropic Claude Code CLI \u2014 leaked source (2026-03-31). Not an official release.",
+    "pkg_dependencies": [
+      "@anthropic-ai/sdk",
+      "@commander-js/extra-typings",
+      "@growthbook/growthbook",
+      "@modelcontextprotocol/sdk",
+      "@opentelemetry/api",
+      "@opentelemetry/api-logs",
+      "@opentelemetry/core",
+      "@opentelemetry/sdk-logs",
+      "@opentelemetry/sdk-metrics",
+      "@opentelemetry/sdk-trace-base",
+      "@xterm/addon-fit",
+      "@xterm/addon-search",
+      "@xterm/addon-unicode11",
+      "@xterm/addon-web-links",
+      "@xterm/addon-webgl",
+      "@xterm/xterm",
+      "auto-bind",
+      "axios",
+      "chalk",
+      "chokidar",
+      "cli-boxes",
+      "code-excerpt",
+      "diff",
+      "execa",
+      "figures",
+      "fuse.js",
+      "highlight.js",
+      "ignore",
+      "lodash-es",
+      "marked",
+      "node-pty",
+      "p-map",
+      "picomatch",
+      "proper-lockfile",
+      "qrcode",
+      "react",
+      "react-reconciler",
+      "semver",
+      "stack-utils",
+      "strip-ansi",
+      "supports-hyperlinks",
+      "tree-kill",
+      "type-fest",
+      "undici",
+      "usehooks-ts",
+      "wrap-ansi",
+      "ws",
+      "yaml",
+      "zod"
+    ],
+    "pkg_devDependencies": [
+      "@biomejs/biome",
+      "@types/diff",
+      "@types/lodash-es",
+      "@types/node",
+      "@types/picomatch",
+      "@types/proper-lockfile",
+      "@types/react",
+      "@types/semver",
+      "@types/stack-utils",
+      "@types/ws",
+      "esbuild",
+      "typescript"
+    ],
+    "pkg_scripts": [
+      "build",
+      "build:watch",
+      "build:prod",
+      "build:web",
+      "build:web:watch",
+      "build:web:prod",
+      "typecheck",
+      "lint",
+      "lint:fix",
+      "format",
+      "check"
+    ],
+    "pkg_engines": {
+      "bun": ">=1.1.0"
+    },
+    "last_commit_iso": "2026-04-02T10:14:21Z",
+    "recent_commits": [
+      {
+        "title": "Update README.md",
+        "date": "2026-04-02T10:14:21Z",
+        "author": "codeaashu"
+      },
+      {
+        "title": "Update Star History section in README",
+        "date": "2026-04-02T09:52:15Z",
+        "author": "codeaashu"
+      },
+      {
+        "title": "Update README.md",
+        "date": "2026-04-02T09:39:48Z",
+        "author": "codeaashu"
+      },
+      {
+        "title": "Update contributor",
+        "date": "2026-04-01T15:12:13Z",
+        "author": "codeaashu"
+      },
+      {
+        "title": "Add Twitter follow badge",
+        "date": "2026-04-01T07:40:31Z",
+        "author": "codeaashu"
+      },
+      {
+        "title": "Update FUNDING.yml",
+        "date": "2026-03-31T14:43:36Z",
+        "author": "codeaashu"
+      },
+      {
+        "title": "update readme",
+        "date": "2026-03-31T14:40:27Z",
+        "author": "codeaashu"
+      },
+      {
+        "title": "Create FUNDING.yml",
+        "date": "2026-03-31T14:30:09Z",
+        "author": "codeaashu"
+      },
+      {
+        "title": "update",
+        "date": "2026-03-31T13:35:57Z",
+        "author": "codeaashu"
+      },
+      {
+        "title": "claude-code",
+        "date": "2026-03-31T13:28:05Z",
+        "author": "codeaashu"
+      }
+    ]
+  },
+  {
+    "name": "Web-Dev-Task-03",
+    "description": "About mongodb database login logout",
+    "languages": [
+      {
+        "lang": "JavaScript",
+        "pct": "100.0%"
+      }
+    ],
+    "primary_language": "JavaScript",
+    "stars": "0",
+    "forks": "0",
+    "commit_count_text": "10 Commits",
+    "topics": [],
+    "top_level_files": [],
+    "readme_chars": 54,
+    "readme_headings": 1,
+    "readme_code_blocks": 0,
+    "readme_images": 0,
+    "readme_badges": 0,
+    "readme_links": 0,
+    "readme_quality": 2,
+    "readme_first_500": "# Web-Dev-Task-03\nAbout mongodb database login logout\n",
+    "pkg_name": "login-system",
+    "pkg_description": "MongoDB login logout system",
+    "pkg_dependencies": [
+      "express",
+      "express-session",
+      "mongoose"
+    ],
+    "pkg_devDependencies": [],
+    "pkg_scripts": [
+      "start"
+    ],
+    "pkg_engines": {},
+    "last_commit_iso": "2026-03-06T16:23:43Z",
+    "recent_commits": [
+      {
+        "title": "Merge pull request #1 from ammarasad2005/copilot/add-initial-setup",
+        "date": "2026-03-06T16:23:43Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "Added AI vs Student comparison report",
+        "date": "2026-03-06T16:15:33Z",
+        "author": "copilot-swe-agent"
+      },
+      {
+        "title": "Implemented logout functionality",
+        "date": "2026-03-06T16:08:58Z",
+        "author": "copilot-swe-agent"
+      },
+      {
+        "title": "Added dashboard protected route",
+        "date": "2026-03-06T16:08:43Z",
+        "author": "copilot-swe-agent"
+      },
+      {
+        "title": "Implemented login route with session",
+        "date": "2026-03-06T16:08:26Z",
+        "author": "copilot-swe-agent"
+      },
+      {
+        "title": "Created User class with register method",
+        "date": "2026-03-06T16:08:03Z",
+        "author": "copilot-swe-agent"
+      },
+      {
+        "title": "Added MongoDB connection using Mongoose",
+        "date": "2026-03-06T16:07:45Z",
+        "author": "copilot-swe-agent"
+      },
+      {
+        "title": "Initial project setup with Express server",
+        "date": "2026-03-06T16:07:36Z",
+        "author": "copilot-swe-agent"
+      },
+      {
+        "title": "Initial plan",
+        "date": "2026-03-06T16:06:21Z",
+        "author": "copilot-swe-agent"
+      },
+      {
+        "title": "Initial commit",
+        "date": "2026-03-06T15:39:45Z",
+        "author": "ammarasad2005"
+      }
+    ]
+  },
+  {
+    "name": "cric-view",
+    "description": "",
+    "languages": [
+      {
+        "lang": "JavaScript",
+        "pct": "95.8%"
+      },
+      {
+        "lang": "CSS",
+        "pct": "3.8%"
+      },
+      {
+        "lang": "HTML",
+        "pct": "0.4%"
+      }
+    ],
+    "primary_language": "JavaScript",
+    "stars": "0",
+    "forks": "0",
+    "commit_count_text": "3 Commits",
+    "topics": [],
+    "top_level_files": [],
+    "readme_chars": 0,
+    "readme_quality": 0,
+    "readme_first_500": "",
+    "pkg_name": "drama-ghar",
+    "pkg_description": "DramaGhar \u2013 Pakistan ka number one drama schedule platform",
+    "pkg_dependencies": [
+      "bcrypt",
+      "compression",
+      "connect-session-sequelize",
+      "dotenv",
+      "ejs",
+      "express",
+      "express-session",
+      "express-validator",
+      "nodemailer",
+      "sequelize",
+      "sqlite3"
+    ],
+    "pkg_devDependencies": [
+      "concurrently",
+      "nodemon",
+      "sequelize-cli"
+    ],
+    "pkg_scripts": [
+      "start",
+      "dev",
+      "seed",
+      "install:all"
+    ],
+    "pkg_engines": {},
+    "last_commit_iso": "2026-05-05T06:37:22Z",
+    "recent_commits": [
+      {
+        "title": "full-stack completion &amp; monorepo dev environment stabilization. rende\u2026",
+        "date": "2026-05-05T06:37:22Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "update .gitignore to exclude project context files and remove redunda\u2026",
+        "date": "2026-05-05T04:23:52Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "initial version: drama ghar.",
+        "date": "2026-05-05T04:19:26Z",
+        "author": "ammarasad2005"
+      }
+    ]
+  },
+  {
+    "name": "Algo-Visualizer",
+    "description": "A simple website which can be used to visualize the working of search algorithms in AI",
+    "languages": [
+      {
+        "lang": "TypeScript",
+        "pct": "96.6%"
+      },
+      {
+        "lang": "CSS",
+        "pct": "2.2%"
+      },
+      {
+        "lang": "Other",
+        "pct": "1.2%"
+      }
+    ],
+    "primary_language": "TypeScript",
+    "stars": "0",
+    "forks": "0",
+    "commit_count_text": "7 Commits",
+    "topics": [],
+    "top_level_files": [],
+    "readme_chars": 5470,
+    "readme_headings": 16,
+    "readme_code_blocks": 8,
+    "readme_images": 4,
+    "readme_badges": 7,
+    "readme_links": 5,
+    "readme_quality": 5,
+    "readme_first_500": "<div align=\"center\">\n\n# \ud83e\uddec EvoSearch Lab\n\n**The definitive interactive educational platform for understanding Genetic Algorithms and Informed Search Algorithms**\n\n[![CI/CD](https://github.com/ammarasad2005/Algo-Visualizer/actions/workflows/ci.yml/badge.svg)](https://github.com/ammarasad2005/Algo-Visualizer/actions/workflows/ci.yml)\n[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)\n[![TypeScript](https://img.shields.io/badge/TypeScript-5.4-",
+    "pkg_name": "evosearch-lab",
+    "pkg_description": "",
+    "pkg_dependencies": [],
+    "pkg_devDependencies": [
+      "concurrently"
+    ],
+    "pkg_scripts": [
+      "dev",
+      "dev:client",
+      "dev:server",
+      "build",
+      "build:client",
+      "build:server",
+      "lint",
+      "test",
+      "typecheck"
+    ],
+    "pkg_engines": {},
+    "last_commit_iso": "2026-03-04T06:37:22Z",
+    "recent_commits": [
+      {
+        "title": "Merge pull request #2 from ammarasad2005/copilot/add-license-file",
+        "date": "2026-03-04T06:37:22Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "Add MIT LICENSE file",
+        "date": "2026-03-04T06:33:09Z",
+        "author": "copilot-swe-agent"
+      },
+      {
+        "title": "Initial plan",
+        "date": "2026-03-04T06:32:33Z",
+        "author": "copilot-swe-agent"
+      },
+      {
+        "title": "Merge pull request #1 from ammarasad2005/copilot/build-full-stack-evo\u2026",
+        "date": "2026-03-04T06:20:55Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "feat: Complete EvoSearch Lab full-stack implementation",
+        "date": "2026-03-03T22:41:31Z",
+        "author": "copilot-swe-agent"
+      },
+      {
+        "title": "Initial plan",
+        "date": "2026-03-03T22:04:56Z",
+        "author": "copilot-swe-agent"
+      },
+      {
+        "title": "Initial commit",
+        "date": "2026-03-03T21:53:21Z",
+        "author": "ammarasad2005"
+      }
+    ]
+  },
+  {
+    "name": "barakah-homes",
+    "description": "",
+    "languages": [],
+    "primary_language": "",
+    "stars": "0",
+    "forks": "0",
+    "commit_count_text": "1 Commit",
+    "topics": [],
+    "top_level_files": [],
+    "readme_chars": 0,
+    "readme_quality": 0,
+    "readme_first_500": "",
+    "last_commit_iso": "2026-04-29T19:03:31Z",
+    "recent_commits": [
+      {
+        "title": "add initial project structure with essential files and components",
+        "date": "2026-04-29T19:03:31Z",
+        "author": "ammarasad2005"
+      }
+    ]
+  },
+  {
+    "name": "TASK-05-WEB",
+    "description": "",
+    "languages": [
+      {
+        "lang": "TypeScript",
+        "pct": "56.2%"
+      },
+      {
+        "lang": "CSS",
+        "pct": "29.1%"
+      },
+      {
+        "lang": "HTML",
+        "pct": "14.7%"
+      }
+    ],
+    "primary_language": "TypeScript",
+    "stars": "0",
+    "forks": "0",
+    "commit_count_text": "6 Commits",
+    "topics": [],
+    "top_level_files": [],
+    "readme_chars": 1473,
+    "readme_headings": 7,
+    "readme_code_blocks": 12,
+    "readme_images": 0,
+    "readme_badges": 0,
+    "readme_links": 3,
+    "readme_quality": 4,
+    "readme_first_500": "# TempNgApp\n\nThis project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.22.\n\n## Development server\n\nTo start a local development server, run:\n\n```bash\nng serve\n```\n\nOnce the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.\n\n## Code scaffolding\n\nAngular CLI includes powerful code scaffolding tools. To generate a new component, run:\n\n```bash\n",
+    "pkg_name": "temp-ng-app",
+    "pkg_description": "",
+    "pkg_dependencies": [
+      "@angular/common",
+      "@angular/compiler",
+      "@angular/core",
+      "@angular/forms",
+      "@angular/platform-browser",
+      "@angular/router",
+      "rxjs",
+      "tslib",
+      "zone.js"
+    ],
+    "pkg_devDependencies": [
+      "@angular/build",
+      "@angular/cli",
+      "@angular/compiler-cli",
+      "@types/jasmine",
+      "jasmine-core",
+      "karma",
+      "karma-chrome-launcher",
+      "karma-coverage",
+      "karma-jasmine",
+      "karma-jasmine-html-reporter",
+      "typescript"
+    ],
+    "pkg_scripts": [
+      "ng",
+      "start",
+      "build",
+      "watch",
+      "test"
+    ],
+    "pkg_engines": {},
+    "last_commit_iso": "2026-03-30T17:38:46Z",
+    "recent_commits": [
+      {
+        "title": "enhance styling and structure for About, Feedback, and Home pages; up\u2026",
+        "date": "2026-03-30T17:38:46Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "clean up component names",
+        "date": "2026-03-30T17:02:22Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "update dashboard template",
+        "date": "2026-03-30T17:00:45Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "add dashboard child routes",
+        "date": "2026-03-30T16:59:27Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "setup routing",
+        "date": "2026-03-30T16:59:08Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "create components",
+        "date": "2026-03-30T16:58:14Z",
+        "author": "ammarasad2005"
+      }
+    ]
+  },
+  {
+    "name": "faculty-feedback-hub",
+    "description": "",
+    "languages": [
+      {
+        "lang": "TypeScript",
+        "pct": "96.2%"
+      },
+      {
+        "lang": "CSS",
+        "pct": "2.1%"
+      },
+      {
+        "lang": "Other",
+        "pct": "1.7%"
+      }
+    ],
+    "primary_language": "TypeScript",
+    "stars": "0",
+    "forks": "0",
+    "commit_count_text": "79 Commits",
+    "topics": [],
+    "top_level_files": [],
+    "readme_chars": 2102,
+    "readme_headings": 10,
+    "readme_code_blocks": 2,
+    "readme_images": 0,
+    "readme_badges": 0,
+    "readme_links": 4,
+    "readme_quality": 5,
+    "readme_first_500": "# Welcome to your Lovable project\n\n## Project info\n\n**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID\n\n## How can I edit this code?\n\nThere are several ways of editing your application.\n\n**Use Lovable**\n\nSimply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.\n\nChanges made via Lovable will be committed automatically to this repo.\n\n**Use your preferred IDE**\n\nIf you want to work locally using your own IDE, you can clone this repo an",
+    "pkg_name": "vite_react_shadcn_ts",
+    "pkg_description": "",
+    "pkg_dependencies": [
+      "@hookform/resolvers",
+      "@radix-ui/react-accordion",
+      "@radix-ui/react-alert-dialog",
+      "@radix-ui/react-aspect-ratio",
+      "@radix-ui/react-avatar",
+      "@radix-ui/react-checkbox",
+      "@radix-ui/react-collapsible",
+      "@radix-ui/react-context-menu",
+      "@radix-ui/react-dialog",
+      "@radix-ui/react-dropdown-menu",
+      "@radix-ui/react-hover-card",
+      "@radix-ui/react-label",
+      "@radix-ui/react-menubar",
+      "@radix-ui/react-navigation-menu",
+      "@radix-ui/react-popover",
+      "@radix-ui/react-progress",
+      "@radix-ui/react-radio-group",
+      "@radix-ui/react-scroll-area",
+      "@radix-ui/react-select",
+      "@radix-ui/react-separator",
+      "@radix-ui/react-slider",
+      "@radix-ui/react-slot",
+      "@radix-ui/react-switch",
+      "@radix-ui/react-tabs",
+      "@radix-ui/react-toast",
+      "@radix-ui/react-toggle",
+      "@radix-ui/react-toggle-group",
+      "@radix-ui/react-tooltip",
+      "@supabase/supabase-js",
+      "@tanstack/react-query",
+      "class-variance-authority",
+      "clsx",
+      "cmdk",
+      "date-fns",
+      "embla-carousel-react",
+      "input-otp",
+      "lucide-react",
+      "next-themes",
+      "react",
+      "react-day-picker",
+      "react-dom",
+      "react-hook-form",
+      "react-resizable-panels",
+      "react-router-dom",
+      "recharts",
+      "sonner",
+      "tailwind-merge",
+      "tailwindcss-animate",
+      "vaul",
+      "zod"
+    ],
+    "pkg_devDependencies": [
+      "@eslint/js",
+      "@tailwindcss/typography",
+      "@testing-library/jest-dom",
+      "@testing-library/react",
+      "@types/node",
+      "@types/react",
+      "@types/react-dom",
+      "@vitejs/plugin-react-swc",
+      "autoprefixer",
+      "eslint",
+      "eslint-plugin-react-hooks",
+      "eslint-plugin-react-refresh",
+      "globals",
+      "jsdom",
+      "lovable-tagger",
+      "postcss",
+      "tailwindcss",
+      "typescript",
+      "typescript-eslint",
+      "vite",
+      "vitest"
+    ],
+    "pkg_scripts": [
+      "dev",
+      "build",
+      "build:dev",
+      "lint",
+      "preview",
+      "test",
+      "test:watch"
+    ],
+    "pkg_engines": {},
+    "last_commit_iso": "2026-02-22T15:27:59Z",
+    "recent_commits": [
+      {
+        "title": "Relax review validation frontend",
+        "date": "2026-02-22T15:27:59Z",
+        "author": "lovable-dev"
+      },
+      {
+        "title": "Changes",
+        "date": "2026-02-22T15:27:59Z",
+        "author": "lovable-dev"
+      },
+      {
+        "title": "Relax comment limit in edge function",
+        "date": "2026-02-22T15:27:21Z",
+        "author": "lovable-dev"
+      },
+      {
+        "title": "Changes",
+        "date": "2026-02-22T15:27:20Z",
+        "author": "lovable-dev"
+      },
+      {
+        "title": "Lovable update",
+        "date": "2026-02-22T15:14:02Z",
+        "author": "lovable-dev"
+      },
+      {
+        "title": "Changes",
+        "date": "2026-02-22T15:14:01Z",
+        "author": "lovable-dev"
+      },
+      {
+        "title": "Add page transition wrapper",
+        "date": "2026-01-26T19:43:51Z",
+        "author": "lovable-dev"
+      },
+      {
+        "title": "Changes",
+        "date": "2026-01-26T19:43:51Z",
+        "author": "lovable-dev"
+      },
+      {
+        "title": "Updated plan file",
+        "date": "2026-01-26T19:43:12Z",
+        "author": "lovable-dev"
+      },
+      {
+        "title": "Improve leaderboard layout",
+        "date": "2026-01-26T19:40:36Z",
+        "author": "lovable-dev"
+      }
+    ]
+  },
+  {
+    "name": "login-system",
+    "description": "",
+    "languages": [
+      {
+        "lang": "JavaScript",
+        "pct": "100.0%"
+      }
+    ],
+    "primary_language": "JavaScript",
+    "stars": "0",
+    "forks": "0",
+    "commit_count_text": "6 Commits",
+    "topics": [],
+    "top_level_files": [],
+    "readme_chars": 0,
+    "readme_quality": 0,
+    "readme_first_500": "",
+    "pkg_name": "login-system",
+    "pkg_description": "",
+    "pkg_dependencies": [
+      "express",
+      "express-session",
+      "mongoose"
+    ],
+    "pkg_devDependencies": [],
+    "pkg_scripts": [
+      "test"
+    ],
+    "pkg_engines": {},
+    "last_commit_iso": "2026-03-06T16:34:48Z",
+    "recent_commits": [
+      {
+        "title": "Implemented logout functionality",
+        "date": "2026-03-06T16:34:48Z",
+        "author": ""
+      },
+      {
+        "title": "Added dashboard protected route",
+        "date": "2026-03-06T16:34:31Z",
+        "author": ""
+      },
+      {
+        "title": "Implemented login route with session",
+        "date": "2026-03-06T16:34:12Z",
+        "author": ""
+      },
+      {
+        "title": "Created User class with register method",
+        "date": "2026-03-06T16:33:50Z",
+        "author": ""
+      },
+      {
+        "title": "Added MongoDB connection using Mongoose",
+        "date": "2026-03-06T16:33:31Z",
+        "author": ""
+      },
+      {
+        "title": "Initial project setup with Express server",
+        "date": "2026-03-06T16:32:52Z",
+        "author": ""
+      }
+    ]
+  },
+  {
+    "name": "web-viewer",
+    "description": "",
+    "languages": [
+      {
+        "lang": "TypeScript",
+        "pct": "91.1%"
+      },
+      {
+        "lang": "CSS",
+        "pct": "8.2%"
+      },
+      {
+        "lang": "HTML",
+        "pct": "0.7%"
+      }
+    ],
+    "primary_language": "TypeScript",
+    "stars": "0",
+    "forks": "0",
+    "commit_count_text": "1 Commit",
+    "topics": [],
+    "top_level_files": [],
+    "readme_chars": 0,
+    "readme_quality": 0,
+    "readme_first_500": "",
+    "pkg_name": "react-vite-tailwind",
+    "pkg_description": "",
+    "pkg_dependencies": [
+      "@types/prismjs",
+      "clsx",
+      "lucide-react",
+      "prismjs",
+      "react",
+      "react-dom",
+      "react-simple-code-editor",
+      "tailwind-merge"
+    ],
+    "pkg_devDependencies": [
+      "@tailwindcss/vite",
+      "@types/node",
+      "@types/react",
+      "@types/react-dom",
+      "@vitejs/plugin-react",
+      "tailwindcss",
+      "typescript",
+      "vite",
+      "vite-plugin-singlefile"
+    ],
+    "pkg_scripts": [
+      "dev",
+      "build",
+      "preview"
+    ],
+    "pkg_engines": {},
+    "last_commit_iso": "2026-02-21T05:56:48Z",
+    "recent_commits": [
+      {
+        "title": "Initial Commit",
+        "date": "2026-02-21T05:56:48Z",
+        "author": "ammarasad2005"
+      }
+    ]
+  },
+  {
+    "name": "nextjs-geist-font-optimization",
+    "description": "",
+    "languages": [
+      {
+        "lang": "JavaScript",
+        "pct": "89.1%"
+      },
+      {
+        "lang": "TypeScript",
+        "pct": "10.7%"
+      },
+      {
+        "lang": "CSS",
+        "pct": "0.2%"
+      }
+    ],
+    "primary_language": "JavaScript",
+    "stars": "0",
+    "forks": "0",
+    "commit_count_text": "64 Commits",
+    "topics": [],
+    "top_level_files": [],
+    "readme_chars": 0,
+    "readme_quality": 0,
+    "readme_first_500": "",
+    "last_commit_iso": "2025-08-16T16:40:23Z",
+    "recent_commits": [
+      {
+        "title": "Add .next/static/chunks/node_modules_next_dist_compiled_2ce9398a._.js\u2026",
+        "date": "2025-08-16T16:40:23Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "Add .next/static/chunks/node_modules_next_dist_client_8f19e6fb._.js 1\u2026",
+        "date": "2025-08-16T16:40:18Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "Add src/components/ui/resizable.tsx 1755362410755",
+        "date": "2025-08-16T16:40:10Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "Add src/components/ui/radio-group.tsx 1755362409041",
+        "date": "2025-08-16T16:40:08Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "Add src/components/ui/scroll-area.tsx 1755362407221",
+        "date": "2025-08-16T16:40:07Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "Add src/components/ui/sheet.tsx 1755362405365",
+        "date": "2025-08-16T16:40:05Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "Add src/components/ui/select.tsx 1755362403077",
+        "date": "2025-08-16T16:40:03Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "Add src/components/ui/sidebar.tsx 1755362388008",
+        "date": "2025-08-16T16:40:01Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "Add src/components/ui/skeleton.tsx 1755362383141",
+        "date": "2025-08-16T16:39:44Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "Add src/components/ui/separator.tsx 1755362378619",
+        "date": "2025-08-16T16:39:40Z",
+        "author": "ammarasad2005"
+      }
+    ]
+  },
+  {
+    "name": "employee-management-system",
+    "description": "",
+    "languages": [
+      {
+        "lang": "TypeScript",
+        "pct": "90.1%"
+      },
+      {
+        "lang": "PLpgSQL",
+        "pct": "7.8%"
+      },
+      {
+        "lang": "CSS",
+        "pct": "1.6%"
+      },
+      {
+        "lang": "JavaScript",
+        "pct": "0.5%"
+      }
+    ],
+    "primary_language": "TypeScript",
+    "stars": "0",
+    "forks": "0",
+    "commit_count_text": "4 Commits",
+    "topics": [],
+    "top_level_files": [],
+    "readme_chars": 7966,
+    "readme_headings": 36,
+    "readme_code_blocks": 16,
+    "readme_images": 3,
+    "readme_badges": 9,
+    "readme_links": 7,
+    "readme_quality": 5,
+    "readme_first_500": "# Employee Management System\n\nA comprehensive, production-ready web application for tracking employee working hours, calculating salaries, and managing company notifications.\n\n![Employee Management System](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)\n![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=for-the-badge&logo=typescript)\n![Supabase](https://img.shields.io/badge/Supabase-green?style=for-the-badge&logo=supabase)\n\n## \ud83d\ude80 Features\n\n### For E",
+    "pkg_name": "employee-management-system",
+    "pkg_description": "",
+    "pkg_dependencies": [
+      "@supabase/ssr",
+      "@supabase/supabase-js",
+      "@tailwindcss/postcss",
+      "class-variance-authority",
+      "clsx",
+      "date-fns",
+      "lucide-react",
+      "next",
+      "react",
+      "react-dom",
+      "react-hot-toast",
+      "recharts",
+      "tailwind-merge"
+    ],
+    "pkg_devDependencies": [
+      "@types/node",
+      "@types/react",
+      "@types/react-dom",
+      "eslint",
+      "eslint-config-next",
+      "postcss",
+      "tailwindcss",
+      "typescript"
+    ],
+    "pkg_scripts": [
+      "dev",
+      "build",
+      "start",
+      "lint",
+      "type-check"
+    ],
+    "pkg_engines": {},
+    "last_commit_iso": "2026-01-28T08:55:25Z",
+    "recent_commits": [
+      {
+        "title": "Implement global Tailwind CSS styling with a dark theme and glassmorp\u2026",
+        "date": "2026-01-28T08:55:25Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "Implement admin dashboard with new API routes for attendance, users, \u2026",
+        "date": "2026-01-28T08:24:17Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "Initialize employee management system with Supabase integration, auth\u2026",
+        "date": "2026-01-28T08:13:55Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "Initial commit from Create Next App",
+        "date": "2026-01-28T07:49:30Z",
+        "author": "ammarasad2005"
+      }
+    ]
+  },
+  {
+    "name": "Web-Programming-Assignment-01",
+    "description": "",
+    "languages": [
+      {
+        "lang": "HTML",
+        "pct": "80.5%"
+      },
+      {
+        "lang": "CSS",
+        "pct": "19.5%"
+      }
+    ],
+    "primary_language": "HTML",
+    "stars": "0",
+    "forks": "0",
+    "commit_count_text": "15 Commits",
+    "topics": [],
+    "top_level_files": [],
+    "readme_chars": 0,
+    "readme_quality": 0,
+    "readme_first_500": "",
+    "last_commit_iso": "2026-01-31T16:58:54Z",
+    "recent_commits": [
+      {
+        "title": "Refactored AI-generated gallery with external CSS, icons, and respons\u2026",
+        "date": "2026-01-31T16:58:54Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "index.html is the file which is one complete single file",
+        "date": "2026-01-31T16:54:22Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "Updated art gallery to HTML5 with external CSS, navigation, icons, an\u2026",
+        "date": "2026-01-31T16:51:39Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "i have added a separate file which contains styling",
+        "date": "2026-01-31T16:46:56Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "this is the ai version",
+        "date": "2026-01-28T09:17:42Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "added media query and flex box. added a couple of images also",
+        "date": "2026-01-28T09:07:22Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "combined all the files into one single html file called index.html",
+        "date": "2026-01-28T08:20:34Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "the home link on header error fixed",
+        "date": "2026-01-26T09:11:40Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "added a feedback form",
+        "date": "2026-01-26T09:06:51Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "added signin and signup pages",
+        "date": "2026-01-26T09:05:02Z",
+        "author": "ammarasad2005"
+      }
+    ]
+  },
+  {
+    "name": "AnonymousFacultyReview",
+    "description": "",
+    "languages": [],
+    "primary_language": "",
+    "topics": [],
+    "top_level_files": [],
+    "readme_chars": 0,
+    "readme_quality": 0,
+    "readme_first_500": "",
+    "last_commit_iso": "",
+    "recent_commits": []
+  },
+  {
+    "name": "ammarasadPersonal",
+    "description": "",
+    "languages": [],
+    "primary_language": "",
+    "stars": "0",
+    "forks": "0",
+    "commit_count_text": "3 Commits",
+    "topics": [],
+    "top_level_files": [],
+    "readme_chars": 19,
+    "readme_headings": 1,
+    "readme_code_blocks": 0,
+    "readme_images": 0,
+    "readme_badges": 0,
+    "readme_links": 0,
+    "readme_quality": 2,
+    "readme_first_500": "# ammarasadPersonal",
+    "last_commit_iso": "2025-08-08T19:56:37Z",
+    "recent_commits": [
+      {
+        "title": "Merge pull request #8 from ammarasad2005/copilot/fix-cbf95af3-061e-4a\u2026",
+        "date": "2025-08-08T19:56:37Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "Initial plan",
+        "date": "2025-08-08T19:54:41Z",
+        "author": "copilot-swe-agent"
+      },
+      {
+        "title": "Initial commit",
+        "date": "2025-01-09T06:54:41Z",
+        "author": "ammarasad2005"
+      }
+    ]
+  },
+  {
+    "name": "FacultyTrackNReview",
+    "description": "A website which the students of FAST NUCES Isb campus can use, for getting info about the teaching staff, like their office number, their email addresses, and they can also be able to post reviews anonymously regarding their experience with the teaching staff, with their identities 100% secret and untracable",
+    "languages": [],
+    "primary_language": "",
+    "stars": "0",
+    "forks": "0",
+    "commit_count_text": "1 Commit",
+    "topics": [],
+    "top_level_files": [],
+    "readme_chars": 0,
+    "readme_quality": 0,
+    "readme_first_500": "",
+    "last_commit_iso": "2026-01-25T19:53:56Z",
+    "recent_commits": [
+      {
+        "title": "Initial commit",
+        "date": "2026-01-25T19:53:56Z",
+        "author": "ammarasad2005"
+      }
+    ]
+  },
+  {
+    "name": "GalaxyWarriors-SFMLGraphics",
+    "description": "A graphical nintendo type galaxy arcade game.",
+    "languages": [
+      {
+        "lang": "C++",
+        "pct": "99.3%"
+      },
+      {
+        "lang": "C",
+        "pct": "0.7%"
+      }
+    ],
+    "primary_language": "C++",
+    "stars": "0",
+    "forks": "0",
+    "commit_count_text": "36 Commits",
+    "topics": [],
+    "top_level_files": [],
+    "readme_chars": 0,
+    "readme_quality": 0,
+    "readme_first_500": "",
+    "last_commit_iso": "2025-12-12T02:44:49Z",
+    "recent_commits": [
+      {
+        "title": "Font File uploaded",
+        "date": "2025-12-12T02:44:49Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "Merge pull request #2 from ammarasad2005/noSTLContainer",
+        "date": "2025-12-11T16:48:58Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "updated",
+        "date": "2025-12-11T14:51:02Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "updated",
+        "date": "2025-12-11T14:50:29Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "updated",
+        "date": "2025-12-11T14:50:05Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "updated",
+        "date": "2025-12-11T14:48:54Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "updated",
+        "date": "2025-12-11T14:48:20Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "updated",
+        "date": "2025-12-11T14:47:46Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "updated",
+        "date": "2025-12-11T14:46:59Z",
+        "author": "ammarasad2005"
+      },
+      {
+        "title": "updated",
+        "date": "2025-12-11T14:46:33Z",
+        "author": "ammarasad2005"
+      }
+    ]
+  }
+]
