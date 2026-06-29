@@ -52,3 +52,17 @@ prompt
 server.log
 # Skills directory
 /skills/
+# Project workspace artifacts (not part of the portfolio code)
+/research/
+/scripts/
+/upload/
+/download/
+/worklog.md
+/agent-ctx/
+
+# Sandbox / dev-orchestration artifacts
+/.zscripts/
+/tool-results/
+/db/
+/prisma/*.db
+/prisma/*.db-journal
