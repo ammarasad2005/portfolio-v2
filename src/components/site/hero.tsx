@@ -48,11 +48,8 @@ export function Hero() {
       className="relative min-h-[100svh] w-full overflow-hidden flex items-center"
       aria-label="Introduction"
     >
-      {/* 3D canvas — right half on desktop, full on mobile */}
-      <div
-        className="absolute inset-0 z-0 lg:left-[35%]"
-        aria-hidden="true"
-      >
+      {/* 3D canvas — fixed background, behind content */}
+      <div className="absolute inset-0 z-0" aria-hidden="true">
         {!reduced && (
           <Scene3D
             activeSection={activeSection}
@@ -60,19 +57,18 @@ export function Hero() {
             isMobile={isMobile}
           />
         )}
-        {/* Gradient mask for legibility — fades to left so text is readable */}
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/40 to-transparent lg:from-background lg:via-background/30 lg:to-transparent" />
-        {/* Bottom fade */}
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
+        {/* Gradient mask for legibility — stronger in light mode */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/60 to-background dark:from-background/30 dark:via-background/50 dark:to-background" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/30 to-background/50 dark:from-background/80 dark:via-transparent dark:to-background/40" />
       </div>
 
-      {/* Content overlay — left side */}
+      {/* Content overlay */}
       <div className="container-prose relative z-10 pt-24 pb-16">
         <motion.div
           initial={reduced ? {} : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-2xl"
+          className="max-w-3xl"
         >
           {/* Status line */}
           <div className="flex items-center gap-3 mb-8">
