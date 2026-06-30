@@ -2,35 +2,41 @@
 
 import * as THREE from "three";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { AdaptiveDpr, AdaptiveEvents, Environment } from "@react-three/drei";
-// Postprocessing disabled for now
+import { AdaptiveDpr, AdaptiveEvents, Environment, ContactShadows } from "@react-three/drei";
 import { useEffect, useRef, useState, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CharacterGLB } from "./character-glb";
+import { Avatar } from "./avatar";
+import { personalInfo } from "@/data/personal";
 
 /**
- * StartupLoader — a scroll-driven cinematic gate using the actual 3D character
- * model from red1-for-hek, with the exact tracking behavior and lighting setup.
+ * StartupLoader — the user's own 3D avatar waves to the viewer while a brief
+ * intro text appears beside it. The viewer scrolls (slowly) to transition
+ * into the main portfolio.
  *
- * Shows on EVERY visit (no sessionStorage gate).
+ * Layout:
+ *   - Left side: 3D avatar waving
+ *   - Right side: intro text (name, role, one-liner)
+ *   - Bottom: "Scroll to enter" hint + vertical progress bar
  *
- * Architecture:
- *   - Canvas with reference camera (FOV 14.5°, position [0, 13.1, 24.7], zoom 1.1)
- *   - Reference lighting: purple directional + point + HDR environment
- *   - "Lights on" reveal: intensities fade from 0 to full over 1.5s
- *   - GLB character loads with progress bar, then intro animation plays
- *   - Head bone (spine.006) tracks mouse cursor (max π/6, lerp 0.2/0.1)
- *   - Scroll (wheel/touch/keyboard) drives progress 0→1:
- *     - 0.0-0.1: idle, head tracks mouse, "Scroll to enter" hint
- *     - 0.1-0.3: character rotates right (y 0→0.7), camera pulls back (z 24.7→28)
- *     - 0.3-0.7: character turns to desk (y 0.7→0.92, x 0→0.12), neck tilts,
- *                monitor reveals, screenlight on
- *     - 0.7-1.0: character slides up, scene fades to black
- *     - 1.0: loader unmounts, main portfolio revealed
+ * Scroll (SLOW — requires more scroll to progress):
+ *   - Wheel: deltaY / 4000 per event (~4000 units = full progress)
+ *   - Touch: deltaY / 1200 per move (~1200px drag = full progress)
+ *   - Keyboard: ArrowDown/PageDown/Space = +4%, ArrowUp/PageUp = -4%
+ *
+ * Transition phases:
+ *   - 0.0-0.5: avatar waves, intro text visible, hint shows
+ *   - 0.5-0.7: intro text fades out, avatar starts to sink
+ *   - 0.7-1.0: avatar sinks down, scene fades to black
+ *   - 1.0: loader unmounts, main portfolio revealed
+ *
+ * Shows on EVERY visit.
  */
 
 const SCROLL_THRESHOLD = 0.995;
-const LERP_SPEED = 0.08;
+const LERP_SPEED = 0.06; // slower lerp = smoother, more deliberate
+const WHEEL_DIVISOR = 2500; // higher = slower scroll (~25 wheel clicks to complete)
+const TOUCH_DIVISOR = 800; // ~800px drag to complete
+const KEYBOARD_STEP = 0.06; // ~16 key presses to complete
 
 interface StartupLoaderProps {
   onComplete: () => void;
@@ -38,7 +44,6 @@ interface StartupLoaderProps {
 
 export function StartupLoader({ onComplete }: StartupLoaderProps) {
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [lightsOn, setLightsOn] = useState(false);
   const [modelLoaded, setModelLoaded] = useState(false);
   const [loadProgress, setLoadProgress] = useState(0);
   const [exiting, setExiting] = useState(false);
@@ -57,16 +62,14 @@ export function StartupLoader({ onComplete }: StartupLoaderProps) {
 
   // Track GLB loading progress via fetch
   useEffect(() => {
-    fetch("/models/character.glb")
+    fetch("/models/avatar-anim.glb")
       .then((response) => {
         if (!response.body) return;
         const reader = response.body.getReader();
         const contentLength = parseInt(response.headers.get("content-length") || "0");
         let received = 0;
-        const chunks: Uint8Array[] = [];
         reader.read().then(function process({ done, value }): any {
           if (done) return;
-          chunks.push(value);
           received += value.length;
           if (contentLength > 0) {
             setLoadProgress(received / contentLength);
@@ -86,10 +89,10 @@ export function StartupLoader({ onComplete }: StartupLoaderProps) {
     };
   }, []);
 
-  // Virtual scroll: wheel / touch / keyboard
+  // Virtual scroll — SLOW (high divisors)
   useEffect(() => {
     const onWheel = (e: WheelEvent) => {
-      targetProgress.current = Math.min(1, Math.max(0, targetProgress.current + e.deltaY / 1500));
+      targetProgress.current = Math.min(1, Math.max(0, targetProgress.current + e.deltaY / WHEEL_DIVISOR));
     };
 
     let touchStartY = 0;
@@ -99,16 +102,16 @@ export function StartupLoader({ onComplete }: StartupLoaderProps) {
     const onTouchMove = (e: TouchEvent) => {
       const deltaY = touchStartY - e.touches[0].clientY;
       touchStartY = e.touches[0].clientY;
-      targetProgress.current = Math.min(1, Math.max(0, targetProgress.current + deltaY / 500));
+      targetProgress.current = Math.min(1, Math.max(0, targetProgress.current + deltaY / TOUCH_DIVISOR));
     };
 
     const onKey = (e: KeyboardEvent) => {
       if (["ArrowDown", "PageDown", " "].includes(e.key)) {
         e.preventDefault();
-        targetProgress.current = Math.min(1, targetProgress.current + 0.08);
+        targetProgress.current = Math.min(1, targetProgress.current + KEYBOARD_STEP);
       } else if (e.key === "ArrowUp" || e.key === "PageUp") {
         e.preventDefault();
-        targetProgress.current = Math.max(0, targetProgress.current - 0.08);
+        targetProgress.current = Math.max(0, targetProgress.current - KEYBOARD_STEP);
       }
     };
 
@@ -146,19 +149,14 @@ export function StartupLoader({ onComplete }: StartupLoaderProps) {
     return () => cancelAnimationFrame(raf);
   }, [onComplete]);
 
-  // "Lights on" reveal after model loads
-  useEffect(() => {
-    if (modelLoaded) {
-      const t = setTimeout(() => setLightsOn(true), 200);
-      return () => clearTimeout(t);
-    }
-  }, [modelLoaded]);
-
   // Canvas opacity: fades out when scroll > 0.7
   const canvasOpacity = Math.max(0, 1 - Math.max(0, (scrollProgress - 0.7) / 0.3));
 
-  // Hint visible: model loaded + lights on + scroll < 0.1
-  const hintVisible = modelLoaded && lightsOn && scrollProgress < 0.1 && !exiting;
+  // Intro text opacity: visible 0-0.5, fades 0.5-0.7
+  const textOpacity = Math.max(0, 1 - Math.max(0, (scrollProgress - 0.5) / 0.2));
+
+  // Hint visible: model loaded + scroll < 0.3
+  const hintVisible = modelLoaded && scrollProgress < 0.3 && !exiting;
 
   // Loading visible: model not yet loaded
   const loadingVisible = !modelLoaded;
@@ -171,55 +169,104 @@ export function StartupLoader({ onComplete }: StartupLoaderProps) {
           style={{ background: "#06060A" }}
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } }}
-          aria-label="Loading portfolio — scroll to enter"
+          aria-label="Welcome — scroll to enter portfolio"
           role="dialog"
           aria-modal="true"
         >
-          {/* Radial glow behind character (reference's .character-rim) */}
+          {/* Radial glow behind avatar */}
           <div
             aria-hidden="true"
             className="absolute inset-0 pointer-events-none transition-opacity duration-[1500ms]"
             style={{
-              opacity: lightsOn ? 0.5 : 0,
+              opacity: modelLoaded ? 0.4 : 0,
               background:
-                "radial-gradient(circle at 50% 45%, oklch(0.45 0.18 320 / 0.4) 0%, transparent 50%)",
+                "radial-gradient(circle at 30% 50%, oklch(0.45 0.12 65 / 0.35) 0%, transparent 50%)",
               filter: "blur(60px)",
             }}
           />
 
-          {/* 3D Canvas — reference camera setup */}
-          <div
-            className="absolute inset-0"
-            aria-hidden="true"
-            style={{ opacity: canvasOpacity, transition: "opacity 0.1s linear" }}
-          >
-            <Canvas
-              camera={{
-                position: [0, 8, 12],
-                fov: 35,
-                near: 0.1,
-                far: 1000,
-              }}
-              onCreated={({ camera }) => {
-                camera.lookAt(0, 8, 2);
-              }}
-              dpr={isMobile ? [1, 1.5] : [1, 2]}
-              gl={{
-                antialias: !isMobile,
-                alpha: true,
-                powerPreference: "high-performance",
-                stencil: false,
-                depth: true,
-              }}
-              style={{ background: "transparent" }}
+          {/* Split layout: avatar left, intro text right */}
+          <div className="absolute inset-0 flex items-center">
+            {/* Left: 3D Canvas */}
+            <div
+              className="absolute inset-0 lg:left-0 lg:right-1/2"
+              aria-hidden="true"
+              style={{ opacity: canvasOpacity, transition: "opacity 0.1s linear" }}
             >
-              <StartupScene
-                scrollProgress={scrollProgress}
-                lightsOn={lightsOn}
-                isMobile={isMobile}
-                onModelLoaded={() => setModelLoaded(true)}
-              />
-            </Canvas>
+              <Canvas
+                camera={{ position: [0, 0.3, 3.2], fov: 35, near: 0.1, far: 100 }}
+                onCreated={({ camera }) => {
+                  camera.lookAt(0, 0.4, 0);
+                }}
+                dpr={isMobile ? [1, 1.5] : [1, 2]}
+                gl={{
+                  antialias: !isMobile,
+                  alpha: true,
+                  powerPreference: "high-performance",
+                  stencil: false,
+                  depth: true,
+                }}
+                style={{ background: "transparent" }}
+              >
+                <AvatarScene
+                  scrollProgress={scrollProgress}
+                  isMobile={isMobile}
+                  onModelLoaded={() => setModelLoaded(true)}
+                />
+              </Canvas>
+            </div>
+
+            {/* Right: Intro text (desktop only — mobile shows text below) */}
+            <div
+              className="relative z-10 lg:absolute lg:right-0 lg:top-0 lg:bottom-0 lg:w-1/2 flex items-center justify-center lg:justify-start lg:pl-8"
+              style={{ opacity: textOpacity, transition: "opacity 0.3s ease" }}
+            >
+              <div className="px-6 sm:px-8 lg:px-12 max-w-lg">
+                <AnimatePresence>
+                  {modelLoaded && (
+                    <motion.div
+                      initial={{ opacity: 0, x: 30 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
+                    >
+                      {/* Greeting */}
+                      <p className="label-mono text-accent mb-4">
+                        Hello there —
+                      </p>
+
+                      {/* Name */}
+                      <h1 className="display-serif text-5xl sm:text-6xl lg:text-7xl text-foreground leading-[0.95] mb-4">
+                        {personalInfo.shortName}
+                      </h1>
+
+                      {/* Role */}
+                      <p className="text-xl sm:text-2xl text-foreground font-medium mb-6">
+                        {personalInfo.role}
+                      </p>
+
+                      {/* Brief intro */}
+                      <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-8 max-w-md">
+                        {personalInfo.valueProp}
+                      </p>
+
+                      {/* Stats row */}
+                      <div className="flex flex-wrap gap-6 mb-8">
+                        {personalInfo.stats.slice(0, 3).map((stat) => (
+                          <div key={stat.label}>
+                            <div className="text-lg font-medium text-foreground tabular-nums">
+                              {stat.value}
+                            </div>
+                            <div className="label-mono text-muted-foreground mt-0.5">
+                              {stat.label}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            </div>
           </div>
 
           {/* Top brand strip */}
@@ -227,22 +274,15 @@ export function StartupLoader({ onComplete }: StartupLoaderProps) {
             <div className="flex items-center gap-3">
               <span
                 className="display-serif text-2xl text-accent leading-none transition-opacity duration-1000"
-                style={{ opacity: lightsOn ? 1 : 0 }}
+                style={{ opacity: modelLoaded ? 1 : 0 }}
                 aria-hidden="true"
               >
-                aa
+                {personalInfo.initials}
               </span>
-              <div
-                className="hidden sm:flex flex-col leading-none transition-opacity duration-1000"
-                style={{ opacity: lightsOn ? 1 : 0 }}
-              >
-                <span className="text-sm font-medium text-foreground">Ammar Asad</span>
-                <span className="label-mono text-muted-foreground mt-0.5">Full-Stack Engineer</span>
-              </div>
             </div>
             <span
               className="label-mono text-muted-foreground transition-opacity duration-1000"
-              style={{ opacity: lightsOn ? 1 : 0 }}
+              style={{ opacity: modelLoaded ? 1 : 0 }}
             >
               Scroll to enter
             </span>
@@ -267,9 +307,9 @@ export function StartupLoader({ onComplete }: StartupLoaderProps) {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5 }}
-                className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-6"
+                className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-6"
               >
-                <span className="label-mono text-muted-foreground">Loading character</span>
+                <span className="label-mono text-muted-foreground">Loading avatar</span>
                 <div className="w-64 h-px bg-border/40 overflow-hidden relative">
                   <div
                     className="absolute inset-y-0 left-0 bg-accent transition-[width] duration-200"
@@ -291,20 +331,14 @@ export function StartupLoader({ onComplete }: StartupLoaderProps) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}
                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute bottom-10 sm:bottom-12 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-3 pointer-events-none"
+                className="absolute bottom-10 sm:bottom-12 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 pointer-events-none"
               >
-                <span className="display-serif text-2xl sm:text-3xl text-foreground text-center leading-tight">
-                  Move your cursor —{" "}
-                  <span className="text-accent">he's watching.</span>
-                </span>
-                <div className="flex flex-col items-center gap-2 mt-2">
-                  <span className="label-mono text-muted-foreground">Scroll to enter</span>
-                  <motion.div
-                    animate={{ y: [0, 8, 0] }}
-                    transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-                    className="h-8 w-px bg-gradient-to-b from-accent to-transparent"
-                  />
-                </div>
+                <span className="label-mono text-muted-foreground">Scroll to enter</span>
+                <motion.div
+                  animate={{ y: [0, 8, 0] }}
+                  transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+                  className="h-8 w-px bg-gradient-to-b from-accent to-transparent"
+                />
               </motion.div>
             )}
           </AnimatePresence>
@@ -324,88 +358,89 @@ export function StartupLoader({ onComplete }: StartupLoaderProps) {
   );
 }
 
-// ============ Startup scene — reference lighting setup ============
+// ============ Avatar Scene ============
 
-interface StartupSceneProps {
+interface AvatarSceneProps {
   scrollProgress: number;
-  lightsOn: boolean;
   isMobile: boolean;
   onModelLoaded: () => void;
 }
 
-function StartupScene({ scrollProgress, lightsOn, isMobile, onModelLoaded }: StartupSceneProps) {
-  const { camera, scene } = useThree();
+function AvatarScene({ scrollProgress, isMobile, onModelLoaded }: AvatarSceneProps) {
+  const { scene } = useThree();
 
-  // Light refs (reference lighting.ts setup)
-  const dirLightRef = useRef<THREE.DirectionalLight>(null);
-  const pointLightRef = useRef<THREE.PointLight>(null);
-  const envIntensity = useRef(0);
-  const dirIntensity = useRef(0);
+  // Lighting refs
+  const keyLightRef = useRef<THREE.DirectionalLight>(null);
+  const fillLightRef = useRef<THREE.PointLight>(null);
+  const rimLightRef = useRef<THREE.SpotLight>(null);
+  const lightIntensity = useRef(0);
 
   useFrame((_, delta) => {
-    // === "Lights on" reveal ===
-    const targetEnv = lightsOn ? 0.64 : 0;
-    const targetDir = lightsOn ? 1 : 0;
-    envIntensity.current += (targetEnv - envIntensity.current) * delta * 1.2;
-    dirIntensity.current += (targetDir - dirIntensity.current) * delta * 1.2;
+    // "Lights on" reveal
+    const target = 1;
+    lightIntensity.current += (target - lightIntensity.current) * delta * 1.2;
 
-    if (dirLightRef.current) {
-      dirLightRef.current.intensity = dirIntensity.current;
-    }
-    // Set environment intensity on the scene (safe in three 0.185)
+    if (keyLightRef.current) keyLightRef.current.intensity = lightIntensity.current * 1.5;
+    if (fillLightRef.current) fillLightRef.current.intensity = lightIntensity.current * 0.8;
+    if (rimLightRef.current) rimLightRef.current.intensity = lightIntensity.current * 2;
+
+    // Environment intensity
     if (scene) {
-      (scene as any).environmentIntensity = envIntensity.current;
+      (scene as any).environmentIntensity = lightIntensity.current * 0.5;
     }
-
-    // === Camera setup — match the Canvas camera position ===
-    // Canvas camera starts at (0, 8, 12). Scroll drives pull-back.
-    const phase1 = Math.max(0, Math.min(1, scrollProgress / 0.3));
-    const phase2 = Math.max(0, Math.min(1, (scrollProgress - 0.3) / 0.4));
-    const targetZ = 12 + phase1 * 3 + phase2 * 5;
-    const targetY = 8 + phase2 * 2;
-    camera.position.x += (0 - camera.position.x) * delta * 3;
-    camera.position.y += (targetY - camera.position.y) * delta * 3;
-    camera.position.z += (targetZ - camera.position.z) * delta * 3;
-    camera.lookAt(0, 8, 2);
   });
 
   return (
     <>
       <color attach="background" args={["#06060A"]} />
-      <fog attach="fog" args={["#06060A", 15, 50]} />
+      <fog attach="fog" args={["#06060A", 4, 12]} />
 
-      <ambientLight intensity={0.3} />
+      <ambientLight intensity={0.4} />
 
-      {/* Reference: DirectionalLight (#c7a9ff purple, position [-0.47, -0.32, -1]) */}
+      {/* Key light — warm, from front-left */}
       <directionalLight
-        ref={dirLightRef}
-        position={[-0.47, -0.32, -1]}
+        ref={keyLightRef}
+        position={[3, 4, 5]}
         intensity={0}
-        color="#c7a9ff"
+        color="#FFE4B5"
       />
 
-      {/* Reference: PointLight (#c2a4ff purple, position [3, 12, 4]) */}
+      {/* Fill light — amber accent */}
       <pointLight
-        ref={pointLightRef}
-        position={[3, 12, 4]}
+        ref={fillLightRef}
+        position={[-3, 1, 2]}
         intensity={0}
-        color="#c2a4ff"
-        distance={100}
-        decay={3}
+        color="#E0A87C"
+        distance={10}
       />
 
-      {/* Additional warm fill light (our accent) */}
-      <pointLight position={[-6, -4, -4]} intensity={1.5} color="#E0A87C" />
+      {/* Rim light — from behind for separation */}
+      <spotLight
+        ref={rimLightRef}
+        position={[-2, 3, -4]}
+        angle={0.6}
+        penumbra={1}
+        intensity={0}
+        color="#E0A87C"
+      />
 
       <Suspense fallback={null}>
-        <CharacterGLB scrollProgress={scrollProgress} onLoaded={onModelLoaded} />
-        {/* Reference environment: char_enviorment.hdr for reflections */}
-        <Environment files="/models/char_enviorment.hdr" background={false} />
+        <Avatar scrollProgress={scrollProgress} onLoaded={onModelLoaded} />
+        <Environment preset="studio" background={false} />
       </Suspense>
+
+      {/* Contact shadow under avatar */}
+      <ContactShadows
+        position={[0, -1.05, 0]}
+        opacity={0.5}
+        scale={4}
+        blur={2}
+        far={3}
+        color="#000000"
+      />
 
       <AdaptiveDpr pixelated={false} />
       <AdaptiveEvents />
-      {/* Postprocessing disabled — causes rendering issues with GLB model */}
     </>
   );
 }
