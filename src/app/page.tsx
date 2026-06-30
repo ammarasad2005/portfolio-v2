@@ -13,30 +13,11 @@ import { Footer } from "@/components/site/footer";
 import { NoiseOverlay } from "@/components/site/noise-overlay";
 import { StartupLoader } from "@/components/site/startup-loader";
 
-const LOADER_KEY = "portfolio-loader-seen-v1";
-
 export default function Home() {
-  const [showLoader, setShowLoader] = React.useState(false);
-
-  // Decide whether to show the loader (only on first visit per session)
-  React.useEffect(() => {
-    try {
-      const seen = sessionStorage.getItem(LOADER_KEY);
-      if (!seen) {
-        setShowLoader(true);
-      }
-    } catch {
-      // sessionStorage might be unavailable (private mode) — skip loader
-    }
-  }, []);
+  const [showLoader, setShowLoader] = React.useState(true);
 
   const handleLoaderComplete = React.useCallback(() => {
     setShowLoader(false);
-    try {
-      sessionStorage.setItem(LOADER_KEY, "1");
-    } catch {
-      // ignore
-    }
   }, []);
 
   return (

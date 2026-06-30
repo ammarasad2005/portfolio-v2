@@ -2,34 +2,35 @@
 
 import * as THREE from "three";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Float, Environment, ContactShadows, AdaptiveDpr, AdaptiveEvents } from "@react-three/drei";
-import { EffectComposer, Bloom, Vignette, SMAA } from "@react-three/postprocessing";
-import { useEffect, useRef, useState, useCallback } from "react";
+import { AdaptiveDpr, AdaptiveEvents, Environment } from "@react-three/drei";
+// Postprocessing disabled for now
+import { useEffect, useRef, useState, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Character } from "./character";
+import { CharacterGLB } from "./character-glb";
 
 /**
- * StartupLoader — a scroll-driven cinematic gate.
+ * StartupLoader — a scroll-driven cinematic gate using the actual 3D character
+ * model from red1-for-hek, with the exact tracking behavior and lighting setup.
  *
- * The user scrolls (wheel / touch / keyboard) to drive a virtual progress
- * value (0-1) that:
- *   - 0.0-0.3: character idle, head tracks mouse, "Scroll to enter" hint
- *   - 0.3-0.7: character rotates right (0→0.7 rad), camera pulls back
- *   - 0.7-1.0: character slides up + out, canvas fades to black
- *   - 1.0: loader unmounts, main portfolio revealed
+ * Shows on EVERY visit (no sessionStorage gate).
  *
- * No click-to-enter, no auto-advance. The user must scroll to enter.
- *
- * Inspiration: red1-for-hek.vercel.app's scroll-driven character choreography.
- * Implementation: original procedural character (no proprietary GLB reused).
- *
- * Camera: narrow FOV (22°) for cinematic flatness, high angle looking down.
- * Lights: "lights on" reveal — directional + point + environment fade from 0
- * to full over 1.5s after mount.
+ * Architecture:
+ *   - Canvas with reference camera (FOV 14.5°, position [0, 13.1, 24.7], zoom 1.1)
+ *   - Reference lighting: purple directional + point + HDR environment
+ *   - "Lights on" reveal: intensities fade from 0 to full over 1.5s
+ *   - GLB character loads with progress bar, then intro animation plays
+ *   - Head bone (spine.006) tracks mouse cursor (max π/6, lerp 0.2/0.1)
+ *   - Scroll (wheel/touch/keyboard) drives progress 0→1:
+ *     - 0.0-0.1: idle, head tracks mouse, "Scroll to enter" hint
+ *     - 0.1-0.3: character rotates right (y 0→0.7), camera pulls back (z 24.7→28)
+ *     - 0.3-0.7: character turns to desk (y 0.7→0.92, x 0→0.12), neck tilts,
+ *                monitor reveals, screenlight on
+ *     - 0.7-1.0: character slides up, scene fades to black
+ *     - 1.0: loader unmounts, main portfolio revealed
  */
 
-const SCROLL_THRESHOLD = 0.995; // progress needed to complete
-const LERP_SPEED = 0.08; // how fast actual progress catches up to target
+const SCROLL_THRESHOLD = 0.995;
+const LERP_SPEED = 0.08;
 
 interface StartupLoaderProps {
   onComplete: () => void;
@@ -38,6 +39,8 @@ interface StartupLoaderProps {
 export function StartupLoader({ onComplete }: StartupLoaderProps) {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [lightsOn, setLightsOn] = useState(false);
+  const [modelLoaded, setModelLoaded] = useState(false);
+  const [loadProgress, setLoadProgress] = useState(0);
   const [exiting, setExiting] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -52,7 +55,29 @@ export function StartupLoader({ onComplete }: StartupLoaderProps) {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Lock body scroll while loader is visible
+  // Track GLB loading progress via fetch
+  useEffect(() => {
+    fetch("/models/character.glb")
+      .then((response) => {
+        if (!response.body) return;
+        const reader = response.body.getReader();
+        const contentLength = parseInt(response.headers.get("content-length") || "0");
+        let received = 0;
+        const chunks: Uint8Array[] = [];
+        reader.read().then(function process({ done, value }): any {
+          if (done) return;
+          chunks.push(value);
+          received += value.length;
+          if (contentLength > 0) {
+            setLoadProgress(received / contentLength);
+          }
+          reader.read().then(process);
+        });
+      })
+      .catch(() => {});
+  }, []);
+
+  // Lock body scroll
   useEffect(() => {
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -61,10 +86,9 @@ export function StartupLoader({ onComplete }: StartupLoaderProps) {
     };
   }, []);
 
-  // Virtual scroll: wheel / touch / keyboard → accumulate targetProgress
+  // Virtual scroll: wheel / touch / keyboard
   useEffect(() => {
     const onWheel = (e: WheelEvent) => {
-      // Normalize: ~1500 units of wheel = full progress
       targetProgress.current = Math.min(1, Math.max(0, targetProgress.current + e.deltaY / 1500));
     };
 
@@ -75,7 +99,6 @@ export function StartupLoader({ onComplete }: StartupLoaderProps) {
     const onTouchMove = (e: TouchEvent) => {
       const deltaY = touchStartY - e.touches[0].clientY;
       touchStartY = e.touches[0].clientY;
-      // Normalize: ~500px of touch drag = full progress
       targetProgress.current = Math.min(1, Math.max(0, targetProgress.current + deltaY / 500));
     };
 
@@ -108,10 +131,8 @@ export function StartupLoader({ onComplete }: StartupLoaderProps) {
     const tick = () => {
       setScrollProgress((prev) => {
         const next = prev + (targetProgress.current - prev) * LERP_SPEED;
-        // Check completion
         if (next >= SCROLL_THRESHOLD && !completedRef.current) {
           completedRef.current = true;
-          // Trigger exit
           setTimeout(() => {
             setExiting(true);
             setTimeout(() => onComplete(), 800);
@@ -125,17 +146,22 @@ export function StartupLoader({ onComplete }: StartupLoaderProps) {
     return () => cancelAnimationFrame(raf);
   }, [onComplete]);
 
-  // "Lights on" reveal after mount
+  // "Lights on" reveal after model loads
   useEffect(() => {
-    const t = setTimeout(() => setLightsOn(true), 200);
-    return () => clearTimeout(t);
-  }, []);
+    if (modelLoaded) {
+      const t = setTimeout(() => setLightsOn(true), 200);
+      return () => clearTimeout(t);
+    }
+  }, [modelLoaded]);
 
   // Canvas opacity: fades out when scroll > 0.7
   const canvasOpacity = Math.max(0, 1 - Math.max(0, (scrollProgress - 0.7) / 0.3));
 
-  // Hint visible: lights on + scroll < 0.15
-  const hintVisible = lightsOn && scrollProgress < 0.15 && !exiting;
+  // Hint visible: model loaded + lights on + scroll < 0.1
+  const hintVisible = modelLoaded && lightsOn && scrollProgress < 0.1 && !exiting;
+
+  // Loading visible: model not yet loaded
+  const loadingVisible = !modelLoaded;
 
   return (
     <AnimatePresence>
@@ -149,26 +175,34 @@ export function StartupLoader({ onComplete }: StartupLoaderProps) {
           role="dialog"
           aria-modal="true"
         >
-          {/* Radial glow behind character (like reference's .character-rim) */}
+          {/* Radial glow behind character (reference's .character-rim) */}
           <div
             aria-hidden="true"
             className="absolute inset-0 pointer-events-none transition-opacity duration-[1500ms]"
             style={{
               opacity: lightsOn ? 0.5 : 0,
               background:
-                "radial-gradient(circle at 50% 45%, oklch(0.45 0.12 65 / 0.4) 0%, transparent 50%)",
+                "radial-gradient(circle at 50% 45%, oklch(0.45 0.18 320 / 0.4) 0%, transparent 50%)",
               filter: "blur(60px)",
             }}
           />
 
-          {/* 3D Canvas */}
+          {/* 3D Canvas — reference camera setup */}
           <div
             className="absolute inset-0"
             aria-hidden="true"
             style={{ opacity: canvasOpacity, transition: "opacity 0.1s linear" }}
           >
             <Canvas
-              camera={{ position: [0, 2, 6.5], fov: 22, near: 0.1, far: 100 }}
+              camera={{
+                position: [0, 8, 12],
+                fov: 35,
+                near: 0.1,
+                far: 1000,
+              }}
+              onCreated={({ camera }) => {
+                camera.lookAt(0, 8, 2);
+              }}
               dpr={isMobile ? [1, 1.5] : [1, 2]}
               gl={{
                 antialias: !isMobile,
@@ -183,6 +217,7 @@ export function StartupLoader({ onComplete }: StartupLoaderProps) {
                 scrollProgress={scrollProgress}
                 lightsOn={lightsOn}
                 isMobile={isMobile}
+                onModelLoaded={() => setModelLoaded(true)}
               />
             </Canvas>
           </div>
@@ -224,6 +259,30 @@ export function StartupLoader({ onComplete }: StartupLoaderProps) {
             />
           </div>
 
+          {/* Loading state — GLB download progress */}
+          <AnimatePresence>
+            {loadingVisible && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+                className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-6"
+              >
+                <span className="label-mono text-muted-foreground">Loading character</span>
+                <div className="w-64 h-px bg-border/40 overflow-hidden relative">
+                  <div
+                    className="absolute inset-y-0 left-0 bg-accent transition-[width] duration-200"
+                    style={{ width: `${Math.round(loadProgress * 100)}%` }}
+                  />
+                </div>
+                <span className="label-mono text-muted-foreground tabular-nums">
+                  {Math.round(loadProgress * 100)}%
+                </span>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           {/* "Scroll to enter" hint — bottom center */}
           <AnimatePresence>
             {hintVisible && (
@@ -250,7 +309,7 @@ export function StartupLoader({ onComplete }: StartupLoaderProps) {
             )}
           </AnimatePresence>
 
-          {/* Fade-to-black overlay during exit (scroll > 0.7) */}
+          {/* Fade-to-black overlay during exit */}
           <div
             aria-hidden="true"
             className="absolute inset-0 pointer-events-none z-[5] transition-opacity duration-100"
@@ -265,119 +324,88 @@ export function StartupLoader({ onComplete }: StartupLoaderProps) {
   );
 }
 
-// ============ Startup scene ============
+// ============ Startup scene — reference lighting setup ============
 
 interface StartupSceneProps {
   scrollProgress: number;
   lightsOn: boolean;
   isMobile: boolean;
+  onModelLoaded: () => void;
 }
 
-function StartupScene({ scrollProgress, lightsOn, isMobile }: StartupSceneProps) {
-  const { camera } = useThree();
+function StartupScene({ scrollProgress, lightsOn, isMobile, onModelLoaded }: StartupSceneProps) {
+  const { camera, scene } = useThree();
 
-  // Light refs for "lights on" reveal
+  // Light refs (reference lighting.ts setup)
   const dirLightRef = useRef<THREE.DirectionalLight>(null);
   const pointLightRef = useRef<THREE.PointLight>(null);
-  const pointLight2Ref = useRef<THREE.PointLight>(null);
-  const spotLightRef = useRef<THREE.SpotLight>(null);
-
-  // Light intensity animation state
-  const lightIntensity = useRef(0);
+  const envIntensity = useRef(0);
+  const dirIntensity = useRef(0);
 
   useFrame((_, delta) => {
-    // === "Lights on" reveal — lerp intensity 0 → 1 over ~1.5s ===
-    const targetIntensity = lightsOn ? 1 : 0;
-    lightIntensity.current += (targetIntensity - lightIntensity.current) * delta * 1.2;
+    // === "Lights on" reveal ===
+    const targetEnv = lightsOn ? 0.64 : 0;
+    const targetDir = lightsOn ? 1 : 0;
+    envIntensity.current += (targetEnv - envIntensity.current) * delta * 1.2;
+    dirIntensity.current += (targetDir - dirIntensity.current) * delta * 1.2;
 
     if (dirLightRef.current) {
-      dirLightRef.current.intensity = lightIntensity.current * 1.1;
+      dirLightRef.current.intensity = dirIntensity.current;
     }
-    if (pointLightRef.current) {
-      pointLightRef.current.intensity = lightIntensity.current * 1.8;
-    }
-    if (pointLight2Ref.current) {
-      pointLight2Ref.current.intensity = lightIntensity.current * 1.2;
-    }
-    if (spotLightRef.current) {
-      spotLightRef.current.intensity = lightIntensity.current * 2.5;
+    // Set environment intensity on the scene (safe in three 0.185)
+    if (scene) {
+      (scene as any).environmentIntensity = envIntensity.current;
     }
 
-    // === Scroll-driven camera pull-back (like reference tl1: z 10→22) ===
-    // 0.0-0.7: camera pulls back and rises slightly
-    const camProgress = Math.max(0, Math.min(1, scrollProgress / 0.7));
-    const targetZ = 6.5 + camProgress * 4.5; // 6.5 → 11
-    const targetY = 2 + camProgress * 1.5; // 2 → 3.5
+    // === Camera setup — match the Canvas camera position ===
+    // Canvas camera starts at (0, 8, 12). Scroll drives pull-back.
+    const phase1 = Math.max(0, Math.min(1, scrollProgress / 0.3));
+    const phase2 = Math.max(0, Math.min(1, (scrollProgress - 0.3) / 0.4));
+    const targetZ = 12 + phase1 * 3 + phase2 * 5;
+    const targetY = 8 + phase2 * 2;
     camera.position.x += (0 - camera.position.x) * delta * 3;
     camera.position.y += (targetY - camera.position.y) * delta * 3;
     camera.position.z += (targetZ - camera.position.z) * delta * 3;
-    camera.lookAt(0, -0.3, 0);
+    camera.lookAt(0, 8, 2);
   });
 
   return (
     <>
       <color attach="background" args={["#06060A"]} />
-      <fog attach="fog" args={["#06060A", 5, 16]} />
+      <fog attach="fog" args={["#06060A", 15, 50]} />
 
       <ambientLight intensity={0.3} />
+
+      {/* Reference: DirectionalLight (#c7a9ff purple, position [-0.47, -0.32, -1]) */}
       <directionalLight
         ref={dirLightRef}
-        position={[5, 8, 5]}
+        position={[-0.47, -0.32, -1]}
         intensity={0}
-        color="#FFE4B5"
+        color="#c7a9ff"
       />
+
+      {/* Reference: PointLight (#c2a4ff purple, position [3, 12, 4]) */}
       <pointLight
         ref={pointLightRef}
-        position={[-6, -4, -4]}
+        position={[3, 12, 4]}
         intensity={0}
-        color="#E0A87C"
-      />
-      <pointLight
-        ref={pointLight2Ref}
-        position={[6, -2, 6]}
-        intensity={0}
-        color="#7DD3FC"
-      />
-      {/* Rim light from behind for character separation */}
-      <spotLight
-        ref={spotLightRef}
-        position={[0, 4, -6]}
-        angle={0.6}
-        penumbra={1}
-        intensity={0}
-        color="#E0A87C"
+        color="#c2a4ff"
+        distance={100}
+        decay={3}
       />
 
-      <Float speed={1.0} rotationIntensity={0.1} floatIntensity={0.3}>
-        <Character scrollProgress={scrollProgress} />
-      </Float>
+      {/* Additional warm fill light (our accent) */}
+      <pointLight position={[-6, -4, -4]} intensity={1.5} color="#E0A87C" />
 
-      <ContactShadows
-        position={[0, -1.7, 0]}
-        opacity={0.4}
-        scale={6}
-        blur={2.5}
-        far={4}
-        color="#000000"
-      />
-
-      <Environment preset="city" environmentIntensity={lightIntensity.current * 0.6} />
+      <Suspense fallback={null}>
+        <CharacterGLB scrollProgress={scrollProgress} onLoaded={onModelLoaded} />
+        {/* Reference environment: char_enviorment.hdr for reflections */}
+        <Environment files="/models/char_enviorment.hdr" background={false} />
+      </Suspense>
 
       <AdaptiveDpr pixelated={false} />
       <AdaptiveEvents />
-
-      {!isMobile && (
-        <EffectComposer multisampling={0}>
-          <Bloom
-            intensity={0.7}
-            luminanceThreshold={0.22}
-            luminanceSmoothing={0.5}
-            mipmapBlur
-          />
-          <Vignette eskil={false} offset={0.2} darkness={0.7} />
-          <SMAA />
-        </EffectComposer>
-      )}
+      {/* Postprocessing disabled — causes rendering issues with GLB model */}
     </>
   );
 }
