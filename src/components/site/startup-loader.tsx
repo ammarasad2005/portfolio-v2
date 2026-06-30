@@ -33,10 +33,10 @@ import { personalInfo } from "@/data/personal";
  */
 
 const SCROLL_THRESHOLD = 0.995;
-const LERP_SPEED = 0.06; // slower lerp = smoother, more deliberate
-const WHEEL_DIVISOR = 2500; // higher = slower scroll (~25 wheel clicks to complete)
-const TOUCH_DIVISOR = 800; // ~800px drag to complete
-const KEYBOARD_STEP = 0.06; // ~16 key presses to complete
+const LERP_SPEED = 0.12; // higher = faster catch-up = smoother continuous feel
+const WHEEL_DIVISOR = 1800; // continuous accumulation (no stepping)
+const TOUCH_DIVISOR = 600;
+const KEYBOARD_STEP = 0.08;
 
 interface StartupLoaderProps {
   onComplete: () => void;
@@ -194,9 +194,10 @@ export function StartupLoader({ onComplete }: StartupLoaderProps) {
               style={{ opacity: canvasOpacity, transition: "opacity 0.1s linear" }}
             >
               <Canvas
-                camera={{ position: [0, 0.3, 3.2], fov: 35, near: 0.1, far: 100 }}
+                camera={{ position: [0, 0.5, 4.5], fov: 35, near: 0.1, far: 100 }}
                 onCreated={({ camera }) => {
-                  camera.lookAt(0, 0.4, 0);
+                  // Avatar is Y[-1, 1.85], center at Y=0.42 — look at chest/face area
+                  camera.lookAt(0, 0.5, 0);
                 }}
                 dpr={isMobile ? [1, 1.5] : [1, 2]}
                 gl={{
