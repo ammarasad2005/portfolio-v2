@@ -1,50 +1,56 @@
 "use client";
 
 import * as THREE from "three";
-import { useRef, useMemo, useEffect } from "react";
+import { useRef, useMemo } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 
 /**
  * Character — an original stylized developer figure built from Three.js primitives.
  *
- * Designed for the StartupLoader — a standalone full-screen 3D experience
- * that gates entry into the main portfolio. The character is the focal point:
- * head and pupils track the mouse cursor in real-time, breathing + blinking
- * idle animations run continuously, and a subtle typing animation plays on
- * the laptop screen.
+ * Designed for the StartupLoader — a scroll-driven cinematic gate that
+ * transitions into the main portfolio. Behavior matches the red1-for-hek
+ * reference concept:
  *
- * Inspiration: red1-for-hek.vercel.app's developer figure concept.
- * Implementation: original Three.js primitives (no proprietary GLB reused).
+ *   - Head bone rotation tracks mouse cursor (NOT pupil tracking — the
+ *     eyes are fixed in the head and turn with it, creating the illusion
+ *     of eye tracking via head rotation)
+ *   - Max head rotation: π/6 (~30°) horizontal, -0.3 to 0.4 vertical
+ *   - Lerp: 0.2 horizontal (responsive), 0.1 vertical (slower, smooth)
+ *   - Mouse influence fades as scrollProgress increases (disabled by 50%)
+ *   - Scroll-driven: character group rotates 0 → 0.7 rad, slides up + out
+ *   - Scroll-driven: head tilts down (looking at desk) as scroll progresses
+ *   - Idle: breathing (torso scale), blink (eye scale Y), typing (hand bob)
  *
- * All refs are mutated only inside useFrame — never read during render.
+ * All refs mutated only inside useFrame — never read during render.
  */
 
-const MAX_HEAD_ROTATION_Y = Math.PI / 5; // ~36° — generous, this is the headline feature
-const MAX_HEAD_ROTATION_X = Math.PI / 7; // ~25°
-const PUPIL_OFFSET = 0.03; // generous pupil travel
-const IRIS_RADIUS = 0.034;
+const MAX_HEAD_ROTATION_Y = Math.PI / 6; // ~30° — matches reference
+const MIN_HEAD_ROTATION_X = -0.3; // matches reference
+const MAX_HEAD_ROTATION_X = 0.4; // matches reference
+const LERP_Y = 0.2; // horizontal — responsive
+const LERP_X = 0.1; // vertical — smooth
 
-export function Character() {
-  // Group refs
+interface CharacterProps {
+  scrollProgress: number; // 0-1, drives exit animation
+}
+
+export function Character({ scrollProgress }: CharacterProps) {
   const characterGroupRef = useRef<THREE.Group>(null);
   const headGroupRef = useRef<THREE.Group>(null);
   const torsoRef = useRef<THREE.Mesh>(null);
   const leftEyeGroupRef = useRef<THREE.Group>(null);
   const rightEyeGroupRef = useRef<THREE.Group>(null);
-  const leftPupilRef = useRef<THREE.Mesh>(null);
-  const rightPupilRef = useRef<THREE.Mesh>(null);
   const leftHandRef = useRef<THREE.Mesh>(null);
   const rightHandRef = useRef<THREE.Mesh>(null);
   const screenMaterialRef = useRef<THREE.MeshStandardMaterial>(null);
 
-  // Animation state refs (only mutated in useFrame)
+  // Animation state refs
   const blinkPhase = useRef(0);
   const nextBlinkAt = useRef(2 + Math.random() * 3);
   const blinkTimer = useRef(0);
   const breathingPhase = useRef(0);
   const typingPhase = useRef(0);
   const currentMouse = useRef({ x: 0, y: 0 });
-  const screenFlicker = useRef(1.4);
 
   // ============ MATERIALS ============
   const bodyMaterial = useMemo(
@@ -87,6 +93,7 @@ export function Character() {
     []
   );
 
+  // Iris — amber (our accent, not the reference's purple)
   const irisMaterial = useMemo(
     () =>
       new THREE.MeshStandardMaterial({
@@ -142,7 +149,7 @@ export function Character() {
 
   const { pointer } = useThree();
 
-  // ============ Torso using LatheGeometry for organic shape ============
+  // ============ GEOMETRIES ============
   const torsoGeometry = useMemo(() => {
     const points = [
       new THREE.Vector2(0.0, 0.0),
@@ -164,29 +171,32 @@ export function Character() {
   }, []);
 
   useFrame((_, delta) => {
-    // === Mouse tracking — smooth interpolation toward pointer ===
-    // Higher lerp factor for snappier, more responsive tracking
-    currentMouse.current.x += (pointer.x - currentMouse.current.x) * delta * 5;
-    currentMouse.current.y += (pointer.y - currentMouse.current.y) * delta * 5;
+    // === Smooth mouse tracking ===
+    currentMouse.current.x += (pointer.x - currentMouse.current.x) * delta * 4;
+    currentMouse.current.y += (pointer.y - currentMouse.current.y) * delta * 4;
 
-    // === Head rotation — tracks mouse with generous range ===
+    // === Mouse influence fades as user scrolls (gone by 50% scroll) ===
+    const mouseInfluence = Math.max(0, 1 - scrollProgress * 2);
+
+    // === Head bone rotation — tracks mouse (like reference's spine006) ===
+    // Reference: headBone.rotation.y = lerp(..., mouseX * π/6, 0.2)
+    // Reference: headBone.rotation.x = lerp(..., -mouseY - 0.5*π/6, 0.1), clamped
     if (headGroupRef.current) {
-      const targetY = currentMouse.current.x * MAX_HEAD_ROTATION_Y;
-      const targetX = -currentMouse.current.y * MAX_HEAD_ROTATION_X;
-      headGroupRef.current.rotation.y += (targetY - headGroupRef.current.rotation.y) * delta * 5;
-      headGroupRef.current.rotation.x += (targetX - headGroupRef.current.rotation.x) * delta * 5;
-    }
+      // Mouse-driven horizontal
+      const targetY_mouse = currentMouse.current.x * MAX_HEAD_ROTATION_Y * mouseInfluence;
+      // Scroll-driven horizontal (slight right turn as user scrolls, like reference tl1)
+      const targetY_scroll = scrollProgress * 0.15;
+      const targetY = targetY_mouse + targetY_scroll;
 
-    // === Pupil tracking — moves within iris toward cursor ===
-    const pupilOffsetX = currentMouse.current.x * PUPIL_OFFSET;
-    const pupilOffsetY = currentMouse.current.y * PUPIL_OFFSET;
-    if (leftPupilRef.current) {
-      leftPupilRef.current.position.x += (pupilOffsetX - leftPupilRef.current.position.x) * delta * 8;
-      leftPupilRef.current.position.y += (pupilOffsetY - leftPupilRef.current.position.y) * delta * 8;
-    }
-    if (rightPupilRef.current) {
-      rightPupilRef.current.position.x += (pupilOffsetX - rightPupilRef.current.position.x) * delta * 8;
-      rightPupilRef.current.position.y += (pupilOffsetY - rightPupilRef.current.position.y) * delta * 8;
+      // Mouse-driven vertical (clamped to -0.3..0.4, like reference)
+      let targetX_mouse = -currentMouse.current.y * 0.35 * mouseInfluence;
+      targetX_mouse = Math.max(MIN_HEAD_ROTATION_X, Math.min(MAX_HEAD_ROTATION_X, targetX_mouse));
+      // Scroll-driven vertical (head tilts down looking at desk, like reference tl2 neckBone)
+      const targetX_scroll = scrollProgress * 0.4;
+      const targetX = targetX_mouse + targetX_scroll;
+
+      headGroupRef.current.rotation.y += (targetY - headGroupRef.current.rotation.y) * LERP_Y;
+      headGroupRef.current.rotation.x += (targetX - headGroupRef.current.rotation.x) * LERP_X;
     }
 
     // === Blink animation ===
@@ -219,7 +229,7 @@ export function Character() {
       rightEyeGroupRef.current.scale.y = eyeScaleY;
     }
 
-    // === Breathing animation ===
+    // === Breathing ===
     breathingPhase.current += delta * 0.7;
     const breathScale = 1 + Math.sin(breathingPhase.current) * 0.015;
     if (torsoRef.current) {
@@ -238,15 +248,21 @@ export function Character() {
       rightHandRef.current.position.z = -0.78 + typingOffsetR;
       rightHandRef.current.position.y = -1.42 + Math.abs(typingOffsetR) * 0.3;
     }
-    screenFlicker.current = 1.4 + Math.sin(typingPhase.current * 0.6) * 0.15;
+    const flicker = 1.4 + Math.sin(typingPhase.current * 0.6) * 0.15;
     if (screenMaterialRef.current) {
-      screenMaterialRef.current.emissiveIntensity = screenFlicker.current;
+      screenMaterialRef.current.emissiveIntensity = flicker;
     }
 
-    // === Subtle character group float ===
+    // === Scroll-driven character group rotation (reference tl1: rotation.y 0→0.7) ===
     if (characterGroupRef.current) {
-      characterGroupRef.current.position.y =
-        -0.2 + Math.sin(breathingPhase.current * 0.5) * 0.025;
+      // 0.3-0.7 scroll range: rotate right
+      const rotProgress = Math.max(0, Math.min(1, (scrollProgress - 0.3) / 0.4));
+      characterGroupRef.current.rotation.y = rotProgress * 0.7;
+
+      // 0.6-1.0 scroll range: slide up and out (reference tl3: y 0%→-100%)
+      const slideProgress = Math.max(0, Math.min(1, (scrollProgress - 0.6) / 0.4));
+      characterGroupRef.current.position.y = -0.2 + slideProgress * 1.8;
+      characterGroupRef.current.position.x = -slideProgress * 0.3;
     }
   });
 
@@ -301,7 +317,7 @@ export function Character() {
         <cylinderGeometry args={[0.09, 0.11, 0.16, 12]} />
       </mesh>
 
-      {/* === Head group (rotates with mouse) === */}
+      {/* === Head group (rotates with mouse — the "eye tracking" illusion) === */}
       <group ref={headGroupRef} position={[0, -0.55, 0.02]}>
         <mesh geometry={headGeometry} castShadow material={skinMaterial} />
 
@@ -331,15 +347,15 @@ export function Character() {
           <meshStandardMaterial color={0x1a1208} roughness={0.7} />
         </mesh>
 
-        {/* === Left eye === */}
+        {/* === Left eye (pupils static — turn with head, like reference) === */}
         <group ref={leftEyeGroupRef} position={[-0.085, 0.03, 0.2]}>
           <mesh material={eyeWhiteMaterial}>
             <sphereGeometry args={[0.045, 16, 12]} />
           </mesh>
           <mesh position={[0, 0, 0.035]} material={irisMaterial}>
-            <circleGeometry args={[IRIS_RADIUS, 20]} />
+            <circleGeometry args={[0.034, 20]} />
           </mesh>
-          <mesh ref={leftPupilRef} position={[0, 0, 0.04]} material={pupilMaterial}>
+          <mesh position={[0, 0, 0.04]} material={pupilMaterial}>
             <circleGeometry args={[0.016, 12]} />
           </mesh>
           <mesh position={[0.012, 0.015, 0.045]}>
@@ -354,9 +370,9 @@ export function Character() {
             <sphereGeometry args={[0.045, 16, 12]} />
           </mesh>
           <mesh position={[0, 0, 0.035]} material={irisMaterial}>
-            <circleGeometry args={[IRIS_RADIUS, 20]} />
+            <circleGeometry args={[0.034, 20]} />
           </mesh>
-          <mesh ref={rightPupilRef} position={[0, 0, 0.04]} material={pupilMaterial}>
+          <mesh position={[0, 0, 0.04]} material={pupilMaterial}>
             <circleGeometry args={[0.016, 12]} />
           </mesh>
           <mesh position={[0.012, 0.015, 0.045]}>
